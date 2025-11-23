@@ -341,4 +341,32 @@
         <tag>Hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Ubuntu更新镜像源</title>
+    <url>/2025/11/23/Ubuntu%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h3 id="1-Ubuntu软件源配置文件"><a href="#1-Ubuntu软件源配置文件" class="headerlink" title="1. Ubuntu软件源配置文件"></a>1. Ubuntu软件源配置文件</h3><figure class="highlight plaintext"><figcaption><span>cd</span><a href="/etc/apt">link</a></figcaption><table><tr><td class="code"><pre><span class="line">sudo cd /etc/apt</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu的软件源配置文件在<code>/etc/apt</code>的<code>sources.list</code>中</p>
+<h3 id="2-备份配置文件"><a href="#2-备份配置文件" class="headerlink" title="2.备份配置文件"></a>2.备份配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp sources.list sources.list.bak</span><br></pre></td></tr></table></figure>
+
+<p>备份一份配置文件，以便以后需要时找回</p>
+<h3 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi sources.list</span><br></pre></td></tr></table></figure>
+
+<p>依次按下<code>g</code> <code>d</code> <code>shift</code> <code>g</code>删除所有内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># aliyun</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<p>复制对应版本的镜像源，我这里是Ubuntu22.04 阿里镜像源，其余版本可自行Google</p>
+<p>按下<code>:</code> <code>wq</code> 保存并退出</p>
+<h3 id="4-更新软件源"><a href="#4-更新软件源" class="headerlink" title="4.更新软件源"></a>4.更新软件源</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+
+<p>更新软件源</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
