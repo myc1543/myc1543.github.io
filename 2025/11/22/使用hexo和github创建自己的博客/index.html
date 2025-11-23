@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="在windows11环境下，完成hexo以及git的配置，搭建自己的博客。">
 <meta property="og:type" content="article">
@@ -25,7 +25,7 @@
 <meta property="og:url" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/index.html">
 <meta property="og:site_name" content="The Dawn">
 <meta property="og:description" content="在windows11环境下，完成hexo以及git的配置，搭建自己的博客。">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122143108724.png">
 <meta property="og:image" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122141133630.png">
 <meta property="og:image" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122151002542.png">
@@ -36,8 +36,9 @@
 <meta property="og:image" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174615272.png">
 <meta property="og:image" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174748275.png">
 <meta property="article:published_time" content="2025-11-22T03:42:53.000Z">
-<meta property="article:modified_time" content="2025-11-22T14:48:31.843Z">
+<meta property="article:modified_time" content="2025-11-23T09:42:01.584Z">
 <meta property="article:author" content="The Dawn">
+<meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122143108724.png">
 
@@ -45,7 +46,7 @@
 <link rel="canonical" href="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/","path":"2025/11/22/使用hexo和github创建自己的博客/","title":"使用hexo和github创建自己的博客"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/","path":"2025/11/22/使用hexo和github创建自己的博客/","title":"使用hexo和github创建自己的博客"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>使用hexo和github创建自己的博客 | The Dawn</title>
@@ -89,7 +90,7 @@
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
   </div>
 
@@ -103,7 +104,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -114,7 +115,7 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
       </li>
   </ul>
@@ -130,7 +131,7 @@
         </span>
         <div class="search-input-container">
           <input autocomplete="off" autocapitalize="off" maxlength="80"
-                placeholder="Searching..." spellcheck="false"
+                placeholder="搜索..." spellcheck="false"
                 type="search" class="search-input">
         </div>
         <span class="popup-btn-close" role="button">
@@ -153,17 +154,17 @@
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">1.前置准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%89%E8%A3%85Node-js"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%AE%89%E8%A3%85git-%E5%B7%B2%E7%BB%8F%E9%85%8D%E7%BD%AE%E7%9A%84%E5%8F%AF%E8%B7%B3%E8%BF%87%EF%BC%8C%E5%90%8E%E7%BB%AD%E5%91%BD%E4%BB%A4%E9%83%BD%E5%9C%A8git%E4%B8%AD%E5%AE%8C%E6%88%90"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 安装git(已经配置的可跳过，后续命令都在git中完成)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85Hexo%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.安装Hexo并初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%83%A8%E7%BD%B2%E5%88%B0Github-Pages"><span class="nav-number">3.</span> <span class="nav-text">3. 部署到Github Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BB%93%E5%BA%93"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 新建一个仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%9B%B4%E6%94%B9hexo%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 更改hexo配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 远程部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-number">4.</span> <span class="nav-text">4.hexo中插入图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 插入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E9%85%8D%E5%90%88Typora%E6%9D%A5%E7%AE%80%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 配合Typora来简化操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E7%9A%84%E6%80%BB%E7%BB%93"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 插入图片的总结</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="nav-text">1.前置准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%89%E8%A3%85Node-js"><span class="nav-text">1.1 安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%AE%89%E8%A3%85git-%E5%B7%B2%E7%BB%8F%E9%85%8D%E7%BD%AE%E7%9A%84%E5%8F%AF%E8%B7%B3%E8%BF%87%EF%BC%8C%E5%90%8E%E7%BB%AD%E5%91%BD%E4%BB%A4%E9%83%BD%E5%9C%A8git%E4%B8%AD%E5%AE%8C%E6%88%90"><span class="nav-text">1.2 安装git(已经配置的可跳过，后续命令都在git中完成)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85Hexo%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">2.安装Hexo并初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%83%A8%E7%BD%B2%E5%88%B0Github-Pages"><span class="nav-text">3. 部署到Github Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BB%93%E5%BA%93"><span class="nav-text">3.1 新建一个仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%9B%B4%E6%94%B9hexo%E9%85%8D%E7%BD%AE"><span class="nav-text">3.2 更改hexo配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2"><span class="nav-text">3.3 远程部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-text">4.hexo中插入图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-text">4.1 插入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E9%85%8D%E5%90%88Typora%E6%9D%A5%E7%AE%80%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="nav-text">4.2 配合Typora来简化操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E7%9A%84%E6%80%BB%E7%BB%93"><span class="nav-text">4.3 插入图片的总结</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,9 +179,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">2</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -205,7 +216,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -233,27 +244,46 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2025-11-22 11:42:53 / Modified: 22:48:31" itemprop="dateCreated datePublished" datetime="2025-11-22T11:42:53+08:00">2025-11-22</time>
+      <time title="创建时间：2025-11-22 11:42:53" itemprop="dateCreated datePublished" datetime="2025-11-22T11:42:53+08:00">2025-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-11-23 17:42:01" itemprop="dateModified" datetime="2025-11-23T17:42:01+08:00">2025-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
     </span>
 
   
     <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="Word count in article">
+    <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
       </span>
-      <span class="post-meta-item-text">Word count in article: </span>
+      <span class="post-meta-item-text">本文字数：</span>
       <span>2.6k</span>
     </span>
-    <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>2 mins.</span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -394,6 +424,9 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          </div>
 
         
 
@@ -404,6 +437,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2025/11/23/%E4%B8%AA%E6%80%A7%E5%8C%96hexo%E9%85%8D%E7%BD%AE/" rel="next" title="个性化Hexo配置">
+                  个性化Hexo配置 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -434,16 +470,16 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">3k</span>
+    <span title="站点总字数">6k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3 mins.</span>
+    <span title="站点阅读时长">6 分钟</span>
   </span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
@@ -456,7 +492,7 @@
     <span class="toggle-line"></span>
   </div>
   <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
