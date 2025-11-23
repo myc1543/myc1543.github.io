@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>WSL的安装</title>
+    <url>/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>本篇文章参考微软的文档</p>
+<p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
+<h2 id="1-安装WSL命令"><a href="#1-安装WSL命令" class="headerlink" title="1. 安装WSL命令"></a>1. 安装WSL命令</h2><h3 id="1-1-管理员身份打开PowerShell"><a href="#1-1-管理员身份打开PowerShell" class="headerlink" title="1.1 管理员身份打开PowerShell"></a>1.1 管理员身份打开PowerShell</h3><p>输入</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223823461.png"></p>
+<p>该命令会自动启用WSL相关的组件。接着重启电脑。</p>
+<p>或者使用windows功能(启用或关闭Windows功能)，启用<strong>适用于Linux的Windows子系统</strong></p>
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121222954406.png" alt="image-20251121222954406"></p>
+<h2 id="2-设置WSL版本为WSL2"><a href="#2-设置WSL版本为WSL2" class="headerlink" title="2. 设置WSL版本为WSL2"></a>2. 设置WSL版本为WSL2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-安装Linux发行版-注意安装位置"><a href="#3-安装Linux发行版-注意安装位置" class="headerlink" title="3.安装Linux发行版(注意安装位置)"></a>3.安装Linux发行版(注意安装位置)</h2><p>建议从<strong>Microsoft Store</strong>安装稳定的Linux发行版，这里以Ubuntu 18.04为例</p>
+<h3 id="3-1-安装发行版"><a href="#3-1-安装发行版" class="headerlink" title="3.1 安装发行版"></a>3.1 安装发行版</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223552582.png"></p>
+<h3 id="3-2-初始化信息"><a href="#3-2-初始化信息" class="headerlink" title="3.2 初始化信息"></a>3.2 初始化信息</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223934668.png"></p>
+<p>输入自己的用户名以及密码</p>
+<h2 id="4-检查安装"><a href="#4-检查安装" class="headerlink" title="4. 检查安装"></a>4. 检查安装</h2><h3 id="4-1-查看已安装的发行版及其版本"><a href="#4-1-查看已安装的发行版及其版本" class="headerlink" title="4.1 查看已安装的发行版及其版本"></a>4.1 查看已安装的发行版及其版本</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-进入WSL"><a href="#4-2-进入WSL" class="headerlink" title="4.2 进入WSL"></a>4.2 进入WSL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash</span><br></pre></td></tr></table></figure>
+
+<p>命令行输入bash进入WSL，建议更换终端Hyper</p>
+<h2 id="5-WSL的迁移"><a href="#5-WSL的迁移" class="headerlink" title="5. WSL的迁移"></a>5. WSL的迁移</h2><p>如果Linux发行版安装到了C盘，并且C盘空间不足时，可以参考一下操作将其迁移到其他盘</p>
+<h3 id="5-1-停止WSL的运行"><a href="#5-1-停止WSL的运行" class="headerlink" title="5.1 停止WSL的运行"></a>5.1 停止WSL的运行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>首先查看WSL的运行状态</p>
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121225104829.png"></p>
+<p>如果WSL正在运行，首先终止其运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+
+<p>确保处于stopped的状态</p>
+<h3 id="5-2-导出-恢复备份"><a href="#5-2-导出-恢复备份" class="headerlink" title="5.2 导出&#x2F;恢复备份"></a>5.2 导出&#x2F;恢复备份</h3><p>在新的盘中创建一个新的目录来存放迁移后的WSL，这里以F盘为例，新的目录为WSL</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.导出备份，命名为Ubuntu.tar</span><br><span class="line">wsl --export Ubuntu-&#123;版本&#125; F:\WSL\Ubuntu.tar</span><br><span class="line">2.确定新的目录有备份文件后，注销原有文件</span><br><span class="line">wsl --unregister Ubuntu-&#123;版本&#125;</span><br><span class="line">3.恢复备份文件</span><br><span class="line">wsl --import Ubuntu-&#123;版本&#125; F:\WSL F:\WSL\Ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121230524992.png"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>个性化Hexo配置</title>
     <url>/2025/11/23/%E4%B8%AA%E6%80%A7%E5%8C%96hexo%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="1-Hexo配置Next主题"><a href="#1-Hexo配置Next主题" class="headerlink" title="1.Hexo配置Next主题"></a>1.Hexo配置Next主题</h2><h3 id="1-1-检查Hexo配置"><a href="#1-1-检查Hexo配置" class="headerlink" title="1.1 检查Hexo配置"></a>1.1 检查Hexo配置</h3><p>输入<code>hexo v</code>命令，出现如下信息，表示Hexo已安装，可以进行后续操作</p>
@@ -63,7 +114,7 @@
 <ul>
 <li><strong>创建分类并添加type属性</strong></li>
 </ul>
-<p>-在站点所在文件夹</p>
+<p>在站点所在文件夹</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
 
 <p>成功后提示</p>
@@ -153,7 +204,7 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -288,57 +339,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>WSL的安装</title>
-    <url>/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>本篇文章参考微软的文档</p>
-<p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
-<h2 id="1-安装WSL命令"><a href="#1-安装WSL命令" class="headerlink" title="1. 安装WSL命令"></a>1. 安装WSL命令</h2><h3 id="1-1-管理员身份打开PowerShell"><a href="#1-1-管理员身份打开PowerShell" class="headerlink" title="1.1 管理员身份打开PowerShell"></a>1.1 管理员身份打开PowerShell</h3><p>输入</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223823461.png"></p>
-<p>该命令会自动启用WSL相关的组件。接着重启电脑。</p>
-<p>或者使用windows功能(启用或关闭Windows功能)，启用<strong>适用于Linux的Windows子系统</strong></p>
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121222954406.png" alt="image-20251121222954406"></p>
-<h2 id="2-设置WSL版本为WSL2"><a href="#2-设置WSL版本为WSL2" class="headerlink" title="2. 设置WSL版本为WSL2"></a>2. 设置WSL版本为WSL2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-安装Linux发行版-注意安装位置"><a href="#3-安装Linux发行版-注意安装位置" class="headerlink" title="3.安装Linux发行版(注意安装位置)"></a>3.安装Linux发行版(注意安装位置)</h2><p>建议从<strong>Microsoft Store</strong>安装稳定的Linux发行版，这里以Ubuntu 18.04为例</p>
-<h3 id="3-1-安装发行版"><a href="#3-1-安装发行版" class="headerlink" title="3.1 安装发行版"></a>3.1 安装发行版</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223552582.png"></p>
-<h3 id="3-2-初始化信息"><a href="#3-2-初始化信息" class="headerlink" title="3.2 初始化信息"></a>3.2 初始化信息</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223934668.png"></p>
-<p>输入自己的用户名以及密码</p>
-<h2 id="4-检查安装"><a href="#4-检查安装" class="headerlink" title="4. 检查安装"></a>4. 检查安装</h2><h3 id="4-1-查看已安装的发行版及其版本"><a href="#4-1-查看已安装的发行版及其版本" class="headerlink" title="4.1 查看已安装的发行版及其版本"></a>4.1 查看已安装的发行版及其版本</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-2-进入WSL"><a href="#4-2-进入WSL" class="headerlink" title="4.2 进入WSL"></a>4.2 进入WSL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash</span><br></pre></td></tr></table></figure>
-
-<p>命令行输入bash进入WSL，建议更换终端Hyper</p>
-<h2 id="5-WSL的迁移"><a href="#5-WSL的迁移" class="headerlink" title="5. WSL的迁移"></a>5. WSL的迁移</h2><p>如果Linux发行版安装到了C盘，并且C盘空间不足时，可以参考一下操作将其迁移到其他盘</p>
-<h3 id="5-1-停止WSL的运行"><a href="#5-1-停止WSL的运行" class="headerlink" title="5.1 停止WSL的运行"></a>5.1 停止WSL的运行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
-
-<p>首先查看WSL的运行状态</p>
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121225104829.png"></p>
-<p>如果WSL正在运行，首先终止其运行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
-
-<p>确保处于stopped的状态</p>
-<h3 id="5-2-导出-恢复备份"><a href="#5-2-导出-恢复备份" class="headerlink" title="5.2 导出&#x2F;恢复备份"></a>5.2 导出&#x2F;恢复备份</h3><p>在新的盘中创建一个新的目录来存放迁移后的WSL，这里以F盘为例，新的目录为WSL</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.导出备份，命名为Ubuntu.tar</span><br><span class="line">wsl --export Ubuntu-&#123;版本&#125; F:\WSL\Ubuntu.tar</span><br><span class="line">2.确定新的目录有备份文件后，注销原有文件</span><br><span class="line">wsl --unregister Ubuntu-&#123;版本&#125;</span><br><span class="line">3.恢复备份文件</span><br><span class="line">wsl --import Ubuntu-&#123;版本&#125; F:\WSL F:\WSL\Ubuntu.tar</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121230524992.png"></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
