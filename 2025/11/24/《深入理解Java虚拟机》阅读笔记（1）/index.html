@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="《深入理解Java虚拟机》阅读笔记，本篇文章主要是关于Java内存区域。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《深入理解Java虚拟机》阅读笔记（1）">
+<meta property="og:url" content="http://example.com/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/index.html">
+<meta property="og:site_name" content="The Dawn">
+<meta property="og:description" content="《深入理解Java虚拟机》阅读笔记，本篇文章主要是关于Java内存区域。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/image-20251124231738862.png">
+<meta property="article:published_time" content="2025-11-24T08:30:44.000Z">
+<meta property="article:modified_time" content="2026-01-04T17:10:16.143Z">
+<meta property="article:author" content="The Dawn">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/image-20251124231738862.png">
+
+
+<link rel="canonical" href="http://example.com/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/","path":"2025/11/24/《深入理解Java虚拟机》阅读笔记（1）/","title":"《深入理解Java虚拟机》阅读笔记（1）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《深入理解Java虚拟机》阅读笔记（1） | The Dawn</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Dawn</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AC%AC%E4%B8%80%E7%AB%A0%E2%80%9C%E8%B5%B0%E8%BF%9B%E2%80%9CJava%E2%80%9D"><span class="nav-text">1.第一章“走进“Java”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E2%80%9CJava%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8%E2%80%9D"><span class="nav-text">2.第二章“Java内存区域与内存溢出异常”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F"><span class="nav-text">2.1 运行时数据区域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-text">2.1.1程序计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="nav-text">2.1.2 Java虚拟机栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="nav-text">2.1.3 本地方法栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-4-Java%E5%A0%86"><span class="nav-text">2.1.4 Java堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-5-%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-text">2.1.5 方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-6-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="nav-text">2.1.6 运行时常量池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-7-%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98"><span class="nav-text">2.2.7  直接内存</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98"><span class="nav-text">2.3HotSpot虚拟机对象探秘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-text">2.3.1 对象的创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-text">2.3.2 对象的内存布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="nav-text">2.3.3 对象的访问定位</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-OOM"><span class="nav-text">2.4 OOM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-%E5%A0%86%E6%BA%A2%E5%87%BA"><span class="nav-text">2.4.1 堆溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="nav-text">2.4.2  栈溢出</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="The Dawn"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">The Dawn</p>
+  <div class="site-description" itemprop="description">一位即将步入职场的应届生的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="The Dawn">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Dawn">
+      <meta itemprop="description" content="一位即将步入职场的应届生的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《深入理解Java虚拟机》阅读笔记（1） | The Dawn">
+      <meta itemprop="description" content="《深入理解Java虚拟机》阅读笔记，本篇文章主要是关于Java内存区域。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《深入理解Java虚拟机》阅读笔记（1）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-11-24 16:30:44" itemprop="dateCreated datePublished" datetime="2025-11-24T16:30:44+08:00">2025-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-01-05 01:10:16" itemprop="dateModified" datetime="2026-01-05T01:10:16+08:00">2026-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">《深入理解Java虚拟机》阅读笔记，本篇文章主要是关于Java内存区域。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-第一章“走进“Java”"><a href="#1-第一章“走进“Java”" class="headerlink" title="1.第一章“走进“Java”"></a>1.第一章“走进“Java”</h2><p><strong>Java的优势之JVM</strong></p>
+<ul>
+<li>虚拟机层面屏蔽技术的复杂性和操作系统的差异性</li>
+</ul>
+<h2 id="2-第二章“Java内存区域与内存溢出异常”"><a href="#2-第二章“Java内存区域与内存溢出异常”" class="headerlink" title="2.第二章“Java内存区域与内存溢出异常”"></a>2.第二章“Java内存区域与内存溢出异常”</h2><h3 id="2-1-运行时数据区域"><a href="#2-1-运行时数据区域" class="headerlink" title="2.1 运行时数据区域"></a>2.1 运行时数据区域</h3><p><img src="/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/image-20251124231738862.png" alt="JVM内存区域"></p>
+<h4 id="2-1-1程序计数器"><a href="#2-1-1程序计数器" class="headerlink" title="2.1.1程序计数器"></a>2.1.1程序计数器</h4><p>程序计数器是当前线程所执行的字节码的行号指示器(唯一不会出现OOM的区域)</p>
+<p>因为Java是多线程执行的，每个处理器在一个时间内只会执行一条线程内的指令，所以每条线程都要有单独的程序计数器，为了线程切换后能恢复到正确的执行位置。</p>
+<h4 id="2-1-2-Java虚拟机栈"><a href="#2-1-2-Java虚拟机栈" class="headerlink" title="2.1.2 Java虚拟机栈"></a>2.1.2 Java虚拟机栈</h4><p>虚拟机栈是线程私有的，生命周期和线程相同。描述的是Java方法执行的线程内存模型。每个方法被执行的时候，会同步创建栈帧。</p>
+<ul>
+<li><p>栈帧</p>
+<ul>
+<li><p>局部变量表：编译器可知的基本数据类型、对象引用、返回地址</p>
+</li>
+<li><p>操作数栈：用于暂存计算的操作数和结果</p>
+</li>
+<li><p>动态链接：符号引用(字符串)转化内直接引用(指针)</p>
+</li>
+<li><p>方法出口</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-3-本地方法栈"><a href="#2-1-3-本地方法栈" class="headerlink" title="2.1.3 本地方法栈"></a>2.1.3 本地方法栈</h4><p>本地方法栈执为虚拟机使用到的本地方法服务</p>
+<h4 id="2-1-4-Java堆"><a href="#2-1-4-Java堆" class="headerlink" title="2.1.4 Java堆"></a>2.1.4 Java堆</h4><p>堆是虚拟机锁管理的内存中最大的一块，被所有线程共享。在虚拟机启动时创建，存放对象实例(所有还是大部分？)</p>
+<p>从内存分配的角度来看，堆中还可以划分出线程私有的分配缓冲区。</p>
+<p><strong>改变Java堆的大小</strong></p>
+<ul>
+<li>-Xmx</li>
+<li>-Xms</li>
+</ul>
+<p><strong>字符串常量池</strong></p>
+<p>编译器可确定的字符串常量自动入池，运行时生成的字符串需要通过intern()手动入池</p>
+<h4 id="2-1-5-方法区"><a href="#2-1-5-方法区" class="headerlink" title="2.1.5 方法区"></a>2.1.5 方法区</h4><p>方法区是各个线程共享的内存区域，存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。</p>
+<h4 id="2-1-6-运行时常量池"><a href="#2-1-6-运行时常量池" class="headerlink" title="2.1.6 运行时常量池"></a>2.1.6 运行时常量池</h4><p>运行时常量池是方法区的一部分，存放编译器生成的各种字面量与符号引用</p>
+<p>String.intern</p>
+<h4 id="2-2-7-直接内存"><a href="#2-2-7-直接内存" class="headerlink" title="2.2.7  直接内存"></a>2.2.7  直接内存</h4><p>直接内存是一种特殊的内存缓冲区，并不在 Java 堆或方法区中分配的，而是通过 JNI 的方式在本地内存上分配的。</p>
+<h3 id="2-3HotSpot虚拟机对象探秘"><a href="#2-3HotSpot虚拟机对象探秘" class="headerlink" title="2.3HotSpot虚拟机对象探秘"></a>2.3HotSpot虚拟机对象探秘</h3><h4 id="2-3-1-对象的创建"><a href="#2-3-1-对象的创建" class="headerlink" title="2.3.1 对象的创建"></a>2.3.1 对象的创建</h4><p>当虚拟机遇到new字节码指令时，首先回去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并检查这个符号引用代表的类是否已经被加载、解析、初始化过，如果没有，先执行类的加载。</p>
+<ul>
+<li>为新生对象分配内存，根据Java堆的内存是否规整，选择指针碰撞或空闲列表的方式分配内存<ul>
+<li>针对并发问题，有CAS和本地线程分配缓冲</li>
+</ul>
+</li>
+<li>内存分配完成后，必须将分配到的内存空间初始化为零值</li>
+<li>对对象进行必要的设置</li>
+<li>执行构造函数，对对象进行初始化</li>
+</ul>
+<h4 id="2-3-2-对象的内存布局"><a href="#2-3-2-对象的内存布局" class="headerlink" title="2.3.2 对象的内存布局"></a>2.3.2 对象的内存布局</h4><p>对象在HotSpot虚拟机中的存储布局可以分为三个部分：对象头、实例数据、对齐填充。</p>
+<p>*** 对象头***</p>
+<ul>
+<li>对象自身的运行时数据(Mark Word)<ul>
+<li>哈希码</li>
+<li>GC分代年龄</li>
+<li>锁状态标志</li>
+<li>线程持有的锁</li>
+<li>偏向线程ID</li>
+</ul>
+</li>
+<li>类型指针<ul>
+<li>对象指向它的类型元数据的指针</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>实例数据</strong></em></p>
+<ul>
+<li>程序代码中所定义的各种类型的字段内容</li>
+</ul>
+<p>*** 对齐填充***</p>
+<ul>
+<li>占位符，符合对象的起始地址是8字节的整数倍</li>
+</ul>
+<h4 id="2-3-3-对象的访问定位"><a href="#2-3-3-对象的访问定位" class="headerlink" title="2.3.3 对象的访问定位"></a>2.3.3 对象的访问定位</h4><p>Java程序通过栈上的reference数据来操作堆上的具体对象。reference是一个指向对象的引用，通过引用去访问对象的方式主要有句柄和直接指针两种</p>
+<p>*** 句柄***‘</p>
+<ul>
+<li>堆中内存划分出一块作为句柄池，reference中存储的是对象的句柄地址，句柄在包含对象实例数据和对象类型数据各自具体的地址信息。</li>
+</ul>
+<p><em><strong>直接指针</strong></em></p>
+<p>存储的是对象地址</p>
+<h3 id="2-4-OOM"><a href="#2-4-OOM" class="headerlink" title="2.4 OOM"></a>2.4 OOM</h3><h4 id="2-4-1-堆溢出"><a href="#2-4-1-堆溢出" class="headerlink" title="2.4.1 堆溢出"></a>2.4.1 堆溢出</h4><p>对象太多，总容量触及最大堆的容量限制后就会产生内存溢出异常。</p>
+<h4 id="2-4-2-栈溢出"><a href="#2-4-2-栈溢出" class="headerlink" title="2.4.2  栈溢出"></a>2.4.2  栈溢出</h4><p>栈溢出的本质是新的栈帧内存无法分配的时候，导致OOM。</p>
+<p>有两种情况</p>
+<ul>
+<li>栈帧太大</li>
+<li>虚拟机栈容量太小</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/23/Ubuntu%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%BA%90/" rel="prev" title="Ubuntu更新镜像源">
+                  <i class="fa fa-angle-left"></i> Ubuntu更新镜像源
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/" rel="next" title="《深入理解Java虚拟机》阅读笔记(2)">
+                  《深入理解Java虚拟机》阅读笔记(2) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Dawn</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">32k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">29 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
