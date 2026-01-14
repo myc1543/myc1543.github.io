@@ -1,6 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java中的排序</title>
+    <url>/2026/01/13/Java%E4%B8%AD%E7%9A%84%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h2 id="1-排序的对象"><a href="#1-排序的对象" class="headerlink" title="1.排序的对象"></a>1.排序的对象</h2><p>在Java中，排序的对象主要有两类：数组和集合。</p>
+<ul>
+<li>数组<ul>
+<li>基本类型数组</li>
+<li>对象数组</li>
+</ul>
+</li>
+<li>集合<ul>
+<li>List</li>
+<li>Set</li>
+<li>Map</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-数组排序"><a href="#2-数组排序" class="headerlink" title="2.数组排序"></a>2.数组排序</h2><p>对数组排序，使用<code>Arrays.sort()</code>方法，默认升序，降序排序可考虑将数组反转。</p>
+<h3 id="2-1-基本类型数组"><a href="#2-1-基本类型数组" class="headerlink" title="2.1 基本类型数组"></a>2.1 基本类型数组</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       int[] array = new int[]&#123;154,562,105,4,46,7&#125;;</span><br><span class="line">       System.out.println(&quot;排序前:&quot; + Arrays.toString(array));</span><br><span class="line">       Arrays.sort(array);</span><br><span class="line">       System.out.println(&quot;排序后:&quot; + Arrays.toString(array));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2对象数组"><a href="#2-2对象数组" class="headerlink" title="2.2对象数组"></a>2.2对象数组</h3><p><strong>排序规则</strong></p>
+<p>compare(o1, o2): </p>
+<ul>
+<li>返回负数: o1 &lt; o2 (o1 排在前面) -</li>
+<li>返回 0:   o1 &#x3D;&#x3D; o2 </li>
+<li>返回正数: o1 &gt; o2 (o2 排在前面)</li>
+</ul>
+<p>在这里，以User对象来进行排序</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class User&#123;</span><br><span class="line">    String name;</span><br><span class="line">    int age;</span><br><span class="line"></span><br><span class="line">    public User(String name,int age)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot;:&quot; + age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-1-实现Comparable接口"><a href="#2-2-1-实现Comparable接口" class="headerlink" title="2.2.1 实现Comparable接口"></a>2.2.1 实现Comparable接口</h4><p>需要排序的对象，需要实现Comparable接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class User implements Comparable&lt;User&gt; &#123;</span><br><span class="line">    String name;</span><br><span class="line">    int age;</span><br><span class="line"></span><br><span class="line">    public User(String name,int age)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int compareTo(User other) &#123;</span><br><span class="line">        return this.age - other.age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot;:&quot; + age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        // 创建测试数据</span><br><span class="line">        User[] users = &#123;</span><br><span class="line">            new User(&quot;张三&quot;, 25),</span><br><span class="line">            new User(&quot;李四&quot;, 20),</span><br><span class="line">            new User(&quot;王五&quot;, 30),</span><br><span class="line">            new User(&quot;赵六&quot;, 22),</span><br><span class="line">            new User(&quot;孙七&quot;, 28),</span><br><span class="line">            new User(&quot;周八&quot;, 18),</span><br><span class="line">            new User(&quot;吴九&quot;, 35),</span><br><span class="line">            new User(&quot;郑十&quot;, 26)</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;排序前:&quot; + Arrays.toString(users));</span><br><span class="line"></span><br><span class="line">        // 使用 Comparable 排序（按年龄升序）</span><br><span class="line">        Arrays.sort(users);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;\n排序后（按年龄升序）:&quot; + Arrays.toString(users));</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-2-Comparator接口"><a href="#2-2-2-Comparator接口" class="headerlink" title="2.2.2 Comparator接口"></a>2.2.2 Comparator接口</h4><p>与实现Comparable接口不同，Comparator排序，是自定义了排序规则</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">       // 创建测试数据</span><br><span class="line">       User[] users = &#123;</span><br><span class="line">           new User(&quot;张三&quot;, 25),</span><br><span class="line">           new User(&quot;李四&quot;, 20),</span><br><span class="line">           new User(&quot;王五&quot;, 30),</span><br><span class="line">           new User(&quot;赵六&quot;, 22),</span><br><span class="line">           new User(&quot;孙七&quot;, 28),</span><br><span class="line">           new User(&quot;周八&quot;, 18),</span><br><span class="line">           new User(&quot;吴九&quot;, 35),</span><br><span class="line">           new User(&quot;郑十&quot;, 26)</span><br><span class="line">       &#125;;</span><br><span class="line"></span><br><span class="line">       System.out.println(&quot;排序前:&quot; + Arrays.toString(users));</span><br><span class="line"></span><br><span class="line">       // 使用 Comparable 排序（按年龄升序）</span><br><span class="line">       Arrays.sort(users, new Comparator&lt;User&gt;() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public int compare(User o1, User o2) &#123;</span><br><span class="line">               return o1.age - o2.age;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       System.out.println(&quot;\n排序后（按年龄升序）:&quot; + Arrays.toString(users));</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以简化一些，使用Lambda 表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 使用 Comparable 排序（按年龄升序）</span><br><span class="line">       Arrays.sort(users, (p,q) -&gt; p.age - q.age);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-2-3-pair排序"><a href="#2-2-3-pair排序" class="headerlink" title="2.2.3 pair排序"></a>2.2.3 pair排序</h4><p>常见于数组排序，举个例子,使用大小为2的数组表示一个区间，对区间数组排序</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int[][] intervals = &#123;</span><br><span class="line">           &#123;1, 5&#125;,</span><br><span class="line">           &#123;3, 7&#125;,</span><br><span class="line">           &#123;1, 3&#125;,   // 起点和第一个区间相同</span><br><span class="line">           &#123;3, 4&#125;,   // 起点和第二个区间相同</span><br><span class="line">           &#123;2, 6&#125;,</span><br><span class="line">           &#123;1, 8&#125;    // 起点和第一、三个区间相同</span><br><span class="line">       &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>排序方法和对象类似，以起点为准排序</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);</span><br></pre></td></tr></table></figure>
+
+<p>还有一种可能就是，起点相同的情况下，看终点的位置，也就是多字段排序</p>
+<ul>
+<li>手动排序</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arrays.sort(intervals, (a, b) -&gt; &#123;</span><br><span class="line">           if (a[0] != b[0]) &#123;</span><br><span class="line">               return a[0] - b[0];  // 起点不同，按起点排序</span><br><span class="line">           &#125;</span><br><span class="line">           return a[1] - b[1];      // 起点相同，按终点排序</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>链式调用</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arrays.sort(intervals, Comparator</span><br><span class="line">        .comparingInt((int[] a) -&gt; a[0])  // 先按起点</span><br><span class="line">        .thenComparingInt(a -&gt; a[1]));    // 再按终点</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-集合排序"><a href="#3-集合排序" class="headerlink" title="3.集合排序"></a>3.集合排序</h2><p>集合排序和数组排序类似，只不过集合排序使用的是<code>Collections.sort</code></p>
+<h3 id="3-1-List"><a href="#3-1-List" class="headerlink" title="3.1 List"></a>3.1 List</h3><h3 id="3-1-1-实现Comparable接口"><a href="#3-1-1-实现Comparable接口" class="headerlink" title="3.1.1 实现Comparable接口"></a>3.1.1 实现Comparable接口</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;User&gt; users = new ArrayList&lt;&gt;();</span><br><span class="line">        users.add(new User(&quot;张三&quot;, 25));</span><br><span class="line">        users.add(new User(&quot;李四&quot;, 30));</span><br><span class="line">        users.add(new User(&quot;王五&quot;, 25));</span><br><span class="line">        users.add(new User(&quot;赵六&quot;, 25));</span><br><span class="line">        users.add(new User(&quot;孙七&quot;, 30));</span><br><span class="line">        System.out.println(users);</span><br><span class="line">        Collections.sort(users);</span><br><span class="line">        System.out.println(users);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="3-1-2-实现Comparator"><a href="#3-1-2-实现Comparator" class="headerlink" title="3.1.2 实现Comparator"></a>3.1.2 实现Comparator</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Collections.sort(users, new Comparator&lt;User&gt;() &#123;</span><br><span class="line">          @Override</span><br><span class="line">          public int compare(User o1, User o2) &#123;</span><br><span class="line">              return o1.age - o2.age;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Lambda 表达式简化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Collections.sort(users, (u1,u2) -&gt; u1.age - u2.age);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-1-3-多字段排序"><a href="#3-1-3-多字段排序" class="headerlink" title="3.1.3 多字段排序"></a>3.1.3 多字段排序</h4><p>先按年龄排序，如果年龄相同，按姓名排序</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Collections.sort(users, (u1,u2) -&gt; &#123;</span><br><span class="line">            if(u1.age != u2.age)&#123;</span><br><span class="line">                return u1.age - u2.age;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return u1.name.compareTo(u2.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1-4-通过List的sort方法"><a href="#3-1-4-通过List的sort方法" class="headerlink" title="3.1.4 通过List的sort方法"></a>3.1.4 通过List的sort方法</h4><p>以上通过Collections.sort排序的集合，都可以通过List.sort来实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">users.sort((u1,u2) -&gt; &#123;</span><br><span class="line">            if(u1.age != u2.age)&#123;</span><br><span class="line">                return u1.age - u2.age;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return u1.name.compareTo(u2.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-Map按key排序"><a href="#3-2-Map按key排序" class="headerlink" title="3.2 Map按key排序"></a>3.2 Map按key排序</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 按 Key 排序 - 用 TreeMap</span><br><span class="line">Map&lt;K, V&gt; treeMap = new TreeMap&lt;&gt;(hashMap);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3-Map按value排序"><a href="#3-3-Map按value排序" class="headerlink" title="3.3 Map按value排序"></a>3.3 Map按value排序</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 按 Value 排序 - 用 Stream</span><br><span class="line">Map&lt;K, V&gt; sorted = map.entrySet().stream()</span><br><span class="line">    .sorted(Map.Entry.comparingByValue())</span><br><span class="line">    .collect(Collectors.toMap(</span><br><span class="line">        Map.Entry::getKey,</span><br><span class="line">        Map.Entry::getValue,</span><br><span class="line">        (e1, e2) -&gt; e1,</span><br><span class="line">        LinkedHashMap::new</span><br><span class="line">    ));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-4-优先队列"><a href="#3-4-优先队列" class="headerlink" title="3.4 优先队列"></a>3.4 优先队列</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 最小堆</span><br><span class="line">PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();</span><br><span class="line"></span><br><span class="line">// 最大堆</span><br><span class="line">PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder())</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu更新镜像源</title>
+    <url>/2025/11/23/Ubuntu%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h3 id="1-Ubuntu软件源配置文件"><a href="#1-Ubuntu软件源配置文件" class="headerlink" title="1. Ubuntu软件源配置文件"></a>1. Ubuntu软件源配置文件</h3><figure class="highlight plaintext"><figcaption><span>cd</span><a href="/etc/apt">link</a></figcaption><table><tr><td class="code"><pre><span class="line">sudo cd /etc/apt</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu的软件源配置文件在<code>/etc/apt</code>的<code>sources.list</code>中</p>
+<h3 id="2-备份配置文件"><a href="#2-备份配置文件" class="headerlink" title="2.备份配置文件"></a>2.备份配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp sources.list sources.list.bak</span><br></pre></td></tr></table></figure>
+
+<p>备份一份配置文件，以便以后需要时找回</p>
+<h3 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi sources.list</span><br></pre></td></tr></table></figure>
+
+<p>依次按下<code>g</code> <code>d</code> <code>shift</code> <code>g</code>删除所有内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># aliyun</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<p>复制对应版本的镜像源，我这里是Ubuntu22.04 阿里镜像源，其余版本可自行Google</p>
+<p>按下<code>:</code> <code>wq</code> 保存并退出</p>
+<h3 id="4-更新软件源"><a href="#4-更新软件源" class="headerlink" title="4.更新软件源"></a>4.更新软件源</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+
+<p>更新软件源</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL的安装</title>
+    <url>/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>本篇文章参考微软的文档</p>
+<p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
+<h2 id="1-安装WSL命令"><a href="#1-安装WSL命令" class="headerlink" title="1. 安装WSL命令"></a>1. 安装WSL命令</h2><h3 id="1-1-管理员身份打开PowerShell"><a href="#1-1-管理员身份打开PowerShell" class="headerlink" title="1.1 管理员身份打开PowerShell"></a>1.1 管理员身份打开PowerShell</h3><p>输入</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223823461.png"></p>
+<p>该命令会自动启用WSL相关的组件。接着重启电脑。</p>
+<p>或者使用windows功能(启用或关闭Windows功能)，启用<strong>适用于Linux的Windows子系统</strong></p>
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121222954406.png" alt="image-20251121222954406"></p>
+<h2 id="2-设置WSL版本为WSL2"><a href="#2-设置WSL版本为WSL2" class="headerlink" title="2. 设置WSL版本为WSL2"></a>2. 设置WSL版本为WSL2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-安装Linux发行版-注意安装位置"><a href="#3-安装Linux发行版-注意安装位置" class="headerlink" title="3.安装Linux发行版(注意安装位置)"></a>3.安装Linux发行版(注意安装位置)</h2><p>建议从<strong>Microsoft Store</strong>安装稳定的Linux发行版，这里以Ubuntu 18.04为例</p>
+<h3 id="3-1-安装发行版"><a href="#3-1-安装发行版" class="headerlink" title="3.1 安装发行版"></a>3.1 安装发行版</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223552582.png"></p>
+<h3 id="3-2-初始化信息"><a href="#3-2-初始化信息" class="headerlink" title="3.2 初始化信息"></a>3.2 初始化信息</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223934668.png"></p>
+<p>输入自己的用户名以及密码</p>
+<h2 id="4-检查安装"><a href="#4-检查安装" class="headerlink" title="4. 检查安装"></a>4. 检查安装</h2><h3 id="4-1-查看已安装的发行版及其版本"><a href="#4-1-查看已安装的发行版及其版本" class="headerlink" title="4.1 查看已安装的发行版及其版本"></a>4.1 查看已安装的发行版及其版本</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-进入WSL"><a href="#4-2-进入WSL" class="headerlink" title="4.2 进入WSL"></a>4.2 进入WSL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash</span><br></pre></td></tr></table></figure>
+
+<p>命令行输入bash进入WSL，建议更换终端Hyper</p>
+<h2 id="5-WSL的迁移"><a href="#5-WSL的迁移" class="headerlink" title="5. WSL的迁移"></a>5. WSL的迁移</h2><p>如果Linux发行版安装到了C盘，并且C盘空间不足时，可以参考一下操作将其迁移到其他盘</p>
+<h3 id="5-1-停止WSL的运行"><a href="#5-1-停止WSL的运行" class="headerlink" title="5.1 停止WSL的运行"></a>5.1 停止WSL的运行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>首先查看WSL的运行状态</p>
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121225104829.png"></p>
+<p>如果WSL正在运行，首先终止其运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+
+<p>确保处于stopped的状态</p>
+<h3 id="5-2-导出-恢复备份"><a href="#5-2-导出-恢复备份" class="headerlink" title="5.2 导出&#x2F;恢复备份"></a>5.2 导出&#x2F;恢复备份</h3><p>在新的盘中创建一个新的目录来存放迁移后的WSL，这里以F盘为例，新的目录为WSL</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.导出备份，命名为Ubuntu.tar</span><br><span class="line">wsl --export Ubuntu-&#123;版本&#125; F:\WSL\Ubuntu.tar</span><br><span class="line">2.确定新的目录有备份文件后，注销原有文件</span><br><span class="line">wsl --unregister Ubuntu-&#123;版本&#125;</span><br><span class="line">3.恢复备份文件</span><br><span class="line">wsl --import Ubuntu-&#123;版本&#125; F:\WSL F:\WSL\Ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121230524992.png"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java异常</title>
     <url>/2026/01/13/Java%E5%BC%82%E5%B8%B8/</url>
     <content><![CDATA[<h2 id="1-认识异常"><a href="#1-认识异常" class="headerlink" title="1.认识异常"></a>1.认识异常</h2><p>程序运行过程中可能会出现很多的问题，这些问题可能是代码写的有错误，又或者是输入的数据导致的一些问题……</p>
@@ -137,397 +324,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu更新镜像源</title>
-    <url>/2025/11/23/Ubuntu%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h3 id="1-Ubuntu软件源配置文件"><a href="#1-Ubuntu软件源配置文件" class="headerlink" title="1. Ubuntu软件源配置文件"></a>1. Ubuntu软件源配置文件</h3><figure class="highlight plaintext"><figcaption><span>cd</span><a href="/etc/apt">link</a></figcaption><table><tr><td class="code"><pre><span class="line">sudo cd /etc/apt</span><br></pre></td></tr></table></figure>
-
-<p>Ubuntu的软件源配置文件在<code>/etc/apt</code>的<code>sources.list</code>中</p>
-<h3 id="2-备份配置文件"><a href="#2-备份配置文件" class="headerlink" title="2.备份配置文件"></a>2.备份配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp sources.list sources.list.bak</span><br></pre></td></tr></table></figure>
-
-<p>备份一份配置文件，以便以后需要时找回</p>
-<h3 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi sources.list</span><br></pre></td></tr></table></figure>
-
-<p>依次按下<code>g</code> <code>d</code> <code>shift</code> <code>g</code>删除所有内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># aliyun</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<p>复制对应版本的镜像源，我这里是Ubuntu22.04 阿里镜像源，其余版本可自行Google</p>
-<p>按下<code>:</code> <code>wq</code> 保存并退出</p>
-<h3 id="4-更新软件源"><a href="#4-更新软件源" class="headerlink" title="4.更新软件源"></a>4.更新软件源</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
-
-<p>更新软件源</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI学习</title>
-    <url>/2025/12/28/AI%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>2025年，AI的热度越来越火，许多公司的业务都在朝大模型应用发展，校招面试和社招面试也会提问大模型相关的知识，对于后端选手来说，学习AI相关的知识是必然的。</p>
-<h2 id="1-术语解释"><a href="#1-术语解释" class="headerlink" title="1.术语解释"></a>1.术语解释</h2><ul>
-<li><p>AI：Artificial Intelligence的缩写，指“人工智能”，人工智能是指模拟人类智能的计算机系统或软件，使其能够执行诸如学习、推理、问题解决、感知、语言理解等复杂任务。</p>
-</li>
-<li><p>生成式AI：是一种人工智能技术，能够自动生成新的内容，如文本、图像、音频和视频等。与传统的AI不同，生成式AI不仅能分析和理解数据，还能基于其学习到的信息创造出新的内容。</p>
-</li>
-<li><p>AIGC：AI Generated Content的缩写，意指由人工智能生成的内容。在算法和数码内容制作领域，AIGC 涉及使用人工智能技术生成各种形式的内容，比如文字、图像、视频、音乐等。</p>
-</li>
-<li><p>NLP：Natural Language Processing的缩写，指“自然语言处理”，自然语言处理是人工智能的一个子领域，主要研究计算机如何理解、解释和生成人类语言。NLP技术包括文本分析、语言生成、机器翻译、情感分析、对话系统等。</p>
-</li>
-<li><p>LLM：Large Language Model的缩写，指“大语言模型”，这类模型是基于机器学习和深度学习技术，特别是自然语言处理（NLP）中的一种技术。大语言模型通过大量的文本数据进行训练，以生成、理解和处理自然语言。一些著名的 LLM 示例包括 OpenAI 的 GPT（Generative Pre-trained Transformer）系列模型，如 GPT-3 和 GPT-4</p>
-</li>
-<li><p>RAG：Retrieval-Augmented Generation的缩写，指“检索增强生成”，这是一个跨越检索和生成任务的框架，通过先从数据库或文档集合中检索到相关信息，然后利用生成模型（如Transformer模型）来生成最终的输出。目前在技术发展趋势和应用落地上，RAG是工程同学较为值得探索的领域。</p>
-</li>
-<li><p>Agent：中文叫智能体，一个能独立执行任务和做出决策的实体，在人工智能中，Agent可以是一个机器人，一个虚拟助手，或是一个智能软件系统，它能够通过学习和推理来完成复杂任务。在多Agent系统中，多个独立的Agents相互协作或竞争，以共同解决问题或完成任务。</p>
-</li>
-<li><p>GPT：Generative Pre-trained Transformer的缩写，指“生成式预训练变换器”，GPT 模型利用大量文本数据进行预训练，然后可以通过微调来执行特定任务，例如语言生成、回答问题、翻译、文本摘要等。</p>
-</li>
-<li><p>chatGPT：由 OpenAI 开发的一种基于 GPT（生成预训练变换模型）架构的人工智能聊天机器人。它使用自然语言处理技术，能够理解并生成类似人类的文本回复。可以看做是一种Agent。</p>
-</li>
-<li><p>Prompt：指的是提供给模型的一段初始文本，用于引导模型生成后续的内容。</p>
-</li>
-<li><p>Embedding：中文叫嵌入，是一种将高维数据映射到低维空间的技术，但仍尽可能保留原数据的特征和结构。嵌入技术通常用于处理和表示复杂的数据如文本、图像、音乐以及其他高维度的数据类型。</p>
-</li>
-</ul>
-<h2 id="2-LLM"><a href="#2-LLM" class="headerlink" title="2.LLM"></a>2.LLM</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><strong>大型语言模型</strong></a>（英语：large language model，LLM），也称<strong>大语言模型</strong>，简称<strong>大模型</strong>，是一种基于<a href="https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">人工神经网络</a>的<a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">语言模型</a>。其名称中的“大型”指模型具有庞大的参数量（通常在数十亿至数万亿级别，如GPT-3含1750亿参数）以及巨大的训练数据规模。大语言模型通常采用<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0">自监督机器学习</a>方法，从而能够基于海量无标注的文本进行训练。大语言模型专为<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86">自然语言处理</a>任务而设计，尤其适用于<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E7%94%9F%E6%88%90">语言生成</a>。</p>
-<h3 id="2-1-大模型的应用"><a href="#2-1-大模型的应用" class="headerlink" title="2.1 大模型的应用"></a>2.1 大模型的应用</h3><p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
-<p>一个典型的大模型应用架构如上图所示，其实和我们平时开发的应用没什么两样。我们平时开发应用，也是处理用户请求，然后调用其它服务实现具体功能。在这个图中，大模型也就是一个普通的下游服务。</p>
-<h4 id="2-1-1-联网搜索"><a href="#2-1-1-联网搜索" class="headerlink" title="2.1.1  联网搜索"></a>2.1.1  联网搜索</h4><p>大模型的回答是基于训练的数据，如果提问的内容不在训练的知识范围内，那么大模型只能进行推理，自身没有能力获取外界的知识。联网搜索就是把互联网的内容提供给大模型，让大模型能够参考搜索的结果，给出回答。</p>
-<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
-<h4 id="2-1-2-Prompt-Engineering"><a href="#2-1-2-Prompt-Engineering" class="headerlink" title="2.1.2  Prompt Engineering"></a>2.1.2  Prompt Engineering</h4><p>提示词工程（Prompt Engineering）是一种在人工智能和自然语言处理领域中开发和设计提示词（Prompts）以引导大型语言模型（例如GPT-3等）产生特定输出的方法。通过精心构建和优化提示词，用户可以更有效地获得所需的答案、生成文本或执行其他自然语言处理任务。</p>
-<p>提示词可以从大模型中获取大量结果，但是这个结果不一定是期望的结果，所以可以优化提示词，提供更多的信息以及完善度，得到质量更高的结果</p>
-<p><strong>举个例子</strong></p>
-<p>比如我们想完成对句子的续写：天空是？</p>
-<ul>
-<li>不添加提示词直接询问</li>
-</ul>
-<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213141341.png" alt="image-20251228213141341"></p>
-<p>结果并不是我们想要的</p>
-<ul>
-<li>添加提示词</li>
-</ul>
-<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213304892.png" alt="image-20251228213304892"></p>
-<p>这里明确告诉大模型，我们需要对句子进行续写，生成的质量就比刚才高很多。</p>
-<h4 id="2-1-3-提示词要素"><a href="#2-1-3-提示词要素" class="headerlink" title="2.1.3 提示词要素"></a>2.1.3 提示词要素</h4><p><strong>指令</strong>：想要模型执行的特定任务或指令。</p>
-<p><strong>上下文</strong>：包含外部信息或额外的上下文信息，引导语言模型更好地响应。</p>
-<p><strong>输入数据</strong>：用户输入的内容或问题。</p>
-<p><strong>输出指示</strong>：指定输出的类型或格式。</p>
-<h4 id="2-1-4-设计提示词的技巧"><a href="#2-1-4-设计提示词的技巧" class="headerlink" title="2.1.4 设计提示词的技巧"></a>2.1.4 设计提示词的技巧</h4><ul>
-<li>指令<br>使用命令来指示模型执行各种简单任务，例如“写入”、“分类”、“总结”、“翻译”、“排序”等，从而为各种简单任务设计有效的提示。通常，上下文越具体和跟任务越相关则效果越好</li>
-<li>具体性<br>要非常具体地说明你希望模型执行的指令和任务。提示越具描述性和详细，结果越好。特别是当你对生成的结果或风格有要求时，这一点尤为重要。不存在什么特定的词元（tokens）或关键词（tokens）能确定带来更好的结果。更重要的是要有一个具有良好格式和描述性的提示词。事实上，在提示中提供示例对于获得特定格式的期望输出非常有效。<br>在设计提示时，还应注意提示的长度，因为提示的长度是有限制的。想一想你需要多么的具体和详细。包含太多不必要的细节不一定是好的方法。这些细节应该是相关的，并有助于完成手头的任务。这是你需要进行大量实验的事情。我们鼓励大量实验和迭代，以优化适用于你应用的提示。</li>
-<li>避免不明确<br>给定上述关于详细描述和改进格式的建议，很容易陷入陷阱：想要在提示上过于聪明，从而可能创造出不明确的描述。通常来说，具体和直接会更好。这里的类比非常类似于有效沟通——越直接，信息传达得越有效。</li>
-<li>做什么还是不做什么<br>设计提示时的另一个常见技巧是避免说不要做什么，而应该说要做什么。这样（说要做什么）更加的具体，并且聚焦于（有利于模型生成良好回复的）细节上。</li>
-</ul>
-<h4 id="2-1-5-提示技术"><a href="#2-1-5-提示技术" class="headerlink" title="2.1.5 提示技术"></a>2.1.5 提示技术</h4><p>提示技术是更高级的技术，完成更加复杂的任务</p>
-<ul>
-<li>零样本提示</li>
-<li>少样本提示</li>
-<li>链式思考(COT)提示</li>
-<li>生成知识提示</li>
-</ul>
-<h3 id="2-2-LLM的问题"><a href="#2-2-LLM的问题" class="headerlink" title="2.2 LLM的问题"></a>2.2 LLM的问题</h3><h4 id="2-2-1-知识截止"><a href="#2-2-1-知识截止" class="headerlink" title="2.2.1 知识截止"></a>2.2.1 知识截止</h4><p>LLM 训练不是实时的，而是离线训练好的。在训练过程中，使用的数据都是提前准备的，而且大多数是公开、开源的数据，这就导致了 LLM 训练后具备的知识是有范围的。换句话说，**模型知识仅限于训练数据所涵盖的知识范围，**对于新的知识（比如今天的新闻）或未训练的知识（比如未公开的数据），模型本身不具备这些知识，仅具备推理能力。</p>
-<h4 id="2-2-2-幻觉现象"><a href="#2-2-2-幻觉现象" class="headerlink" title="2.2.2 幻觉现象"></a>2.2.2 幻觉现象</h4><p>幻觉现象有多种维度的解释。一方面，LLM 是一个条件概率模型，以前文作为条件的词表概率逐词生成文本，这一机制导致其可能出现**看似逻辑严谨（概率高）但其实缺乏事实依据的生成，<strong>也就是“一本正经地胡说八道”。另一方面，LLM 的训练过程，是</strong>对训练数据的知识进行压缩提炼的过程，但不是无损压缩知识，**边缘知识容易在主流知识冲击下出现扭曲，导致产生了幻觉。</p>
-<h2 id="3-RAG"><a href="#3-RAG" class="headerlink" title="3.RAG"></a>3.RAG</h2><p>针对LLM的问题，RAG可以有效解决模型知识截止和幻觉现象。RAG 是检索增强生成（Retrieval-Augmented Generation）的缩写。检索增强生成，是指对大语言模型（LLM）输入进行优化，使其能够在生成响应之前引用训练数据来源之外的知识，作为回答的根据。这是一种经济高效地改进 LLM 输出的方法，让 LLM 保持相关性、准确性和实用性。</p>
-<h3 id="3-1-RAG的组成部分"><a href="#3-1-RAG的组成部分" class="headerlink" title="3.1 RAG的组成部分"></a>3.1 RAG的组成部分</h3><ul>
-<li>**检索（Retrieval）：**查询外部数据源，例如知识库、向量数据库或者网页搜索API。常见的检索方法有全文检索、向量检索、图检索等。</li>
-<li>**生成（Generation）：**将检索信息提供给 LLM，生成回答。</li>
-</ul>
-<h3 id="3-2-RAG的应用"><a href="#3-2-RAG的应用" class="headerlink" title="3.2 RAG的应用"></a>3.2 RAG的应用</h3><p>具体来说，RAG模型在生成答案之前，会首先从一个大型的文档库或知识库中检索到若干条相关的文档片段。再将这些检索到的片段作为额外的上下文信息，输入到生成模型中，从而生成更为准确和信息丰富的文本。</p>
-<p>RAG的工作原理可以分为以下几个步骤：</p>
-<p>1.接收请求：首先，系统接收到用户的请求（例如提出一个问题）。</p>
-<p>2.信息检索（R)：系统从一个大型文档库中检索出与查询最相关的文档片段。这一步的目标是找到那些可能包含答案或相关信息的文档。</p>
-<p>3.生成增强（A）：将检索到的文档片段与原始查询一起输入到大模型（如chatGPT）中，注意使用合适的提示词，比如原始的问题是XXX，检索到的信息是YYY，给大模型的输入应该类似于：请基于YYY回答XXXX。</p>
-<p>4.输出生成（G)：大模型基于输入的查询和检索到的文档片段生成最终的文本答案，并返回给用户。</p>
-<p>RAG 需要注意两个问题：</p>
-<ul>
-<li>检索结果 和 解答问题需要参考的资料 越相关，生成结果越准确。</li>
-<li>检索出过多的内容，又会引入更多的噪声，影响 LLM 注意力，增加幻觉风险，生成的质量反而降低。</li>
-</ul>
-<p>为了尽可能准确地找到和原始问题相关的内容，我们需要某种程度上尽可能 <strong>理解原问题的语义。</strong></p>
-<h3 id="3-3-向量数据库"><a href="#3-3-向量数据库" class="headerlink" title="3.3 向量数据库"></a>3.3 向量数据库</h3><p>在R阶段，需要理解用户的输入，也就是用户输入的语义。</p>
-<p>向量数据库可以解决语义的问题。举个例子，比如“老婆”和“妻子”，这两个词是不同的，但是从语义上来说，它们是相同的。向量数据库使用高维向量来表示一个词的语义。语义越相似的文本，在向量空间中的位置越相近；语义差异越大，在向量空间中的距离越远。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>AI</category>
-      </categories>
-      <tags>
-        <tag>RAG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中的排序</title>
-    <url>/2026/01/13/Java%E4%B8%AD%E7%9A%84%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h2 id="1-排序的对象"><a href="#1-排序的对象" class="headerlink" title="1.排序的对象"></a>1.排序的对象</h2><p>在Java中，排序的对象主要有两类：数组和集合。</p>
-<ul>
-<li>数组<ul>
-<li>基本类型数组</li>
-<li>对象数组</li>
-</ul>
-</li>
-<li>集合<ul>
-<li>List</li>
-<li>Set</li>
-<li>Map</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-数组排序"><a href="#2-数组排序" class="headerlink" title="2.数组排序"></a>2.数组排序</h2><p>对数组排序，使用<code>Arrays.sort()</code>方法，默认升序，降序排序可考虑将数组反转。</p>
-<h3 id="2-1-基本类型数组"><a href="#2-1-基本类型数组" class="headerlink" title="2.1 基本类型数组"></a>2.1 基本类型数组</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       int[] array = new int[]&#123;154,562,105,4,46,7&#125;;</span><br><span class="line">       System.out.println(&quot;排序前:&quot; + Arrays.toString(array));</span><br><span class="line">       Arrays.sort(array);</span><br><span class="line">       System.out.println(&quot;排序后:&quot; + Arrays.toString(array));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2对象数组"><a href="#2-2对象数组" class="headerlink" title="2.2对象数组"></a>2.2对象数组</h3><p><strong>排序规则</strong></p>
-<p>compare(o1, o2): </p>
-<ul>
-<li>返回负数: o1 &lt; o2 (o1 排在前面) -</li>
-<li>返回 0:   o1 &#x3D;&#x3D; o2 </li>
-<li>返回正数: o1 &gt; o2 (o2 排在前面)</li>
-</ul>
-<p>在这里，以User对象来进行排序</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class User&#123;</span><br><span class="line">    String name;</span><br><span class="line">    int age;</span><br><span class="line"></span><br><span class="line">    public User(String name,int age)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot;:&quot; + age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="2-2-1-实现Comparable接口"><a href="#2-2-1-实现Comparable接口" class="headerlink" title="2.2.1 实现Comparable接口"></a>2.2.1 实现Comparable接口</h4><p>需要排序的对象，需要实现Comparable接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class User implements Comparable&lt;User&gt; &#123;</span><br><span class="line">    String name;</span><br><span class="line">    int age;</span><br><span class="line"></span><br><span class="line">    public User(String name,int age)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int compareTo(User other) &#123;</span><br><span class="line">        return this.age - other.age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot;:&quot; + age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        // 创建测试数据</span><br><span class="line">        User[] users = &#123;</span><br><span class="line">            new User(&quot;张三&quot;, 25),</span><br><span class="line">            new User(&quot;李四&quot;, 20),</span><br><span class="line">            new User(&quot;王五&quot;, 30),</span><br><span class="line">            new User(&quot;赵六&quot;, 22),</span><br><span class="line">            new User(&quot;孙七&quot;, 28),</span><br><span class="line">            new User(&quot;周八&quot;, 18),</span><br><span class="line">            new User(&quot;吴九&quot;, 35),</span><br><span class="line">            new User(&quot;郑十&quot;, 26)</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;排序前:&quot; + Arrays.toString(users));</span><br><span class="line"></span><br><span class="line">        // 使用 Comparable 排序（按年龄升序）</span><br><span class="line">        Arrays.sort(users);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;\n排序后（按年龄升序）:&quot; + Arrays.toString(users));</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="2-2-2-Comparator接口"><a href="#2-2-2-Comparator接口" class="headerlink" title="2.2.2 Comparator接口"></a>2.2.2 Comparator接口</h4><p>与实现Comparable接口不同，Comparator排序，是自定义了排序规则</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">       // 创建测试数据</span><br><span class="line">       User[] users = &#123;</span><br><span class="line">           new User(&quot;张三&quot;, 25),</span><br><span class="line">           new User(&quot;李四&quot;, 20),</span><br><span class="line">           new User(&quot;王五&quot;, 30),</span><br><span class="line">           new User(&quot;赵六&quot;, 22),</span><br><span class="line">           new User(&quot;孙七&quot;, 28),</span><br><span class="line">           new User(&quot;周八&quot;, 18),</span><br><span class="line">           new User(&quot;吴九&quot;, 35),</span><br><span class="line">           new User(&quot;郑十&quot;, 26)</span><br><span class="line">       &#125;;</span><br><span class="line"></span><br><span class="line">       System.out.println(&quot;排序前:&quot; + Arrays.toString(users));</span><br><span class="line"></span><br><span class="line">       // 使用 Comparable 排序（按年龄升序）</span><br><span class="line">       Arrays.sort(users, new Comparator&lt;User&gt;() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public int compare(User o1, User o2) &#123;</span><br><span class="line">               return o1.age - o2.age;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       System.out.println(&quot;\n排序后（按年龄升序）:&quot; + Arrays.toString(users));</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以简化一些，使用Lambda 表达式</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 使用 Comparable 排序（按年龄升序）</span><br><span class="line">       Arrays.sort(users, (p,q) -&gt; p.age - q.age);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="2-2-3-pair排序"><a href="#2-2-3-pair排序" class="headerlink" title="2.2.3 pair排序"></a>2.2.3 pair排序</h4><p>常见于数组排序，举个例子,使用大小为2的数组表示一个区间，对区间数组排序</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int[][] intervals = &#123;</span><br><span class="line">           &#123;1, 5&#125;,</span><br><span class="line">           &#123;3, 7&#125;,</span><br><span class="line">           &#123;1, 3&#125;,   // 起点和第一个区间相同</span><br><span class="line">           &#123;3, 4&#125;,   // 起点和第二个区间相同</span><br><span class="line">           &#123;2, 6&#125;,</span><br><span class="line">           &#123;1, 8&#125;    // 起点和第一、三个区间相同</span><br><span class="line">       &#125;;</span><br></pre></td></tr></table></figure>
-
-<p>排序方法和对象类似，以起点为准排序</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);</span><br></pre></td></tr></table></figure>
-
-<p>还有一种可能就是，起点相同的情况下，看终点的位置，也就是多字段排序</p>
-<ul>
-<li>手动排序</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arrays.sort(intervals, (a, b) -&gt; &#123;</span><br><span class="line">           if (a[0] != b[0]) &#123;</span><br><span class="line">               return a[0] - b[0];  // 起点不同，按起点排序</span><br><span class="line">           &#125;</span><br><span class="line">           return a[1] - b[1];      // 起点相同，按终点排序</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>链式调用</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arrays.sort(intervals, Comparator</span><br><span class="line">        .comparingInt((int[] a) -&gt; a[0])  // 先按起点</span><br><span class="line">        .thenComparingInt(a -&gt; a[1]));    // 再按终点</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-集合排序"><a href="#3-集合排序" class="headerlink" title="3.集合排序"></a>3.集合排序</h2><p>集合排序和数组排序类似，只不过集合排序使用的是<code>Collections.sort</code></p>
-<h3 id="3-1-List"><a href="#3-1-List" class="headerlink" title="3.1 List"></a>3.1 List</h3><h3 id="3-1-1-实现Comparable接口"><a href="#3-1-1-实现Comparable接口" class="headerlink" title="3.1.1 实现Comparable接口"></a>3.1.1 实现Comparable接口</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;User&gt; users = new ArrayList&lt;&gt;();</span><br><span class="line">        users.add(new User(&quot;张三&quot;, 25));</span><br><span class="line">        users.add(new User(&quot;李四&quot;, 30));</span><br><span class="line">        users.add(new User(&quot;王五&quot;, 25));</span><br><span class="line">        users.add(new User(&quot;赵六&quot;, 25));</span><br><span class="line">        users.add(new User(&quot;孙七&quot;, 30));</span><br><span class="line">        System.out.println(users);</span><br><span class="line">        Collections.sort(users);</span><br><span class="line">        System.out.println(users);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="3-1-2-实现Comparator"><a href="#3-1-2-实现Comparator" class="headerlink" title="3.1.2 实现Comparator"></a>3.1.2 实现Comparator</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Collections.sort(users, new Comparator&lt;User&gt;() &#123;</span><br><span class="line">          @Override</span><br><span class="line">          public int compare(User o1, User o2) &#123;</span><br><span class="line">              return o1.age - o2.age;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>Lambda 表达式简化</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Collections.sort(users, (u1,u2) -&gt; u1.age - u2.age);</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="3-1-3-多字段排序"><a href="#3-1-3-多字段排序" class="headerlink" title="3.1.3 多字段排序"></a>3.1.3 多字段排序</h4><p>先按年龄排序，如果年龄相同，按姓名排序</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Collections.sort(users, (u1,u2) -&gt; &#123;</span><br><span class="line">            if(u1.age != u2.age)&#123;</span><br><span class="line">                return u1.age - u2.age;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return u1.name.compareTo(u2.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-1-4-通过List的sort方法"><a href="#3-1-4-通过List的sort方法" class="headerlink" title="3.1.4 通过List的sort方法"></a>3.1.4 通过List的sort方法</h4><p>以上通过Collections.sort排序的集合，都可以通过List.sort来实现</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">users.sort((u1,u2) -&gt; &#123;</span><br><span class="line">            if(u1.age != u2.age)&#123;</span><br><span class="line">                return u1.age - u2.age;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return u1.name.compareTo(u2.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-2-Map按key排序"><a href="#3-2-Map按key排序" class="headerlink" title="3.2 Map按key排序"></a>3.2 Map按key排序</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 按 Key 排序 - 用 TreeMap</span><br><span class="line">Map&lt;K, V&gt; treeMap = new TreeMap&lt;&gt;(hashMap);</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-3-Map按value排序"><a href="#3-3-Map按value排序" class="headerlink" title="3.3 Map按value排序"></a>3.3 Map按value排序</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 按 Value 排序 - 用 Stream</span><br><span class="line">Map&lt;K, V&gt; sorted = map.entrySet().stream()</span><br><span class="line">    .sorted(Map.Entry.comparingByValue())</span><br><span class="line">    .collect(Collectors.toMap(</span><br><span class="line">        Map.Entry::getKey,</span><br><span class="line">        Map.Entry::getValue,</span><br><span class="line">        (e1, e2) -&gt; e1,</span><br><span class="line">        LinkedHashMap::new</span><br><span class="line">    ));</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-4-优先队列"><a href="#3-4-优先队列" class="headerlink" title="3.4 优先队列"></a>3.4 优先队列</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 最小堆</span><br><span class="line">PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();</span><br><span class="line"></span><br><span class="line">// 最大堆</span><br><span class="line">PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder())</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《深入理解Java虚拟机》阅读笔记(2)</title>
-    <url>/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="1-判断对象的死亡"><a href="#1-判断对象的死亡" class="headerlink" title="1. 判断对象的死亡"></a>1. 判断对象的死亡</h2><p>通常来说，我们有两种方式来判断对象是否存活</p>
-<ul>
-<li>引用计数法</li>
-<li>可达性分析算法</li>
-</ul>
-<h3 id="1-1-引用计数法"><a href="#1-1-引用计数法" class="headerlink" title="1.1 引用计数法"></a>1.1 引用计数法</h3><p><strong>在对象中添加一个引用计数器，每当有一个地方 引用它时，计数器值就加一；当引用失效时，计数器值就减一；任何时刻计数器为零的对象就是不可 能再被使用的。</strong></p>
-<p>引用计数法的判断效率比较高，但是单纯的引用计数法难以解决对象之间互相循环引用的问题。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 对象objA和objB都有字段instance</span><br><span class="line">objA.instance=objB</span><br><span class="line">objB.instance=objA</span><br></pre></td></tr></table></figure>
-
-<p>除此之外，这两个对象没有其他引用。如果通过引用计数法，他们的计数都不为0，但实际上这两个对象已经不可能再被访问了</p>
-<h3 id="1-2-可达性分析算法-主流的方案"><a href="#1-2-可达性分析算法-主流的方案" class="headerlink" title="1.2 可达性分析算法(主流的方案)"></a>1.2 可达性分析算法(主流的方案)</h3><p>通过 一系列称为“GC Roots”的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索，搜索过 程所走过的路径称为“引用链”（Reference Chain），如果某个对象到GC Roots间没有任何引用链相连， 或者用图论的话来说就是从GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的。</p>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223011734652.png" alt="image-20251223011734652"></p>
-<p>在Java中，可以作为GC Roots的对象包括</p>
-<ul>
-<li>虚拟机栈中引用的对象</li>
-<li>方法区中类静态变量引用的对象</li>
-<li>本地方法栈中JNI引用的对象</li>
-<li>虚拟机内部的引用</li>
-<li>所有同步锁持有的对象</li>
-</ul>
-<h2 id="2-引用的类型"><a href="#2-引用的类型" class="headerlink" title="2.引用的类型"></a>2.引用的类型</h2><h3 id="2-1-强引用"><a href="#2-1-强引用" class="headerlink" title="2.1 强引用"></a>2.1 强引用</h3><p>强引用是最传统的“引用”的定义，是指在程序代码之中普遍存在的引用赋值，即类似“Object obj&#x3D;new Object()”这种引用关系。无论任何情况下，只要强引用关系还存在，垃圾收集器就永远不会回 收掉被引用的对象。</p>
-<h3 id="2-2-软引用"><a href="#2-2-软引用" class="headerlink" title="2.2 软引用"></a>2.2 软引用</h3><p>软引用是用来描述一些还有用，但非必须的对象。只被软引用关联着的对象，在系统将要发生内 存溢出异常前，会把这些对象列进回收范围之中进行第二次回收，如果这次回收还没有足够的内存， 才会抛出内存溢出异常。在JDK 1.2版之后提供了SoftReference类来实现软引用。</p>
-<h3 id="2-3-弱引用"><a href="#2-3-弱引用" class="headerlink" title="2.3 弱引用"></a>2.3 弱引用</h3><p>弱引用也是用来描述那些非必须对象，但是它的强度比软引用更弱一些，被弱引用关联的对象只 能生存到下一次垃圾收集发生为止。当垃圾收集器开始工作，无论当前内存是否足够，都会回收掉只 被弱引用关联的对象。在JDK 1.2版之后提供了WeakReference类来实现弱引用。</p>
-<h3 id="2-4-虚引用"><a href="#2-4-虚引用" class="headerlink" title="2.4 虚引用"></a>2.4 虚引用</h3><p>虚引用也称为“幽灵引用”或者“幻影引用”，它是最弱的一种引用关系。一个对象是否有虚引用的 存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚 引用关联的唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知。在JDK 1.2版之后提供 了PhantomReference类来实现虚引用。</p>
-<h2 id="3-回收方法区"><a href="#3-回收方法区" class="headerlink" title="3.回收方法区"></a>3.回收方法区</h2><p>方法区的垃圾收集主要回收两部分内容：废弃的常量和不再使用的类型。</p>
-<h3 id="3-1-回收常量"><a href="#3-1-回收常量" class="headerlink" title="3.1 回收常量"></a>3.1 回收常量</h3><p>回收废弃常量与回收 Java堆中的对象非常类似。举个常量池中字面量回收的例子，假如一个字符串“java”曾经进入常量池 中，但是当前系统又没有任何一个字符串对象的值是“java”，换句话说，已经没有任何字符串对象引用 常量池中的“java”常量，且虚拟机中也没有其他地方引用这个字面量。如果在这时发生内存回收，而且 垃圾收集器判断确有必要的话，这个“java”常量就将会被系统清理出常量池。常量池中其他类（接口）、方法、字段的符号引用也与此类似。</p>
-<h3 id="3-2-回收类"><a href="#3-2-回收类" class="headerlink" title="3.2 回收类"></a>3.2 回收类</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就 比较苛刻了。需要同时满足下面三个条件： </p>
-<ul>
-<li>该类所有的实例都已经被回收，也就是Java堆中不存在该类及其任何派生子类的实例。 </li>
-<li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP的重加载等，否则通常是很难达成的。 </li>
-<li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ul>
-<p>在大量使用反射、动态代理、CGLib等字节码框架，动态生成JSP以及OSGi这类频繁自定义类加载 器的场景中，通常都需要Java虚拟机具备类型卸载的能力，以保证不会对方法区造成过大的内存压 力。</p>
-<h2 id="4-垃圾回收算法"><a href="#4-垃圾回收算法" class="headerlink" title="4.垃圾回收算法"></a>4.垃圾回收算法</h2><h3 id="4-1-分代收集理论"><a href="#4-1-分代收集理论" class="headerlink" title="4.1 分代收集理论"></a>4.1 分代收集理论</h3><p>收集器应该将Java堆划分 出不同的区域，然后将回收对象依据其年龄（年龄即对象熬过垃圾收集过程的次数）分配到不同的区 域之中存储。显而易见，如果一个区域中大多数对象都是朝生夕灭，难以熬过垃圾收集过程的话，那 么把它们集中放在一起，每次回收时只关注如何保留少量存活而不是去标记那些大量将要被回收的对 象，就能以较低代价回收到大量的空间；如果剩下的都是难以消亡的对象，那把它们集中放在一块， 虚拟机便可以使用较低的频率来回收这个区域，这就同时兼顾了垃圾收集的时间开销和内存的空间有 效利用。</p>
-<p>在Java堆划分出不同的区域之后，垃圾收集器才可以每次只回收其中某一个或者某些部分的区域 ——因而才有了“Minor GC”“Major GC”“Full GC”这样的回收类型的划分；也才能够针对不同的区域安 排与里面存储对象存亡特征相匹配的垃圾收集算法——因而发展出了“标记-复制算法”“标记-清除算 法”“标记-整理算法”等针对性的垃圾收集算法。</p>
-<h3 id="4-2-标记-清除算法"><a href="#4-2-标记-清除算法" class="headerlink" title="4.2 标记-清除算法"></a>4.2 标记-清除算法</h3><p>算法分为“标记”和“清除”两个阶段：首先标记出所有需要回 收的对象，在标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回 收所有未被标记的对象。</p>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223013513236.png" alt="image-20251223013513236"></p>
-<p>它的主要缺点有两个：第一个是执行效率不稳定，如果Java堆中包含大量对 象，而且其中大部分是需要被回收的，这时必须进行大量标记和清除的动作，导致标记和清除两个过 程的执行效率都随对象数量增长而降低；第二个是内存空间的碎片化问题，标记、清除之后会产生大 量不连续的内存碎片，空间碎片太多可能会导致当以后在程序运行过程中需要分配较大对象时无法找 到足够的连续内存而不得不提前触发另一次垃圾收集动作。</p>
-<h3 id="4-3-标记-复制算法"><a href="#4-3-标记-复制算法" class="headerlink" title="4.3 标记-复制算法"></a>4.3 标记-复制算法</h3><p>它将可用 内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着 的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。如果内存中多数对象都是存 活的，这种算法将会产生大量的内存间复制的开销，但对于多数对象都是可回收的情况，算法需要复 制的就是占少数的存活对象，而且每次都是针对整个半区进行内存回收，分配内存时也就不用考虑有 空间碎片的复杂情况，只要移动堆顶指针，按顺序分配即可。</p>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223013636337.png" alt="image-20251223013636337"></p>
-<h3 id="4-4-标记整理算法"><a href="#4-4-标记整理算法" class="headerlink" title="4.4 标记整理算法"></a>4.4 标记整理算法</h3><p>其中的标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可 回收对象进行清理，而是让所有存活的对象都向内存空间一端移动，然后直接清理掉边界以外的内 存</p>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223013805576.png" alt="image-20251223013805576"></p>
-<h3 id="4-6-GC-Roots扫描查找的问题-复杂"><a href="#4-6-GC-Roots扫描查找的问题-复杂" class="headerlink" title="4.6 GC Roots扫描查找的问题(复杂)"></a>4.6 GC Roots扫描查找的问题(复杂)</h3><p>关于可达性算法中从GC Roots集合中找引用链这个操作较为复杂，这里只是简单的说明一下其中的问题以及HotSpot虚拟机的解决方法。</p>
-<p><strong>如何查找到GC Roots集合中相关联的对象？</strong></p>
-<p>HotSpot虚拟机使用OopMap的数据结构来得到哪些地方存放着对象引用，能够在特定的位置记录下栈里和寄存器里哪些位置是引用，不需要从方法区中一个个地从GC Roots开始查找</p>
-<p><strong>JVM何时记录下这些引用？</strong></p>
-<p>实际上HotSpot没有为每条指令都生成OopMap，前面已经提到，只是在“特定的位置”记录 了这些信息，这些位置被称为安全点（Safepoint）。有了安全点的设定，也就决定了用户程序执行时 并非在代码指令流的任意位置都能够停顿下来开始垃圾收集，而是强制要求必须执行到达安全点后才 能够暂停。</p>
-<p><strong>没有分配到处理器时间没有执行的线程怎么办？</strong></p>
-<p>候线程无法响应虚拟机的中断请求，不能再走 到安全的地方去中断挂起自己，虚拟机也显然不可能持续等待线程重新被激活分配处理器时间。对于 这种情况，就必须引入安全区域（Safe Region）来解决。</p>
-<p>安全区域是指能够确保在某一段代码片段之中，引用关系不会发生变化，因此，在这个区域中任 意地方开始垃圾收集都是安全的。我们也可以把安全区域看作被扩展拉伸了的安全点。</p>
-<h3 id="4-7-对象跨代的问题"><a href="#4-7-对象跨代的问题" class="headerlink" title="4.7 对象跨代的问题"></a>4.7 对象跨代的问题</h3><h4 id="4-7-1-卡表"><a href="#4-7-1-卡表" class="headerlink" title="4.7.1 卡表"></a>4.7.1 卡表</h4><p>对象跨代问题(新生代老年代，部分区域回收)可以使用记忆集来解决。</p>
-<p>记忆集是一种用于记录从非收集区域指向收集区域的指针集合的抽象数据结构。如果我们不考虑 效率和成本的话，最简单的实现可以用非收集区域中所有含跨代引用的对象数组来实现这个数据结构。</p>
-<p>记忆集的实现有不同的精度：</p>
-<ul>
-<li>字长精度：每个记录精确到一个机器字长（就是处理器的寻址位数，如常见的32位或64位，这个 精度决定了机器访问物理内存地址的指针长度），该字包含跨代指针。 </li>
-<li>对象精度：每个记录精确到一个对象，该对象里有字段含有跨代指针。 </li>
-<li>卡精度：每个记录精确到一块内存区域，该区域内有对象含有跨代指针。</li>
-</ul>
-<p>最常用的是卡精度，实现方式为“卡表”，它定义了记忆集的记录精度、与堆内存的映射关系等。 </p>
-<p>卡表可类比于哈希表，每一个Card对应内存中的一块区域，称为卡页，一个卡页的内存中通常包含不止一个对象，只要卡页内有一个（或更多）对象的字段存在着跨代 指针，那就将对应卡表的数组元素的值标识为1，称为这个元素变脏（Dirty），没有则标识为0。在垃 圾收集发生时，只要筛选出卡表中变脏的元素，就能轻易得出哪些卡页内存块中包含跨代指针，把它 们加入GC Roots中一并扫描。</p>
-<h4 id="4-7-2-写屏障"><a href="#4-7-2-写屏障" class="headerlink" title="4.7.2 写屏障"></a>4.7.2 写屏障</h4><p>其他分代区域中对象引用了本区域对象时，其对应的卡表元素就应该变脏，变脏时间点原则上应该发生在引用类型字段赋值的那一刻。HotSpot虚拟机里是通过写屏障（Write Barrier）技术维护卡表状态的。写屏障可以看作在虚拟机层面对“引用类型字段赋值”这个动作的AOP切面，在引用对象赋值时会产生一个环形（Around）通知，供程序执行额外的动作，也就是说赋值的 前后都在写屏障的覆盖范畴内。在赋值前的部分的写屏障叫作写前屏障（Pre-Write Barrier），在赋值 后的则叫作写后屏障（Post-Write Barrier）。</p>
-<p>应用写屏障后，虚拟机就会为所有赋值操作生成相应的指令，一旦收集器在写屏障中增加了更新 卡表操作，无论更新的是不是老年代对新生代对象的引用，每次只要对引用进行更新，就会产生额外 的开销，不过这个开销与Minor GC时扫描整个老年代的代价相比还是低得多的。</p>
-<h2 id="5-垃圾回收器"><a href="#5-垃圾回收器" class="headerlink" title="5.垃圾回收器"></a>5.垃圾回收器</h2><h3 id="5-1-Serial收集器"><a href="#5-1-Serial收集器" class="headerlink" title="5.1 Serial收集器"></a>5.1 Serial收集器</h3><p>Serias收集器是一个单线程工作的收集器，但它的“单线程”的意义并不仅仅是说明它只会使用一个处理器或一条收集线程去完成垃圾收集工作，更重要的是强 调在它进行垃圾收集时，必须暂停其他所有工作线程，直到它收集结束(STW)。</p>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251228161952173.png" alt="image-20251228161952173"></p>
-<h3 id="5-2-ParNew收集器"><a href="#5-2-ParNew收集器" class="headerlink" title="5.2 ParNew收集器"></a>5.2 ParNew收集器</h3><p>ParNew收集器实质上是Serial收集器的多线程并行版本，除了同时使用多条线程进行垃圾收集之 外，其余的行为包括Serial收集器可用的所有控制参数（例如：-XX：SurvivorRatio、-XX： PretenureSizeThreshold、-XX：HandlePromotionFailure等）、收集算法、Stop The World、对象分配规则、回收策略等都与Serial收集器完全一致</p>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251228162029336.png" alt="image-20251228162029336"></p>
-<h3 id="5-3-Parallel-Scavenge收集器"><a href="#5-3-Parallel-Scavenge收集器" class="headerlink" title="5.3 Parallel Scavenge收集器"></a>5.3 Parallel Scavenge收集器</h3><p>Parallel Scavenge收集器是一款新生代收集器，它同样是基于标记-复制算法实现的收集器，也是 能够并行收集的多线程收集器。Parallel Scavenge收集器的目标则是达到一个可控制的吞吐量</p>
-<h3 id="5-4-Serial-Old收集器"><a href="#5-4-Serial-Old收集器" class="headerlink" title="5.4 Serial Old收集器"></a>5.4 Serial Old收集器</h3><p>Serial Old是Serial收集器的老年代版本，它同样是一个单线程收集器，使用标记-整理算法。</p>
-<h3 id="5-5-Parallel-Old收集器"><a href="#5-5-Parallel-Old收集器" class="headerlink" title="5.5 Parallel Old收集器"></a>5.5 Parallel Old收集器</h3><p>Parallel Old是Parallel Scavenge收集器的老年代版本，支持多线程并发收集，基于标记-整理算法实现</p>
-<h3 id="5-6-CMS收集器-面试常考"><a href="#5-6-CMS收集器-面试常考" class="headerlink" title="5.6 CMS收集器(面试常考)"></a>5.6 CMS收集器(面试常考)</h3><p>CMS（Concurrent Mark Sweep）收集器是一种以<code>获取最短回收停顿时间</code>为目标的收集器，常用于Java应用集中在互联网网站或者基于浏览器的B&#x2F;S系统的服务端上，这类应用通常都会较为关注服务的响应速度，希望系统停顿时间尽可能短，以给用户带来良好的交互体验。</p>
-<h4 id="5-6-1-CMS收集过程"><a href="#5-6-1-CMS收集过程" class="headerlink" title="5.6.1 CMS收集过程"></a>5.6.1 CMS收集过程</h4><p>CMS收集器是基于标记-清除算法实现的，在老年代进行垃圾回收</p>
-<ol>
-<li><p>初始标记<br>初始标记是标记一下GC Roots能直接关联到的对象</p>
-</li>
-<li><p>并发标记<br>并发标记阶段是从GC Roots的直接关联对象开始遍历整个对象图的过程。</p>
-</li>
-<li><p>重新标记(STW)</p>
-<p>重新标记阶段则是为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的 标记记录</p>
-</li>
-<li><p>并发清除<br>并发清除阶段，清理删除掉标记阶段判断的已经死亡的对象</p>
-</li>
-</ol>
-<h4 id="5-6-2-CMS的缺点"><a href="#5-6-2-CMS的缺点" class="headerlink" title="5.6.2 CMS的缺点"></a>5.6.2 CMS的缺点</h4><ul>
-<li>对处理器资源非常敏感</li>
-<li>无法处理“浮动垃圾”</li>
-<li>空间碎片</li>
-</ul>
-<h3 id="5-7-Garbage-First收集器-面试常考）"><a href="#5-7-Garbage-First收集器-面试常考）" class="headerlink" title="5.7 Garbage First收集器(面试常考）"></a>5.7 Garbage First收集器(面试常考）</h3><p>G1是一款主要面向服务端应用的垃圾收集器。</p>
-<p>G1也是遵循分代收集理 论设计的，但其堆内存的布局与其他收集器有非常明显的差异：G1不再坚持固定大小以及固定数量的 分代区域划分，而是把连续的Java堆划分为多个大小相等的独立区域（Region），每一个Region都可以根据需要，扮演新生代的Eden空间、Survivor空间，或者老年代空间。收集器能够对扮演不同角色的 Region采用不同的策略去处理，这样无论是新创建的对象还是已经存活了一段时间、熬过多次收集的 旧对象都能获取很好的收集效果。</p>
-<p>G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作 为单次回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。</p>
-<p><strong>G1回收过程</strong></p>
-<ul>
-<li>初始标记（Initial Marking）：仅仅只是标记一下GC Roots能直接关联到的对象，并且修改TAMS 指针的值，让下一阶段用户线程并发运行时，能正确地在可用的Region中分配新对象。这个阶段需要停顿线程，但耗时很短，而且是借用进行Minor GC的时候同步完成的，所以G1收集器在这个阶段实际 并没有额外的停顿。 </li>
-<li>并发标记（Concurrent Marking）：从GC Root开始对堆中对象进行可达性分析，递归扫描整个堆里的对象图，找出要回收的对象，这阶段耗时较长，但可与用户程序并发执行。当对象图扫描完成以后，还要重新处理SATB记录下的在并发时有引用变动的对象。 </li>
-<li>最终标记（Final Marking）：对用户线程做另一个短暂的暂停，用于处理并发阶段结束后仍遗留下来的最后那少量的SATB记录。 </li>
-<li>筛选回收（Live Data Counting and Evacuation）：负责更新Region的统计数据，对各个Region的回 收价值和成本进行排序，根据用户所期望的停顿时间来制定回收计划，可以自由选择任意多个Region 构成回收集，然后把决定回收的那一部分Region的存活对象复制到空的Region中，再清理掉整个旧 Region的全部空间。这里的操作涉及存活对象的移动，是必须暂停用户线程，由多条收集器线程并行 完成的。</li>
-</ul>
-<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251228171718742.png" alt="image-20251228171718742"></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>WSL的安装</title>
-    <url>/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>本篇文章参考微软的文档</p>
-<p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
-<h2 id="1-安装WSL命令"><a href="#1-安装WSL命令" class="headerlink" title="1. 安装WSL命令"></a>1. 安装WSL命令</h2><h3 id="1-1-管理员身份打开PowerShell"><a href="#1-1-管理员身份打开PowerShell" class="headerlink" title="1.1 管理员身份打开PowerShell"></a>1.1 管理员身份打开PowerShell</h3><p>输入</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223823461.png"></p>
-<p>该命令会自动启用WSL相关的组件。接着重启电脑。</p>
-<p>或者使用windows功能(启用或关闭Windows功能)，启用<strong>适用于Linux的Windows子系统</strong></p>
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121222954406.png" alt="image-20251121222954406"></p>
-<h2 id="2-设置WSL版本为WSL2"><a href="#2-设置WSL版本为WSL2" class="headerlink" title="2. 设置WSL版本为WSL2"></a>2. 设置WSL版本为WSL2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-安装Linux发行版-注意安装位置"><a href="#3-安装Linux发行版-注意安装位置" class="headerlink" title="3.安装Linux发行版(注意安装位置)"></a>3.安装Linux发行版(注意安装位置)</h2><p>建议从<strong>Microsoft Store</strong>安装稳定的Linux发行版，这里以Ubuntu 18.04为例</p>
-<h3 id="3-1-安装发行版"><a href="#3-1-安装发行版" class="headerlink" title="3.1 安装发行版"></a>3.1 安装发行版</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223552582.png"></p>
-<h3 id="3-2-初始化信息"><a href="#3-2-初始化信息" class="headerlink" title="3.2 初始化信息"></a>3.2 初始化信息</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223934668.png"></p>
-<p>输入自己的用户名以及密码</p>
-<h2 id="4-检查安装"><a href="#4-检查安装" class="headerlink" title="4. 检查安装"></a>4. 检查安装</h2><h3 id="4-1-查看已安装的发行版及其版本"><a href="#4-1-查看已安装的发行版及其版本" class="headerlink" title="4.1 查看已安装的发行版及其版本"></a>4.1 查看已安装的发行版及其版本</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-2-进入WSL"><a href="#4-2-进入WSL" class="headerlink" title="4.2 进入WSL"></a>4.2 进入WSL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash</span><br></pre></td></tr></table></figure>
-
-<p>命令行输入bash进入WSL，建议更换终端Hyper</p>
-<h2 id="5-WSL的迁移"><a href="#5-WSL的迁移" class="headerlink" title="5. WSL的迁移"></a>5. WSL的迁移</h2><p>如果Linux发行版安装到了C盘，并且C盘空间不足时，可以参考一下操作将其迁移到其他盘</p>
-<h3 id="5-1-停止WSL的运行"><a href="#5-1-停止WSL的运行" class="headerlink" title="5.1 停止WSL的运行"></a>5.1 停止WSL的运行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
-
-<p>首先查看WSL的运行状态</p>
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121225104829.png"></p>
-<p>如果WSL正在运行，首先终止其运行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
-
-<p>确保处于stopped的状态</p>
-<h3 id="5-2-导出-恢复备份"><a href="#5-2-导出-恢复备份" class="headerlink" title="5.2 导出&#x2F;恢复备份"></a>5.2 导出&#x2F;恢复备份</h3><p>在新的盘中创建一个新的目录来存放迁移后的WSL，这里以F盘为例，新的目录为WSL</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.导出备份，命名为Ubuntu.tar</span><br><span class="line">wsl --export Ubuntu-&#123;版本&#125; F:\WSL\Ubuntu.tar</span><br><span class="line">2.确定新的目录有备份文件后，注销原有文件</span><br><span class="line">wsl --unregister Ubuntu-&#123;版本&#125;</span><br><span class="line">3.恢复备份文件</span><br><span class="line">wsl --import Ubuntu-&#123;版本&#125; F:\WSL F:\WSL\Ubuntu.tar</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121230524992.png"></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《深入理解Java虚拟机》阅读笔记（1）</title>
     <url>/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
     <content><![CDATA[<h2 id="1-第一章“走进“Java”"><a href="#1-第一章“走进“Java”" class="headerlink" title="1.第一章“走进“Java”"></a>1.第一章“走进“Java”</h2><p><strong>Java的优势之JVM</strong></p>
@@ -622,140 +418,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用hexo和github创建自己的博客</title>
-    <url>/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>本篇文章参考<a href="https://hexo.io/zh-cn/docs/"><strong>Hexo官方文档</strong></a>、<a href="https://zhuanlan.zhihu.com/p/265077468"><strong>Hexo博客如何插入图片</strong></a>、 <a href="https://docs.github.com/en/pages/quickstart"><strong>Github Pages</strong></a>，一步一步搭建自己的博客。</p>
-<h2 id="1-前置准备"><a href="#1-前置准备" class="headerlink" title="1.前置准备"></a>1.前置准备</h2><p>安装Hexo需要先安装Node.js和Git</p>
-<h3 id="1-1-安装Node-js"><a href="#1-1-安装Node-js" class="headerlink" title="1.1 安装Node.js"></a>1.1 安装Node.js</h3><p><a href="https://nodejs.org/zh-cn"><strong>node官网</strong></a>，推荐下载12.0及以上的LTS版本(默认包含npm工具包)，一路安装即可。</p>
-<p>输入<code>node -v</code> <code>npm -v</code>验证是否安装成功</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122143108724.png"></p>
-<h3 id="1-2-安装git-已经配置的可跳过，后续命令都在git中完成"><a href="#1-2-安装git-已经配置的可跳过，后续命令都在git中完成" class="headerlink" title="1.2 安装git(已经配置的可跳过，后续命令都在git中完成)"></a>1.2 安装git(已经配置的可跳过，后续命令都在git中完成)</h3><p><a href="https://git-scm.com/"><strong>git官网</strong></a>，一路安装即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git --version  # 检查是否已经安装git</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>配置用户名、密码以及密钥</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;github绑定的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 生成 ssh 密钥</span><br><span class="line">ssh-keygen -t rsa -C &quot;github 注册邮箱&quot;</span><br></pre></td></tr></table></figure>
-
-<p>使用生成ssh密钥的命令后，会生成<code>id_rsa</code> (私有)<code>id_rsa.pub</code>（公有）两个文件，打开<code>id_rsa.pub</code>中的密钥，复制到<code>GitHub-Settings-SSH and GPG Keys</code>页面，创建一个新的SSH key</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122141133630.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com  # 测试SSH连接</span><br></pre></td></tr></table></figure>
-
-<p>如果成功，会显示Hi，xxx! You’ve successfully authenticated…</p>
-<h2 id="2-安装Hexo并初始化"><a href="#2-安装Hexo并初始化" class="headerlink" title="2.安装Hexo并初始化"></a>2.安装Hexo并初始化</h2><p>使用以下命令安装hexo相关工具</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<p><strong>初始化项目</strong></p>
-<ol>
-<li>创建一个新文件夹用来存放博客，并执行hexo init命令</li>
-<li>执行npm install安装必备组件</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<p>初始化后，目录结构如图所示</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line"> ├── _config.yml # 网站配置信息</span><br><span class="line"> ├── package.json # 应用程序信息</span><br><span class="line"> ├── scaffolds # 模板文件夹</span><br><span class="line"> ├── source # 存放用户资源</span><br><span class="line"> |   ├── _drafts</span><br><span class="line"> |   └── _posts</span><br><span class="line"> └── themes # 主题文件夹</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>本地部署博客</strong></p>
-<ol>
-<li>新建博客</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;博客名&quot;</span><br></pre></td></tr></table></figure>
-
-<p>执行此命令会在&#x2F;source&#x2F;_posts目录下创建一个md文件，用markdown编辑器即可对博客进行编辑</p>
-<ol start="2">
-<li>生成静态网页</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>打开本地服务器</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>在浏览器打开<code>http://localhost:4000</code>，就可以看到部署的网页</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122151002542.png"></p>
-<h2 id="3-部署到Github-Pages"><a href="#3-部署到Github-Pages" class="headerlink" title="3. 部署到Github Pages"></a>3. 部署到Github Pages</h2><p>如果博客需要其他人也访问，则需要部署到服务器上，在这里选择使用Github Pages，是免费的。访问的地址是<code>https://用户名.github.io</code></p>
-<h3 id="3-1-新建一个仓库"><a href="#3-1-新建一个仓库" class="headerlink" title="3.1 新建一个仓库"></a>3.1 新建一个仓库</h3><p><strong>注意点</strong></p>
-<ul>
-<li><p>仓库一定是<code>public</code>的，否则别人访问不到</p>
-</li>
-<li><p>仓库名一定是<code>用户名.github.io</code></p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145400207.png"></p>
-</li>
-</ul>
-<h3 id="3-2-更改hexo配置"><a href="#3-2-更改hexo配置" class="headerlink" title="3.2 更改hexo配置"></a>3.2 更改hexo配置</h3><p>打开目录下_config.Yaml文件</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145713620.png"></p>
-<p>找到Deployment选项</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="line">deploy:</span><br><span class="line">  type: &#x27;git&#x27;</span><br><span class="line">  repository: git@github.com:myc1543/myc1543.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>修改type项为git</li>
-<li>repository项为仓库地址</li>
-<li>branch为main</li>
-</ul>
-<p>注意每项配置<code>:</code>后有空格</p>
-<h3 id="3-3-远程部署"><a href="#3-3-远程部署" class="headerlink" title="3.3 远程部署"></a>3.3 远程部署</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g ## 生成静态网页</span><br><span class="line">hexo d ## 部署到Github Pages</span><br></pre></td></tr></table></figure>
-
-
-
-<p>访问<code>https://用户名.github.io</code> 即可</p>
-<h2 id="4-hexo中插入图片"><a href="#4-hexo中插入图片" class="headerlink" title="4.hexo中插入图片"></a>4.hexo中插入图片</h2><p>用md有个蛋疼的问题，就是对图片的展示不是很友好。</p>
-<h3 id="4-1-插入图片"><a href="#4-1-插入图片" class="headerlink" title="4.1 插入图片"></a>4.1 插入图片</h3><p>在md中插入图片的语法为<code>![图片描述](图片路径)</code></p>
-<p>这里图片路径有三种方式</p>
-<ul>
-<li>绝对路径</li>
-<li>相对路径</li>
-<li>网络路径</li>
-</ul>
-<p>对应的，在hexo中使用图片资源，除了网络路径无需更改，相对路径和绝对路径都是需要先在资源文件下存放， 才能正确显示。</p>
-<p><strong>(1)绝对路径引用</strong></p>
-<p>绝对路径使用需要在<code>/source</code> 文件夹下创建一个资源文件夹如<code>/source/pictures/</code>,作为全局资源文件夹</p>
-<p>引用方式为<code>![](/pictures/picture1.jpg)</code></p>
-<p><strong>(2)相对路径引用</strong></p>
-<p>hexo提供了一个资源文件管理功能，通过config.yml文件中的<code>post_assert_folder</code>设置为true来打开。此时当创建一个新的md博客，会同步创建一个相同名字的文件夹，在博客中之需要使用相对路径引用图片即可。</p>
-<p>举个例子：创建了一个新的博客为blog.md，目录结构为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- source</span><br><span class="line">	- _posts</span><br><span class="line">		- blog.md</span><br><span class="line">		- blog(文件夹)</span><br></pre></td></tr></table></figure>
-
-<p>blog文件夹中存放了1.png，引用方式为<code>![](1.png)</code></p>
-<p><strong>预览不正确的问题</strong></p>
-<p>但这时，直接使用相对路径引入的图片，只能在<strong>博文详情页</strong>展示，在首页或者存档页的预览会不正确，此时应该改为<code>![](% assert_img 1.png %)</code></p>
-<p>这时候可以引入<code>hexo-renderer-marked</code>插件来解决这个问题</p>
-<p>使用<code>npm install hexo-renderer-marked</code>命令直接安装，之后在<code>config.yaml</code>中更改配置如下：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">marked:</span></span><br><span class="line">  <span class="attr">prependRoot:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-配合Typora来简化操作"><a href="#4-2-配合Typora来简化操作" class="headerlink" title="4.2 配合Typora来简化操作"></a>4.2 配合Typora来简化操作</h3><p>这时候会发现一个问题，就是每次我想使用图片的时候，都需要先在资源文件下存放图片，才能使用，这对复制黏贴的截图来说很不友好。</p>
-<p>Typora的设置可以自动将插入的图片复制一份到文章资源文件夹</p>
-<p><code>文件-偏好设置-图像</code>，设置为复制到指定路径<code>/.${filename}</code>，并且设置优先显示相对路径</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122173743632.png"></p>
-<p>这时候图片的路径就为<code>文章名/picture.jpg</code>。但是hexo的路径应该是没有前面的前缀的，用全局搜索替换<code>文章名/</code>为空即可。</p>
-<p>此时本地typora就显示不出图片，可以设置<code>格式-图像-设置图像根目录</code>来解决</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174149386.png" alt="image-20251122174149386"></p>
-<h3 id="4-3-插入图片的总结"><a href="#4-3-插入图片的总结" class="headerlink" title="4.3 插入图片的总结"></a>4.3 插入图片的总结</h3><ol>
-<li>下载<code>hexo-renderer-marked</code>插件并修改<code>config.yaml</code>配置</li>
-<li>设置Typora插入图片设置(<code>插入到指定路径</code> <code>优先使用相对路径</code>)</li>
-</ol>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174615272.png"></p>
-<ol start="3">
-<li>使用<code>&lt;C-f&gt;</code>快捷键，将所有的<code>文章名/</code>替换为空</li>
-</ol>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174748275.png"></p>
-<ol start="4">
-<li>设置图片根目录，在本地编辑器显示</li>
-</ol>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -912,6 +574,344 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《深入理解Java虚拟机》阅读笔记(2)</title>
+    <url>/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="1-判断对象的死亡"><a href="#1-判断对象的死亡" class="headerlink" title="1. 判断对象的死亡"></a>1. 判断对象的死亡</h2><p>通常来说，我们有两种方式来判断对象是否存活</p>
+<ul>
+<li>引用计数法</li>
+<li>可达性分析算法</li>
+</ul>
+<h3 id="1-1-引用计数法"><a href="#1-1-引用计数法" class="headerlink" title="1.1 引用计数法"></a>1.1 引用计数法</h3><p><strong>在对象中添加一个引用计数器，每当有一个地方 引用它时，计数器值就加一；当引用失效时，计数器值就减一；任何时刻计数器为零的对象就是不可 能再被使用的。</strong></p>
+<p>引用计数法的判断效率比较高，但是单纯的引用计数法难以解决对象之间互相循环引用的问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 对象objA和objB都有字段instance</span><br><span class="line">objA.instance=objB</span><br><span class="line">objB.instance=objA</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，这两个对象没有其他引用。如果通过引用计数法，他们的计数都不为0，但实际上这两个对象已经不可能再被访问了</p>
+<h3 id="1-2-可达性分析算法-主流的方案"><a href="#1-2-可达性分析算法-主流的方案" class="headerlink" title="1.2 可达性分析算法(主流的方案)"></a>1.2 可达性分析算法(主流的方案)</h3><p>通过 一系列称为“GC Roots”的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索，搜索过 程所走过的路径称为“引用链”（Reference Chain），如果某个对象到GC Roots间没有任何引用链相连， 或者用图论的话来说就是从GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的。</p>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223011734652.png" alt="image-20251223011734652"></p>
+<p>在Java中，可以作为GC Roots的对象包括</p>
+<ul>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中类静态变量引用的对象</li>
+<li>本地方法栈中JNI引用的对象</li>
+<li>虚拟机内部的引用</li>
+<li>所有同步锁持有的对象</li>
+</ul>
+<h2 id="2-引用的类型"><a href="#2-引用的类型" class="headerlink" title="2.引用的类型"></a>2.引用的类型</h2><h3 id="2-1-强引用"><a href="#2-1-强引用" class="headerlink" title="2.1 强引用"></a>2.1 强引用</h3><p>强引用是最传统的“引用”的定义，是指在程序代码之中普遍存在的引用赋值，即类似“Object obj&#x3D;new Object()”这种引用关系。无论任何情况下，只要强引用关系还存在，垃圾收集器就永远不会回 收掉被引用的对象。</p>
+<h3 id="2-2-软引用"><a href="#2-2-软引用" class="headerlink" title="2.2 软引用"></a>2.2 软引用</h3><p>软引用是用来描述一些还有用，但非必须的对象。只被软引用关联着的对象，在系统将要发生内 存溢出异常前，会把这些对象列进回收范围之中进行第二次回收，如果这次回收还没有足够的内存， 才会抛出内存溢出异常。在JDK 1.2版之后提供了SoftReference类来实现软引用。</p>
+<h3 id="2-3-弱引用"><a href="#2-3-弱引用" class="headerlink" title="2.3 弱引用"></a>2.3 弱引用</h3><p>弱引用也是用来描述那些非必须对象，但是它的强度比软引用更弱一些，被弱引用关联的对象只 能生存到下一次垃圾收集发生为止。当垃圾收集器开始工作，无论当前内存是否足够，都会回收掉只 被弱引用关联的对象。在JDK 1.2版之后提供了WeakReference类来实现弱引用。</p>
+<h3 id="2-4-虚引用"><a href="#2-4-虚引用" class="headerlink" title="2.4 虚引用"></a>2.4 虚引用</h3><p>虚引用也称为“幽灵引用”或者“幻影引用”，它是最弱的一种引用关系。一个对象是否有虚引用的 存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚 引用关联的唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知。在JDK 1.2版之后提供 了PhantomReference类来实现虚引用。</p>
+<h2 id="3-回收方法区"><a href="#3-回收方法区" class="headerlink" title="3.回收方法区"></a>3.回收方法区</h2><p>方法区的垃圾收集主要回收两部分内容：废弃的常量和不再使用的类型。</p>
+<h3 id="3-1-回收常量"><a href="#3-1-回收常量" class="headerlink" title="3.1 回收常量"></a>3.1 回收常量</h3><p>回收废弃常量与回收 Java堆中的对象非常类似。举个常量池中字面量回收的例子，假如一个字符串“java”曾经进入常量池 中，但是当前系统又没有任何一个字符串对象的值是“java”，换句话说，已经没有任何字符串对象引用 常量池中的“java”常量，且虚拟机中也没有其他地方引用这个字面量。如果在这时发生内存回收，而且 垃圾收集器判断确有必要的话，这个“java”常量就将会被系统清理出常量池。常量池中其他类（接口）、方法、字段的符号引用也与此类似。</p>
+<h3 id="3-2-回收类"><a href="#3-2-回收类" class="headerlink" title="3.2 回收类"></a>3.2 回收类</h3><p>判定一个常量是否“废弃”还是相对简单，而要判定一个类型是否属于“不再被使用的类”的条件就 比较苛刻了。需要同时满足下面三个条件： </p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是Java堆中不存在该类及其任何派生子类的实例。 </li>
+<li>加载该类的类加载器已经被回收，这个条件除非是经过精心设计的可替换类加载器的场景，如 OSGi、JSP的重加载等，否则通常是很难达成的。 </li>
+<li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>在大量使用反射、动态代理、CGLib等字节码框架，动态生成JSP以及OSGi这类频繁自定义类加载 器的场景中，通常都需要Java虚拟机具备类型卸载的能力，以保证不会对方法区造成过大的内存压 力。</p>
+<h2 id="4-垃圾回收算法"><a href="#4-垃圾回收算法" class="headerlink" title="4.垃圾回收算法"></a>4.垃圾回收算法</h2><h3 id="4-1-分代收集理论"><a href="#4-1-分代收集理论" class="headerlink" title="4.1 分代收集理论"></a>4.1 分代收集理论</h3><p>收集器应该将Java堆划分 出不同的区域，然后将回收对象依据其年龄（年龄即对象熬过垃圾收集过程的次数）分配到不同的区 域之中存储。显而易见，如果一个区域中大多数对象都是朝生夕灭，难以熬过垃圾收集过程的话，那 么把它们集中放在一起，每次回收时只关注如何保留少量存活而不是去标记那些大量将要被回收的对 象，就能以较低代价回收到大量的空间；如果剩下的都是难以消亡的对象，那把它们集中放在一块， 虚拟机便可以使用较低的频率来回收这个区域，这就同时兼顾了垃圾收集的时间开销和内存的空间有 效利用。</p>
+<p>在Java堆划分出不同的区域之后，垃圾收集器才可以每次只回收其中某一个或者某些部分的区域 ——因而才有了“Minor GC”“Major GC”“Full GC”这样的回收类型的划分；也才能够针对不同的区域安 排与里面存储对象存亡特征相匹配的垃圾收集算法——因而发展出了“标记-复制算法”“标记-清除算 法”“标记-整理算法”等针对性的垃圾收集算法。</p>
+<h3 id="4-2-标记-清除算法"><a href="#4-2-标记-清除算法" class="headerlink" title="4.2 标记-清除算法"></a>4.2 标记-清除算法</h3><p>算法分为“标记”和“清除”两个阶段：首先标记出所有需要回 收的对象，在标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回 收所有未被标记的对象。</p>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223013513236.png" alt="image-20251223013513236"></p>
+<p>它的主要缺点有两个：第一个是执行效率不稳定，如果Java堆中包含大量对 象，而且其中大部分是需要被回收的，这时必须进行大量标记和清除的动作，导致标记和清除两个过 程的执行效率都随对象数量增长而降低；第二个是内存空间的碎片化问题，标记、清除之后会产生大 量不连续的内存碎片，空间碎片太多可能会导致当以后在程序运行过程中需要分配较大对象时无法找 到足够的连续内存而不得不提前触发另一次垃圾收集动作。</p>
+<h3 id="4-3-标记-复制算法"><a href="#4-3-标记-复制算法" class="headerlink" title="4.3 标记-复制算法"></a>4.3 标记-复制算法</h3><p>它将可用 内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着 的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。如果内存中多数对象都是存 活的，这种算法将会产生大量的内存间复制的开销，但对于多数对象都是可回收的情况，算法需要复 制的就是占少数的存活对象，而且每次都是针对整个半区进行内存回收，分配内存时也就不用考虑有 空间碎片的复杂情况，只要移动堆顶指针，按顺序分配即可。</p>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223013636337.png" alt="image-20251223013636337"></p>
+<h3 id="4-4-标记整理算法"><a href="#4-4-标记整理算法" class="headerlink" title="4.4 标记整理算法"></a>4.4 标记整理算法</h3><p>其中的标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可 回收对象进行清理，而是让所有存活的对象都向内存空间一端移动，然后直接清理掉边界以外的内 存</p>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251223013805576.png" alt="image-20251223013805576"></p>
+<h3 id="4-6-GC-Roots扫描查找的问题-复杂"><a href="#4-6-GC-Roots扫描查找的问题-复杂" class="headerlink" title="4.6 GC Roots扫描查找的问题(复杂)"></a>4.6 GC Roots扫描查找的问题(复杂)</h3><p>关于可达性算法中从GC Roots集合中找引用链这个操作较为复杂，这里只是简单的说明一下其中的问题以及HotSpot虚拟机的解决方法。</p>
+<p><strong>如何查找到GC Roots集合中相关联的对象？</strong></p>
+<p>HotSpot虚拟机使用OopMap的数据结构来得到哪些地方存放着对象引用，能够在特定的位置记录下栈里和寄存器里哪些位置是引用，不需要从方法区中一个个地从GC Roots开始查找</p>
+<p><strong>JVM何时记录下这些引用？</strong></p>
+<p>实际上HotSpot没有为每条指令都生成OopMap，前面已经提到，只是在“特定的位置”记录 了这些信息，这些位置被称为安全点（Safepoint）。有了安全点的设定，也就决定了用户程序执行时 并非在代码指令流的任意位置都能够停顿下来开始垃圾收集，而是强制要求必须执行到达安全点后才 能够暂停。</p>
+<p><strong>没有分配到处理器时间没有执行的线程怎么办？</strong></p>
+<p>候线程无法响应虚拟机的中断请求，不能再走 到安全的地方去中断挂起自己，虚拟机也显然不可能持续等待线程重新被激活分配处理器时间。对于 这种情况，就必须引入安全区域（Safe Region）来解决。</p>
+<p>安全区域是指能够确保在某一段代码片段之中，引用关系不会发生变化，因此，在这个区域中任 意地方开始垃圾收集都是安全的。我们也可以把安全区域看作被扩展拉伸了的安全点。</p>
+<h3 id="4-7-对象跨代的问题"><a href="#4-7-对象跨代的问题" class="headerlink" title="4.7 对象跨代的问题"></a>4.7 对象跨代的问题</h3><h4 id="4-7-1-卡表"><a href="#4-7-1-卡表" class="headerlink" title="4.7.1 卡表"></a>4.7.1 卡表</h4><p>对象跨代问题(新生代老年代，部分区域回收)可以使用记忆集来解决。</p>
+<p>记忆集是一种用于记录从非收集区域指向收集区域的指针集合的抽象数据结构。如果我们不考虑 效率和成本的话，最简单的实现可以用非收集区域中所有含跨代引用的对象数组来实现这个数据结构。</p>
+<p>记忆集的实现有不同的精度：</p>
+<ul>
+<li>字长精度：每个记录精确到一个机器字长（就是处理器的寻址位数，如常见的32位或64位，这个 精度决定了机器访问物理内存地址的指针长度），该字包含跨代指针。 </li>
+<li>对象精度：每个记录精确到一个对象，该对象里有字段含有跨代指针。 </li>
+<li>卡精度：每个记录精确到一块内存区域，该区域内有对象含有跨代指针。</li>
+</ul>
+<p>最常用的是卡精度，实现方式为“卡表”，它定义了记忆集的记录精度、与堆内存的映射关系等。 </p>
+<p>卡表可类比于哈希表，每一个Card对应内存中的一块区域，称为卡页，一个卡页的内存中通常包含不止一个对象，只要卡页内有一个（或更多）对象的字段存在着跨代 指针，那就将对应卡表的数组元素的值标识为1，称为这个元素变脏（Dirty），没有则标识为0。在垃 圾收集发生时，只要筛选出卡表中变脏的元素，就能轻易得出哪些卡页内存块中包含跨代指针，把它 们加入GC Roots中一并扫描。</p>
+<h4 id="4-7-2-写屏障"><a href="#4-7-2-写屏障" class="headerlink" title="4.7.2 写屏障"></a>4.7.2 写屏障</h4><p>其他分代区域中对象引用了本区域对象时，其对应的卡表元素就应该变脏，变脏时间点原则上应该发生在引用类型字段赋值的那一刻。HotSpot虚拟机里是通过写屏障（Write Barrier）技术维护卡表状态的。写屏障可以看作在虚拟机层面对“引用类型字段赋值”这个动作的AOP切面，在引用对象赋值时会产生一个环形（Around）通知，供程序执行额外的动作，也就是说赋值的 前后都在写屏障的覆盖范畴内。在赋值前的部分的写屏障叫作写前屏障（Pre-Write Barrier），在赋值 后的则叫作写后屏障（Post-Write Barrier）。</p>
+<p>应用写屏障后，虚拟机就会为所有赋值操作生成相应的指令，一旦收集器在写屏障中增加了更新 卡表操作，无论更新的是不是老年代对新生代对象的引用，每次只要对引用进行更新，就会产生额外 的开销，不过这个开销与Minor GC时扫描整个老年代的代价相比还是低得多的。</p>
+<h2 id="5-垃圾回收器"><a href="#5-垃圾回收器" class="headerlink" title="5.垃圾回收器"></a>5.垃圾回收器</h2><h3 id="5-1-Serial收集器"><a href="#5-1-Serial收集器" class="headerlink" title="5.1 Serial收集器"></a>5.1 Serial收集器</h3><p>Serias收集器是一个单线程工作的收集器，但它的“单线程”的意义并不仅仅是说明它只会使用一个处理器或一条收集线程去完成垃圾收集工作，更重要的是强 调在它进行垃圾收集时，必须暂停其他所有工作线程，直到它收集结束(STW)。</p>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251228161952173.png" alt="image-20251228161952173"></p>
+<h3 id="5-2-ParNew收集器"><a href="#5-2-ParNew收集器" class="headerlink" title="5.2 ParNew收集器"></a>5.2 ParNew收集器</h3><p>ParNew收集器实质上是Serial收集器的多线程并行版本，除了同时使用多条线程进行垃圾收集之 外，其余的行为包括Serial收集器可用的所有控制参数（例如：-XX：SurvivorRatio、-XX： PretenureSizeThreshold、-XX：HandlePromotionFailure等）、收集算法、Stop The World、对象分配规则、回收策略等都与Serial收集器完全一致</p>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251228162029336.png" alt="image-20251228162029336"></p>
+<h3 id="5-3-Parallel-Scavenge收集器"><a href="#5-3-Parallel-Scavenge收集器" class="headerlink" title="5.3 Parallel Scavenge收集器"></a>5.3 Parallel Scavenge收集器</h3><p>Parallel Scavenge收集器是一款新生代收集器，它同样是基于标记-复制算法实现的收集器，也是 能够并行收集的多线程收集器。Parallel Scavenge收集器的目标则是达到一个可控制的吞吐量</p>
+<h3 id="5-4-Serial-Old收集器"><a href="#5-4-Serial-Old收集器" class="headerlink" title="5.4 Serial Old收集器"></a>5.4 Serial Old收集器</h3><p>Serial Old是Serial收集器的老年代版本，它同样是一个单线程收集器，使用标记-整理算法。</p>
+<h3 id="5-5-Parallel-Old收集器"><a href="#5-5-Parallel-Old收集器" class="headerlink" title="5.5 Parallel Old收集器"></a>5.5 Parallel Old收集器</h3><p>Parallel Old是Parallel Scavenge收集器的老年代版本，支持多线程并发收集，基于标记-整理算法实现</p>
+<h3 id="5-6-CMS收集器-面试常考"><a href="#5-6-CMS收集器-面试常考" class="headerlink" title="5.6 CMS收集器(面试常考)"></a>5.6 CMS收集器(面试常考)</h3><p>CMS（Concurrent Mark Sweep）收集器是一种以<code>获取最短回收停顿时间</code>为目标的收集器，常用于Java应用集中在互联网网站或者基于浏览器的B&#x2F;S系统的服务端上，这类应用通常都会较为关注服务的响应速度，希望系统停顿时间尽可能短，以给用户带来良好的交互体验。</p>
+<h4 id="5-6-1-CMS收集过程"><a href="#5-6-1-CMS收集过程" class="headerlink" title="5.6.1 CMS收集过程"></a>5.6.1 CMS收集过程</h4><p>CMS收集器是基于标记-清除算法实现的，在老年代进行垃圾回收</p>
+<ol>
+<li><p>初始标记<br>初始标记是标记一下GC Roots能直接关联到的对象</p>
+</li>
+<li><p>并发标记<br>并发标记阶段是从GC Roots的直接关联对象开始遍历整个对象图的过程。</p>
+</li>
+<li><p>重新标记(STW)</p>
+<p>重新标记阶段则是为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的 标记记录</p>
+</li>
+<li><p>并发清除<br>并发清除阶段，清理删除掉标记阶段判断的已经死亡的对象</p>
+</li>
+</ol>
+<h4 id="5-6-2-CMS的缺点"><a href="#5-6-2-CMS的缺点" class="headerlink" title="5.6.2 CMS的缺点"></a>5.6.2 CMS的缺点</h4><ul>
+<li>对处理器资源非常敏感</li>
+<li>无法处理“浮动垃圾”</li>
+<li>空间碎片</li>
+</ul>
+<h3 id="5-7-Garbage-First收集器-面试常考）"><a href="#5-7-Garbage-First收集器-面试常考）" class="headerlink" title="5.7 Garbage First收集器(面试常考）"></a>5.7 Garbage First收集器(面试常考）</h3><p>G1是一款主要面向服务端应用的垃圾收集器。</p>
+<p>G1也是遵循分代收集理 论设计的，但其堆内存的布局与其他收集器有非常明显的差异：G1不再坚持固定大小以及固定数量的 分代区域划分，而是把连续的Java堆划分为多个大小相等的独立区域（Region），每一个Region都可以根据需要，扮演新生代的Eden空间、Survivor空间，或者老年代空间。收集器能够对扮演不同角色的 Region采用不同的策略去处理，这样无论是新创建的对象还是已经存活了一段时间、熬过多次收集的 旧对象都能获取很好的收集效果。</p>
+<p>G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作 为单次回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。</p>
+<p><strong>G1回收过程</strong></p>
+<ul>
+<li>初始标记（Initial Marking）：仅仅只是标记一下GC Roots能直接关联到的对象，并且修改TAMS 指针的值，让下一阶段用户线程并发运行时，能正确地在可用的Region中分配新对象。这个阶段需要停顿线程，但耗时很短，而且是借用进行Minor GC的时候同步完成的，所以G1收集器在这个阶段实际 并没有额外的停顿。 </li>
+<li>并发标记（Concurrent Marking）：从GC Root开始对堆中对象进行可达性分析，递归扫描整个堆里的对象图，找出要回收的对象，这阶段耗时较长，但可与用户程序并发执行。当对象图扫描完成以后，还要重新处理SATB记录下的在并发时有引用变动的对象。 </li>
+<li>最终标记（Final Marking）：对用户线程做另一个短暂的暂停，用于处理并发阶段结束后仍遗留下来的最后那少量的SATB记录。 </li>
+<li>筛选回收（Live Data Counting and Evacuation）：负责更新Region的统计数据，对各个Region的回 收价值和成本进行排序，根据用户所期望的停顿时间来制定回收计划，可以自由选择任意多个Region 构成回收集，然后把决定回收的那一部分Region的存活对象复制到空的Region中，再清理掉整个旧 Region的全部空间。这里的操作涉及存活对象的移动，是必须暂停用户线程，由多条收集器线程并行 完成的。</li>
+</ul>
+<p><img src="/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20251228171718742.png" alt="image-20251228171718742"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo和github创建自己的博客</title>
+    <url>/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>本篇文章参考<a href="https://hexo.io/zh-cn/docs/"><strong>Hexo官方文档</strong></a>、<a href="https://zhuanlan.zhihu.com/p/265077468"><strong>Hexo博客如何插入图片</strong></a>、 <a href="https://docs.github.com/en/pages/quickstart"><strong>Github Pages</strong></a>，一步一步搭建自己的博客。</p>
+<h2 id="1-前置准备"><a href="#1-前置准备" class="headerlink" title="1.前置准备"></a>1.前置准备</h2><p>安装Hexo需要先安装Node.js和Git</p>
+<h3 id="1-1-安装Node-js"><a href="#1-1-安装Node-js" class="headerlink" title="1.1 安装Node.js"></a>1.1 安装Node.js</h3><p><a href="https://nodejs.org/zh-cn"><strong>node官网</strong></a>，推荐下载12.0及以上的LTS版本(默认包含npm工具包)，一路安装即可。</p>
+<p>输入<code>node -v</code> <code>npm -v</code>验证是否安装成功</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122143108724.png"></p>
+<h3 id="1-2-安装git-已经配置的可跳过，后续命令都在git中完成"><a href="#1-2-安装git-已经配置的可跳过，后续命令都在git中完成" class="headerlink" title="1.2 安装git(已经配置的可跳过，后续命令都在git中完成)"></a>1.2 安装git(已经配置的可跳过，后续命令都在git中完成)</h3><p><a href="https://git-scm.com/"><strong>git官网</strong></a>，一路安装即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git --version  # 检查是否已经安装git</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>配置用户名、密码以及密钥</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;github绑定的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 生成 ssh 密钥</span><br><span class="line">ssh-keygen -t rsa -C &quot;github 注册邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>使用生成ssh密钥的命令后，会生成<code>id_rsa</code> (私有)<code>id_rsa.pub</code>（公有）两个文件，打开<code>id_rsa.pub</code>中的密钥，复制到<code>GitHub-Settings-SSH and GPG Keys</code>页面，创建一个新的SSH key</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122141133630.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com  # 测试SSH连接</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，会显示Hi，xxx! You’ve successfully authenticated…</p>
+<h2 id="2-安装Hexo并初始化"><a href="#2-安装Hexo并初始化" class="headerlink" title="2.安装Hexo并初始化"></a>2.安装Hexo并初始化</h2><p>使用以下命令安装hexo相关工具</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化项目</strong></p>
+<ol>
+<li>创建一个新文件夹用来存放博客，并执行hexo init命令</li>
+<li>执行npm install安装必备组件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>初始化后，目录结构如图所示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line"> ├── _config.yml # 网站配置信息</span><br><span class="line"> ├── package.json # 应用程序信息</span><br><span class="line"> ├── scaffolds # 模板文件夹</span><br><span class="line"> ├── source # 存放用户资源</span><br><span class="line"> |   ├── _drafts</span><br><span class="line"> |   └── _posts</span><br><span class="line"> └── themes # 主题文件夹</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>本地部署博客</strong></p>
+<ol>
+<li>新建博客</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;博客名&quot;</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令会在&#x2F;source&#x2F;_posts目录下创建一个md文件，用markdown编辑器即可对博客进行编辑</p>
+<ol start="2">
+<li>生成静态网页</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>打开本地服务器</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器打开<code>http://localhost:4000</code>，就可以看到部署的网页</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122151002542.png"></p>
+<h2 id="3-部署到Github-Pages"><a href="#3-部署到Github-Pages" class="headerlink" title="3. 部署到Github Pages"></a>3. 部署到Github Pages</h2><p>如果博客需要其他人也访问，则需要部署到服务器上，在这里选择使用Github Pages，是免费的。访问的地址是<code>https://用户名.github.io</code></p>
+<h3 id="3-1-新建一个仓库"><a href="#3-1-新建一个仓库" class="headerlink" title="3.1 新建一个仓库"></a>3.1 新建一个仓库</h3><p><strong>注意点</strong></p>
+<ul>
+<li><p>仓库一定是<code>public</code>的，否则别人访问不到</p>
+</li>
+<li><p>仓库名一定是<code>用户名.github.io</code></p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145400207.png"></p>
+</li>
+</ul>
+<h3 id="3-2-更改hexo配置"><a href="#3-2-更改hexo配置" class="headerlink" title="3.2 更改hexo配置"></a>3.2 更改hexo配置</h3><p>打开目录下_config.Yaml文件</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145713620.png"></p>
+<p>找到Deployment选项</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="line">deploy:</span><br><span class="line">  type: &#x27;git&#x27;</span><br><span class="line">  repository: git@github.com:myc1543/myc1543.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改type项为git</li>
+<li>repository项为仓库地址</li>
+<li>branch为main</li>
+</ul>
+<p>注意每项配置<code>:</code>后有空格</p>
+<h3 id="3-3-远程部署"><a href="#3-3-远程部署" class="headerlink" title="3.3 远程部署"></a>3.3 远程部署</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g ## 生成静态网页</span><br><span class="line">hexo d ## 部署到Github Pages</span><br></pre></td></tr></table></figure>
+
+
+
+<p>访问<code>https://用户名.github.io</code> 即可</p>
+<h2 id="4-hexo中插入图片"><a href="#4-hexo中插入图片" class="headerlink" title="4.hexo中插入图片"></a>4.hexo中插入图片</h2><p>用md有个蛋疼的问题，就是对图片的展示不是很友好。</p>
+<h3 id="4-1-插入图片"><a href="#4-1-插入图片" class="headerlink" title="4.1 插入图片"></a>4.1 插入图片</h3><p>在md中插入图片的语法为<code>![图片描述](图片路径)</code></p>
+<p>这里图片路径有三种方式</p>
+<ul>
+<li>绝对路径</li>
+<li>相对路径</li>
+<li>网络路径</li>
+</ul>
+<p>对应的，在hexo中使用图片资源，除了网络路径无需更改，相对路径和绝对路径都是需要先在资源文件下存放， 才能正确显示。</p>
+<p><strong>(1)绝对路径引用</strong></p>
+<p>绝对路径使用需要在<code>/source</code> 文件夹下创建一个资源文件夹如<code>/source/pictures/</code>,作为全局资源文件夹</p>
+<p>引用方式为<code>![](/pictures/picture1.jpg)</code></p>
+<p><strong>(2)相对路径引用</strong></p>
+<p>hexo提供了一个资源文件管理功能，通过config.yml文件中的<code>post_assert_folder</code>设置为true来打开。此时当创建一个新的md博客，会同步创建一个相同名字的文件夹，在博客中之需要使用相对路径引用图片即可。</p>
+<p>举个例子：创建了一个新的博客为blog.md，目录结构为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- source</span><br><span class="line">	- _posts</span><br><span class="line">		- blog.md</span><br><span class="line">		- blog(文件夹)</span><br></pre></td></tr></table></figure>
+
+<p>blog文件夹中存放了1.png，引用方式为<code>![](1.png)</code></p>
+<p><strong>预览不正确的问题</strong></p>
+<p>但这时，直接使用相对路径引入的图片，只能在<strong>博文详情页</strong>展示，在首页或者存档页的预览会不正确，此时应该改为<code>![](% assert_img 1.png %)</code></p>
+<p>这时候可以引入<code>hexo-renderer-marked</code>插件来解决这个问题</p>
+<p>使用<code>npm install hexo-renderer-marked</code>命令直接安装，之后在<code>config.yaml</code>中更改配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">marked:</span></span><br><span class="line">  <span class="attr">prependRoot:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-配合Typora来简化操作"><a href="#4-2-配合Typora来简化操作" class="headerlink" title="4.2 配合Typora来简化操作"></a>4.2 配合Typora来简化操作</h3><p>这时候会发现一个问题，就是每次我想使用图片的时候，都需要先在资源文件下存放图片，才能使用，这对复制黏贴的截图来说很不友好。</p>
+<p>Typora的设置可以自动将插入的图片复制一份到文章资源文件夹</p>
+<p><code>文件-偏好设置-图像</code>，设置为复制到指定路径<code>/.${filename}</code>，并且设置优先显示相对路径</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122173743632.png"></p>
+<p>这时候图片的路径就为<code>文章名/picture.jpg</code>。但是hexo的路径应该是没有前面的前缀的，用全局搜索替换<code>文章名/</code>为空即可。</p>
+<p>此时本地typora就显示不出图片，可以设置<code>格式-图像-设置图像根目录</code>来解决</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174149386.png" alt="image-20251122174149386"></p>
+<h3 id="4-3-插入图片的总结"><a href="#4-3-插入图片的总结" class="headerlink" title="4.3 插入图片的总结"></a>4.3 插入图片的总结</h3><ol>
+<li>下载<code>hexo-renderer-marked</code>插件并修改<code>config.yaml</code>配置</li>
+<li>设置Typora插入图片设置(<code>插入到指定路径</code> <code>优先使用相对路径</code>)</li>
+</ol>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174615272.png"></p>
+<ol start="3">
+<li>使用<code>&lt;C-f&gt;</code>快捷键，将所有的<code>文章名/</code>替换为空</li>
+</ol>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174748275.png"></p>
+<ol start="4">
+<li>设置图片根目录，在本地编辑器显示</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI学习</title>
+    <url>/2025/12/28/AI%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>2025年，AI的热度越来越火，许多公司的业务都在朝大模型应用发展，校招面试和社招面试也会提问大模型相关的知识，对于后端选手来说，学习AI相关的知识是必然的。</p>
+<h2 id="1-术语解释"><a href="#1-术语解释" class="headerlink" title="1.术语解释"></a>1.术语解释</h2><ul>
+<li><p>AI：Artificial Intelligence的缩写，指“人工智能”，人工智能是指模拟人类智能的计算机系统或软件，使其能够执行诸如学习、推理、问题解决、感知、语言理解等复杂任务。</p>
+</li>
+<li><p>生成式AI：是一种人工智能技术，能够自动生成新的内容，如文本、图像、音频和视频等。与传统的AI不同，生成式AI不仅能分析和理解数据，还能基于其学习到的信息创造出新的内容。</p>
+</li>
+<li><p>AIGC：AI Generated Content的缩写，意指由人工智能生成的内容。在算法和数码内容制作领域，AIGC 涉及使用人工智能技术生成各种形式的内容，比如文字、图像、视频、音乐等。</p>
+</li>
+<li><p>NLP：Natural Language Processing的缩写，指“自然语言处理”，自然语言处理是人工智能的一个子领域，主要研究计算机如何理解、解释和生成人类语言。NLP技术包括文本分析、语言生成、机器翻译、情感分析、对话系统等。</p>
+</li>
+<li><p>LLM：Large Language Model的缩写，指“大语言模型”，这类模型是基于机器学习和深度学习技术，特别是自然语言处理（NLP）中的一种技术。大语言模型通过大量的文本数据进行训练，以生成、理解和处理自然语言。一些著名的 LLM 示例包括 OpenAI 的 GPT（Generative Pre-trained Transformer）系列模型，如 GPT-3 和 GPT-4</p>
+</li>
+<li><p>RAG：Retrieval-Augmented Generation的缩写，指“检索增强生成”，这是一个跨越检索和生成任务的框架，通过先从数据库或文档集合中检索到相关信息，然后利用生成模型（如Transformer模型）来生成最终的输出。目前在技术发展趋势和应用落地上，RAG是工程同学较为值得探索的领域。</p>
+</li>
+<li><p>Agent：中文叫智能体，一个能独立执行任务和做出决策的实体，在人工智能中，Agent可以是一个机器人，一个虚拟助手，或是一个智能软件系统，它能够通过学习和推理来完成复杂任务。在多Agent系统中，多个独立的Agents相互协作或竞争，以共同解决问题或完成任务。</p>
+</li>
+<li><p>GPT：Generative Pre-trained Transformer的缩写，指“生成式预训练变换器”，GPT 模型利用大量文本数据进行预训练，然后可以通过微调来执行特定任务，例如语言生成、回答问题、翻译、文本摘要等。</p>
+</li>
+<li><p>chatGPT：由 OpenAI 开发的一种基于 GPT（生成预训练变换模型）架构的人工智能聊天机器人。它使用自然语言处理技术，能够理解并生成类似人类的文本回复。可以看做是一种Agent。</p>
+</li>
+<li><p>Prompt：指的是提供给模型的一段初始文本，用于引导模型生成后续的内容。</p>
+</li>
+<li><p>Embedding：中文叫嵌入，是一种将高维数据映射到低维空间的技术，但仍尽可能保留原数据的特征和结构。嵌入技术通常用于处理和表示复杂的数据如文本、图像、音乐以及其他高维度的数据类型。</p>
+</li>
+</ul>
+<h2 id="2-LLM"><a href="#2-LLM" class="headerlink" title="2.LLM"></a>2.LLM</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><strong>大型语言模型</strong></a>（英语：large language model，LLM），也称<strong>大语言模型</strong>，简称<strong>大模型</strong>，是一种基于<a href="https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">人工神经网络</a>的<a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">语言模型</a>。其名称中的“大型”指模型具有庞大的参数量（通常在数十亿至数万亿级别，如GPT-3含1750亿参数）以及巨大的训练数据规模。大语言模型通常采用<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0">自监督机器学习</a>方法，从而能够基于海量无标注的文本进行训练。大语言模型专为<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86">自然语言处理</a>任务而设计，尤其适用于<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E7%94%9F%E6%88%90">语言生成</a>。</p>
+<h3 id="2-1-大模型的应用"><a href="#2-1-大模型的应用" class="headerlink" title="2.1 大模型的应用"></a>2.1 大模型的应用</h3><p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
+<p>一个典型的大模型应用架构如上图所示，其实和我们平时开发的应用没什么两样。我们平时开发应用，也是处理用户请求，然后调用其它服务实现具体功能。在这个图中，大模型也就是一个普通的下游服务。</p>
+<h4 id="2-1-1-联网搜索"><a href="#2-1-1-联网搜索" class="headerlink" title="2.1.1  联网搜索"></a>2.1.1  联网搜索</h4><p>大模型的回答是基于训练的数据，如果提问的内容不在训练的知识范围内，那么大模型只能进行推理，自身没有能力获取外界的知识。联网搜索就是把互联网的内容提供给大模型，让大模型能够参考搜索的结果，给出回答。</p>
+<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
+<h4 id="2-1-2-Prompt-Engineering"><a href="#2-1-2-Prompt-Engineering" class="headerlink" title="2.1.2  Prompt Engineering"></a>2.1.2  Prompt Engineering</h4><p>提示词工程（Prompt Engineering）是一种在人工智能和自然语言处理领域中开发和设计提示词（Prompts）以引导大型语言模型（例如GPT-3等）产生特定输出的方法。通过精心构建和优化提示词，用户可以更有效地获得所需的答案、生成文本或执行其他自然语言处理任务。</p>
+<p>提示词可以从大模型中获取大量结果，但是这个结果不一定是期望的结果，所以可以优化提示词，提供更多的信息以及完善度，得到质量更高的结果</p>
+<p><strong>举个例子</strong></p>
+<p>比如我们想完成对句子的续写：天空是？</p>
+<ul>
+<li>不添加提示词直接询问</li>
+</ul>
+<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213141341.png" alt="image-20251228213141341"></p>
+<p>结果并不是我们想要的</p>
+<ul>
+<li>添加提示词</li>
+</ul>
+<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213304892.png" alt="image-20251228213304892"></p>
+<p>这里明确告诉大模型，我们需要对句子进行续写，生成的质量就比刚才高很多。</p>
+<h4 id="2-1-3-提示词要素"><a href="#2-1-3-提示词要素" class="headerlink" title="2.1.3 提示词要素"></a>2.1.3 提示词要素</h4><p><strong>指令</strong>：想要模型执行的特定任务或指令。</p>
+<p><strong>上下文</strong>：包含外部信息或额外的上下文信息，引导语言模型更好地响应。</p>
+<p><strong>输入数据</strong>：用户输入的内容或问题。</p>
+<p><strong>输出指示</strong>：指定输出的类型或格式。</p>
+<h4 id="2-1-4-设计提示词的技巧"><a href="#2-1-4-设计提示词的技巧" class="headerlink" title="2.1.4 设计提示词的技巧"></a>2.1.4 设计提示词的技巧</h4><ul>
+<li>指令<br>使用命令来指示模型执行各种简单任务，例如“写入”、“分类”、“总结”、“翻译”、“排序”等，从而为各种简单任务设计有效的提示。通常，上下文越具体和跟任务越相关则效果越好</li>
+<li>具体性<br>要非常具体地说明你希望模型执行的指令和任务。提示越具描述性和详细，结果越好。特别是当你对生成的结果或风格有要求时，这一点尤为重要。不存在什么特定的词元（tokens）或关键词（tokens）能确定带来更好的结果。更重要的是要有一个具有良好格式和描述性的提示词。事实上，在提示中提供示例对于获得特定格式的期望输出非常有效。<br>在设计提示时，还应注意提示的长度，因为提示的长度是有限制的。想一想你需要多么的具体和详细。包含太多不必要的细节不一定是好的方法。这些细节应该是相关的，并有助于完成手头的任务。这是你需要进行大量实验的事情。我们鼓励大量实验和迭代，以优化适用于你应用的提示。</li>
+<li>避免不明确<br>给定上述关于详细描述和改进格式的建议，很容易陷入陷阱：想要在提示上过于聪明，从而可能创造出不明确的描述。通常来说，具体和直接会更好。这里的类比非常类似于有效沟通——越直接，信息传达得越有效。</li>
+<li>做什么还是不做什么<br>设计提示时的另一个常见技巧是避免说不要做什么，而应该说要做什么。这样（说要做什么）更加的具体，并且聚焦于（有利于模型生成良好回复的）细节上。</li>
+</ul>
+<h4 id="2-1-5-提示技术"><a href="#2-1-5-提示技术" class="headerlink" title="2.1.5 提示技术"></a>2.1.5 提示技术</h4><p>提示技术是更高级的技术，完成更加复杂的任务</p>
+<ul>
+<li>零样本提示</li>
+<li>少样本提示</li>
+<li>链式思考(COT)提示</li>
+<li>生成知识提示</li>
+</ul>
+<h3 id="2-2-LLM的问题"><a href="#2-2-LLM的问题" class="headerlink" title="2.2 LLM的问题"></a>2.2 LLM的问题</h3><h4 id="2-2-1-知识截止"><a href="#2-2-1-知识截止" class="headerlink" title="2.2.1 知识截止"></a>2.2.1 知识截止</h4><p>LLM 训练不是实时的，而是离线训练好的。在训练过程中，使用的数据都是提前准备的，而且大多数是公开、开源的数据，这就导致了 LLM 训练后具备的知识是有范围的。换句话说，**模型知识仅限于训练数据所涵盖的知识范围，**对于新的知识（比如今天的新闻）或未训练的知识（比如未公开的数据），模型本身不具备这些知识，仅具备推理能力。</p>
+<h4 id="2-2-2-幻觉现象"><a href="#2-2-2-幻觉现象" class="headerlink" title="2.2.2 幻觉现象"></a>2.2.2 幻觉现象</h4><p>幻觉现象有多种维度的解释。一方面，LLM 是一个条件概率模型，以前文作为条件的词表概率逐词生成文本，这一机制导致其可能出现**看似逻辑严谨（概率高）但其实缺乏事实依据的生成，<strong>也就是“一本正经地胡说八道”。另一方面，LLM 的训练过程，是</strong>对训练数据的知识进行压缩提炼的过程，但不是无损压缩知识，**边缘知识容易在主流知识冲击下出现扭曲，导致产生了幻觉。</p>
+<h2 id="3-RAG"><a href="#3-RAG" class="headerlink" title="3.RAG"></a>3.RAG</h2><p>针对LLM的问题，RAG可以有效解决模型知识截止和幻觉现象。RAG 是检索增强生成（Retrieval-Augmented Generation）的缩写。检索增强生成，是指对大语言模型（LLM）输入进行优化，使其能够在生成响应之前引用训练数据来源之外的知识，作为回答的根据。这是一种经济高效地改进 LLM 输出的方法，让 LLM 保持相关性、准确性和实用性。</p>
+<h3 id="3-1-RAG的组成部分"><a href="#3-1-RAG的组成部分" class="headerlink" title="3.1 RAG的组成部分"></a>3.1 RAG的组成部分</h3><ul>
+<li>**检索（Retrieval）：**查询外部数据源，例如知识库、向量数据库或者网页搜索API。常见的检索方法有全文检索、向量检索、图检索等。</li>
+<li>**生成（Generation）：**将检索信息提供给 LLM，生成回答。</li>
+</ul>
+<h3 id="3-2-RAG的应用"><a href="#3-2-RAG的应用" class="headerlink" title="3.2 RAG的应用"></a>3.2 RAG的应用</h3><p>具体来说，RAG模型在生成答案之前，会首先从一个大型的文档库或知识库中检索到若干条相关的文档片段。再将这些检索到的片段作为额外的上下文信息，输入到生成模型中，从而生成更为准确和信息丰富的文本。</p>
+<p>RAG的工作原理可以分为以下几个步骤：</p>
+<p>1.接收请求：首先，系统接收到用户的请求（例如提出一个问题）。</p>
+<p>2.信息检索（R)：系统从一个大型文档库中检索出与查询最相关的文档片段。这一步的目标是找到那些可能包含答案或相关信息的文档。</p>
+<p>3.生成增强（A）：将检索到的文档片段与原始查询一起输入到大模型（如chatGPT）中，注意使用合适的提示词，比如原始的问题是XXX，检索到的信息是YYY，给大模型的输入应该类似于：请基于YYY回答XXXX。</p>
+<p>4.输出生成（G)：大模型基于输入的查询和检索到的文档片段生成最终的文本答案，并返回给用户。</p>
+<p>RAG 需要注意两个问题：</p>
+<ul>
+<li>检索结果 和 解答问题需要参考的资料 越相关，生成结果越准确。</li>
+<li>检索出过多的内容，又会引入更多的噪声，影响 LLM 注意力，增加幻觉风险，生成的质量反而降低。</li>
+</ul>
+<p>为了尽可能准确地找到和原始问题相关的内容，我们需要某种程度上尽可能 <strong>理解原问题的语义。</strong></p>
+<h3 id="3-3-向量数据库"><a href="#3-3-向量数据库" class="headerlink" title="3.3 向量数据库"></a>3.3 向量数据库</h3><p>在R阶段，需要理解用户的输入，也就是用户输入的语义。</p>
+<p>向量数据库可以解决语义的问题。举个例子，比如“老婆”和“妻子”，这两个词是不同的，但是从语义上来说，它们是相同的。向量数据库使用高维向量来表示一个词的语义。语义越相似的文本，在向量空间中的位置越相近；语义差异越大，在向量空间中的距离越远。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>RAG</tag>
       </tags>
   </entry>
 </search>
