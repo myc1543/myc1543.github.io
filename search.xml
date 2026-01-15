@@ -1142,4 +1142,85 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数值计算</title>
+    <url>/2026/01/15/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h2 id="1-浮点数"><a href="#1-浮点数" class="headerlink" title="1. 浮点数"></a>1. 浮点数</h2><h3 id="1-1浮点数计算"><a href="#1-1浮点数计算" class="headerlink" title="1.1浮点数计算"></a>1.1浮点数计算</h3><p>学过计算机组成原理的同学都知道，在程序中，我们使用二进制并不能准确地表示一个数。以0.1为例，0.1的二进制表示为0.0 0011 0011 0011…，再转化为十进制，就变成了0.1000000000000000055511151231257827021181583404541015625。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(0.1 + 0.2);</span><br><span class="line">// 输出结果：0.30000000000000004</span><br></pre></td></tr></table></figure>
+
+<p>所以我们在使用浮点数时，需要注意可能带来的误差。</p>
+<h3 id="1-2-浮点数格式化"><a href="#1-2-浮点数格式化" class="headerlink" title="1.2 浮点数格式化"></a>1.2 浮点数格式化</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">double num1 = 3.35;</span><br><span class="line">float num2 = 3.35f;</span><br><span class="line">System.out.println(String.format(&quot;%.1f&quot;, num1)); // 输出3.4</span><br><span class="line">System.out.println(String.format(&quot;%.1f&quot;, num2)); // 输出3.3</span><br></pre></td></tr></table></figure>
+
+<p>这就是由精度问题和舍入方式共同导致的，double和float的3.35其实相当于3.350xxx和3.349xxx：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3.350000000000000088817841970012523233890533447265625</span><br><span class="line">3.349999904632568359375</span><br></pre></td></tr></table></figure>
+
+<p>String.format采用四舍五入的方式进行舍入，取1位小数，double的3.350四舍五入为3.4，而float的3.349四舍五入为3.3。</p>
+<h2 id="2-BigDecimal"><a href="#2-BigDecimal" class="headerlink" title="2.BigDecimal"></a>2.BigDecimal</h2><p>涉及到精确计算时，我们常常使用decimal来代替浮点数。但是使用浮点数也有一些注意事项</p>
+<h3 id="2-1-使用字符串的构造方法来初始化BigDecimal"><a href="#2-1-使用字符串的构造方法来初始化BigDecimal" class="headerlink" title="2.1 使用字符串的构造方法来初始化BigDecimal"></a>2.1 使用字符串的构造方法来初始化BigDecimal</h3><hr>
+<h4 id="使用浮点数来初始化BigDecimal"><a href="#使用浮点数来初始化BigDecimal" class="headerlink" title="使用浮点数来初始化BigDecimal"></a>使用浮点数来初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(0.1).add(new BigDecimal(0.2)));</span><br><span class="line">// 输出结果 0.3000000000000000166533453693773481063544750213623046875</span><br></pre></td></tr></table></figure>
+
+<p>对比直接使用浮点数做运算，使用BigDecimal，仅仅是提高了精度，并没有解决根本问题。</p>
+<h4 id="使用字符串来初始化BigDecimal"><a href="#使用字符串来初始化BigDecimal" class="headerlink" title="使用字符串来初始化BigDecimal"></a>使用字符串来初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;0.1&quot;).add(new BigDecimal(&quot;0.2&quot;)));</span><br><span class="line">// 输出结果 0.3</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="double转为字符串，初始化BigDecimal"><a href="#double转为字符串，初始化BigDecimal" class="headerlink" title="double转为字符串，初始化BigDecimal"></a>double转为字符串，初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;3.1&quot;).multiply(new BigDecimal(Double.toString(100))));</span><br><span class="line">// 输出结果 310.00</span><br></pre></td></tr></table></figure>
+
+<p>BigDecimal有scale和precision两个概念</p>
+<ul>
+<li>scale:小数点右边的位数</li>
+<li>precision:有效数字的长度</li>
+</ul>
+<p><strong>对于BigDecimal乘法操作，返回值的scale是两个数的scale相加</strong></p>
+<p>new BigDecimal(“3.1”)得到的为3.1，new BigDecimal(Double.toString(100))得到的为100.0，所以相乘得到310.00</p>
+<h3 id="2-2-浮点数的字符串格式化通过BigDecimal来进行"><a href="#2-2-浮点数的字符串格式化通过BigDecimal来进行" class="headerlink" title="2.2 浮点数的字符串格式化通过BigDecimal来进行"></a>2.2 浮点数的字符串格式化通过BigDecimal来进行</h3><p>根据对浮点数的测试，在进行格式化的时候会有精度问题，使用BigDecimal可以避免这个问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BigDecimal num1 = new BigDecimal(&quot;3.35&quot;);</span><br><span class="line">BigDecimal num2 = num1.setScale(1, BigDecimal.ROUND_DOWN);</span><br><span class="line">System.out.println(num2); // 3.3</span><br><span class="line">BigDecimal num3 = num1.setScale(1, BigDecimal.ROUND_HALF_UP);</span><br><span class="line">System.out.println(num3); // 3.4</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-BigDecimal判等"><a href="#2-3-BigDecimal判等" class="headerlink" title="2.3 BigDecimal判等"></a>2.3 BigDecimal判等</h3><p>BigDecimal的判等会同时判断scale和value</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;1&quot;).equals(new BigDecimal(&quot;1.0&quot;))); // false</span><br></pre></td></tr></table></figure>
+
+<p>可以通过compareTo方法只比较数值部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;1&quot;).compareTo(new BigDecimal(&quot;1.0&quot;)) == 0); // true</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="HashSet-和-HashMap问题"><a href="#HashSet-和-HashMap问题" class="headerlink" title="HashSet 和 HashMap问题"></a>HashSet 和 HashMap问题</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set hashSet1 = new HashSet&lt;&gt;();</span><br><span class="line">hashSet1.add(new BigDecimal(&quot;1.0&quot;));</span><br><span class="line">System.out.println(hashSet1.contains(new BigDecimal(&quot;1&quot;)));// false</span><br></pre></td></tr></table></figure>
+
+<p>有两个解决方法</p>
+<ul>
+<li>使用TreeSet替换HashSet，TreeSet不使用hashCode方法，也不使用equals，而是使用compareTo</li>
+<li>把BigDecimal存入HashSet或HashMap前，先使用stripTrailingZeros方法去掉尾部的零，比较的时候也去掉尾部的0，确保value相同的BigDecimal，scale也是一致的</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set hashSet2 = new HashSet&lt;&gt;();</span><br><span class="line">hashSet2.add(new BigDecimal(&quot;1.0&quot;).stripTrailingZeros());</span><br><span class="line">System.out.println(hashSet2.contains(new BigDecimal(&quot;1.000&quot;).stripTrailingZeros()));// true</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-溢出问题"><a href="#3-溢出问题" class="headerlink" title="3. 溢出问题"></a>3. 溢出问题</h2><p>和小数类似，由于数值是二进制表示，当数值超过了可表示的最大值，就会变成最小值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">long l = Long.MAX_VALUE;</span><br><span class="line">System.out.println(l + 1);</span><br><span class="line">System.out.println(l + 1 == Long.MIN_VALUE);</span><br><span class="line">--------------------------------------------</span><br><span class="line">输出结果</span><br><span class="line">-9223372036854775808</span><br><span class="line">true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当发生溢出时，没有任何异常，所以难以感知到，要解决这个问题，有以下两种方法</p>
+<h3 id="3-1-Exact方法"><a href="#3-1-Exact方法" class="headerlink" title="3.1 Exact方法"></a>3.1 Exact方法</h3><p>使用Math类的addExact、subtractExact等xxExact方法进行数值运算，这些方法可以在数值溢出时主动抛出异常</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">            long l = Long.MAX_VALUE;</span><br><span class="line">            System.out.println(Math.addExact(l, 1));</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>结果</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java.lang.ArithmeticException: long overflow</span><br><span class="line">	at java.lang.Math.addExact(Math.java:809)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-使用大数类BigInteger"><a href="#3-2-使用大数类BigInteger" class="headerlink" title="3.2 使用大数类BigInteger"></a>3.2 使用大数类BigInteger</h3><p>如果希望把计算结果转换一个Long变量的话，可以使用BigInteger的longValueExact方法，在转换出现溢出时，同样会抛出ArithmeticException：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BigInteger i = new BigInteger(String.valueOf(Long.MAX_VALUE));</span><br><span class="line">System.out.println(i.add(BigInteger.ONE).toString());</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">    long l = i.add(BigInteger.ONE).longValueExact();</span><br><span class="line">&#125; catch (Exception ex) &#123;</span><br><span class="line">    ex.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>结果</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">9223372036854775808</span><br><span class="line">java.lang.ArithmeticException: BigInteger out of long range</span><br><span class="line">	at java.math.BigInteger.longValueExact(BigInteger.java:4632)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>
