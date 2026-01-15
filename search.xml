@@ -1035,4 +1035,111 @@
         <tag>Hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>日期与时间</title>
+    <url>/2026/01/15/%E6%97%A5%E6%9C%9F%E4%B8%8E%E6%97%B6%E9%97%B4/</url>
+    <content><![CDATA[<h2 id="1-从现实角度看日期和时间"><a href="#1-从现实角度看日期和时间" class="headerlink" title="1. 从现实角度看日期和时间"></a>1. 从现实角度看日期和时间</h2><p>在日常生活中，我们说早上八点，默认是对应了北京时间，也就是北京时间的早上八点。但是在其他地区，在北京时间早上八点的此时此刻，对应的就是纽约时间的前一天晚上9点。所以在使用日期的时候，一定要注意地区差异。</p>
+<p><strong>补充知识</strong></p>
+<p>时区的概念源于地理上的时区。地球自转一圈为24小时，转过360度。所以每个地方的本地时间都不相同，经度每相差15度，本地时间相差1小时。</p>
+<p>由于每个地方的本地时间都不同，所以引出了更大范围的时区的概念。</p>
+<p><img src="/2026/01/15/%E6%97%A5%E6%9C%9F%E4%B8%8E%E6%97%B6%E9%97%B4/1153954-20230117192119560-1554666043.png" alt="世界时区划分"> </p>
+<p>以本初子午线为0经度，每15度为一个时区。更通用于地区统一时间。比如我国的经度横跨 73°-135°，地理上包括5个时区，但是为了统一，就使用东八区的时间作为全国统一的北京时间。</p>
+<p>现在我们知道了每个地区的时间是不同的，那有没有统一的时间来表示当前时间？</p>
+<p>有的，<strong>时间戳就是一个全球统一的时间，不会因为地区差异而改变。时间戳（Unix Timestamp）是一个绝对时间点，表示从 1970-01-01 00:00:00 UTC 以来经过的秒数（或毫秒数）</strong></p>
+<h2 id="2-Java中的时间表示"><a href="#2-Java中的时间表示" class="headerlink" title="2.Java中的时间表示"></a>2.Java中的时间表示</h2><h3 id="2-1-System"><a href="#2-1-System" class="headerlink" title="2.1 System"></a>2.1 System</h3><p>系统为我们提供了获取当前毫秒时间戳的方式，注意要使用long类型来存储，避免溢出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.currentTimeMillis()</span><br><span class="line">// 1768464868132</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-Date"><a href="#2-2-Date" class="headerlink" title="2.2 Date"></a>2.2 Date</h3><p>Date本质是一个毫秒时间戳，没有时区的概念，存储从 1970-01-01 00:00:00 UTC 的毫秒数</p>
+<h4 id="无参构造方法"><a href="#无参构造方法" class="headerlink" title="无参构造方法"></a>无参构造方法</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public Date() &#123;</span><br><span class="line">        this(System.currentTimeMillis());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>本质是保存当前的毫秒时间戳</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new Date().getTime()</span><br></pre></td></tr></table></figure>
+
+<p>获取Date的时间戳</p>
+<h4 id="有参构造方法"><a href="#有参构造方法" class="headerlink" title="有参构造方法"></a>有参构造方法</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public Date(int year, int month, int date, int hrs, int min, int sec) &#123;</span><br><span class="line">        int y = year + 1900;</span><br><span class="line">        // month is 0-based. So we have to normalize month to support Long.MAX_VALUE.</span><br><span class="line">        if (month &gt;= 12) &#123;</span><br><span class="line">            y += month / 12;</span><br><span class="line">            month %= 12;</span><br><span class="line">        &#125; else if (month &lt; 0) &#123;</span><br><span class="line">            y += CalendarUtils.floorDivide(month, 12);</span><br><span class="line">            month = CalendarUtils.mod(month, 12);</span><br><span class="line">        &#125;</span><br><span class="line">        BaseCalendar cal = getCalendarSystem(y);</span><br><span class="line">        cdate = (BaseCalendar.Date) cal.newCalendarDate(TimeZone.getDefaultRef());</span><br><span class="line">        cdate.setNormalizedDate(y, month + 1, date).setTimeOfDay(hrs, min, sec, 0);</span><br><span class="line">        getTimeImpl();</span><br><span class="line">        cdate = null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Date这里的年是计算和1900的差值，月是从0-11而不是1-12。</p>
+<p><strong>不建议使用Date来指定时间</strong></p>
+<h3 id="2-3-Calendar"><a href="#2-3-Calendar" class="headerlink" title="2.3 Calendar"></a>2.3 Calendar</h3><p>Calendar 是 Java 提供的日期时间类，用来替代 Date 的很多已废弃方法。 它是一个抽象类，通常使用其子类 。Calendar是有时区的</p>
+<h4 id="获取Calendar实例"><a href="#获取Calendar实例" class="headerlink" title="获取Calendar实例"></a>获取Calendar实例</h4><p>默认使用当前系统的时区</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Calendar calendar = Calendar.getInstance();</span><br><span class="line">// 指定时区</span><br><span class="line">Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(&quot;Asia/Shanghai&quot;));</span><br><span class="line">// 修改时区</span><br><span class="line">calendar.setTimeZone(TimeZone.getTimeZone(&quot;America/New_York&quot;));</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取当前时间"><a href="#获取当前时间" class="headerlink" title="获取当前时间"></a>获取当前时间</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">calendar.getTime(); // 当前时间 Date类型</span><br><span class="line">calendar.getTimeInMillis(); // 当前时间戳</span><br></pre></td></tr></table></figure>
+
+<h4 id="指定时间"><a href="#指定时间" class="headerlink" title="指定时间"></a>指定时间</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 通过Date来设置时间</span><br><span class="line">public final void setTime(Date date) &#123;</span><br><span class="line">       setTimeInMillis(date.getTime());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">// 毫秒时间戳来设置</span><br><span class="line">calendar.setTimeInMillis(timestamp);  </span><br><span class="line"></span><br><span class="line">//  指定时间</span><br><span class="line">public final void set(int year, int month, int date, int hourOfDay, int minute,</span><br><span class="line">                         int second)</span><br><span class="line">   &#123;</span><br><span class="line">       set(YEAR, year);</span><br><span class="line">       set(MONTH, month);</span><br><span class="line">       set(DATE, date);</span><br><span class="line">       set(HOUR_OF_DAY, hourOfDay);</span><br><span class="line">       set(MINUTE, minute);</span><br><span class="line">       set(SECOND, second);</span><br><span class="line">   &#125;</span><br><span class="line">calendar.set(2019, Calendar.DECEMBER, 29,0,0,0);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意通过指定时间来初始化，年是正常的年，月是0-12，所以推荐通过枚举类初始化月份</p>
+<h4 id="操作日期-add"><a href="#操作日期-add" class="headerlink" title="操作日期 - add"></a>操作日期 - add</h4><p>add方法会自动进位&#x2F;退位,比如1月31日+1个月 &#x3D; 2月28日</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">calendar.add(Calendar.YEAR, 1);          // 加1年</span><br><span class="line">calendar.add(Calendar.MONTH, -3);        // 减3个月</span><br><span class="line">calendar.add(Calendar.DAY_OF_MONTH, 7);  // 加7天</span><br><span class="line">calendar.add(Calendar.HOUR_OF_DAY, 5);   // 加5小时</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="操作日期-roll"><a href="#操作日期-roll" class="headerlink" title="操作日期 - roll"></a>操作日期 - roll</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">calendar.roll(Calendar.DAY_OF_MONTH, 1);  // 日期+1,不影响月份</span><br></pre></td></tr></table></figure>
+
+<p>不会进位,只在当前单位范围内循环</p>
+<h2 id="3-日期字符串"><a href="#3-日期字符串" class="headerlink" title="3.日期字符串"></a>3.日期字符串</h2><p>通常，在业务中往往使用时间戳来传递，但是在前端展示时，通常是<code>2026-01-13 11:01</code>这种形式。所以这里有一个转换，字符串转为时间类型和时间类型转换为字符串</p>
+<p>可以参考一下格式</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>yyyyMMdd</td>
+<td>20250115</td>
+</tr>
+<tr>
+<td><code>yyyy-MM-dd</code></td>
+<td><code>2025-01-15</code></td>
+</tr>
+<tr>
+<td><code>yyyy-MM-dd HH</code></td>
+<td><code>2025-01-15 08</code></td>
+</tr>
+<tr>
+<td><code>yyyy-MM-dd HH:mm</code></td>
+<td><code>2025-01-15 08:30</code></td>
+</tr>
+<tr>
+<td><code>yyyy-MM-dd HH:mm:ss</code></td>
+<td><code>2025-01-15 08:30:45</code></td>
+</tr>
+<tr>
+<td><code>yyyyMMdd HH:mm</code></td>
+<td><code>20250115 08:30</code></td>
+</tr>
+<tr>
+<td><code>yyyy-MM-ddHH:mm:ss</code></td>
+<td><code>2025-01-15T08:30:45</code></td>
+</tr>
+<tr>
+<td><code>HH:mm</code></td>
+<td><code>08:30</code></td>
+</tr>
+<tr>
+<td><code>MM月dd日</code></td>
+<td><code>01月15日</code></td>
+</tr>
+</tbody></table>
+<h3 id="3-1-字符串转时间"><a href="#3-1-字符串转时间" class="headerlink" title="3.1 字符串转时间"></a>3.1 字符串转时间</h3><p>DateFormat将时间字符串转为时间</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">static Date getDateForString(String dateStr, String pattern)&#123;</span><br><span class="line">        Date date=null;</span><br><span class="line">        try &#123;</span><br><span class="line">            DateFormat fmt =new SimpleDateFormat(pattern);</span><br><span class="line">            date = fmt.parse(dateStr);</span><br><span class="line">            return date;</span><br><span class="line">        &#125; catch (ParseException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-2-时间转字符串"><a href="#3-2-时间转字符串" class="headerlink" title="3.2 时间转字符串"></a>3.2 时间转字符串</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static String getStringForDate(Date date, String pattern) &#123;</span><br><span class="line">       if (date == null) &#123;</span><br><span class="line">           return null;</span><br><span class="line">       &#125;</span><br><span class="line">       try &#123;</span><br><span class="line">           SimpleDateFormat sdf = new SimpleDateFormat(pattern);</span><br><span class="line">           return sdf.format(date);</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">           return null;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>
