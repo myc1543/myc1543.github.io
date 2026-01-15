@@ -1223,4 +1223,27 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2026/01/15/List%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="Arrays-asList返回的List不支持增删操作"><a href="#Arrays-asList返回的List不支持增删操作" class="headerlink" title="Arrays.asList返回的List不支持增删操作"></a>Arrays.asList返回的List不支持增删操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Arrays.asList(1,2,3);</span><br><span class="line">list.add(4);</span><br></pre></td></tr></table></figure>
+
+<p>通过Arrays.asList得到的list插入数据， 此时会发生错误</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.UnsupportedOperationException</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:148)</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:108)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">private static class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</span><br><span class="line">        implements RandomAccess, java.io.Serializable</span><br></pre></td></tr></table></figure>
+
+<p>ArrayList不是util包下的ArrayList，而是Arrays的内部类，继承了AbstractList的抽象类，但是没有实现add、remove方法，调用AbstractList的方法。而AbstractList的方法是抛出一个异常。。。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void add(int index, E element) &#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">public E remove(int index) &#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>踩坑</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>
