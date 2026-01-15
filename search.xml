@@ -1,128 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AI学习</title>
-    <url>/2025/12/28/AI%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>2025年，AI的热度越来越火，许多公司的业务都在朝大模型应用发展，校招面试和社招面试也会提问大模型相关的知识，对于后端选手来说，学习AI相关的知识是必然的。</p>
-<h2 id="1-术语解释"><a href="#1-术语解释" class="headerlink" title="1.术语解释"></a>1.术语解释</h2><ul>
-<li><p>AI：Artificial Intelligence的缩写，指“人工智能”，人工智能是指模拟人类智能的计算机系统或软件，使其能够执行诸如学习、推理、问题解决、感知、语言理解等复杂任务。</p>
-</li>
-<li><p>生成式AI：是一种人工智能技术，能够自动生成新的内容，如文本、图像、音频和视频等。与传统的AI不同，生成式AI不仅能分析和理解数据，还能基于其学习到的信息创造出新的内容。</p>
-</li>
-<li><p>AIGC：AI Generated Content的缩写，意指由人工智能生成的内容。在算法和数码内容制作领域，AIGC 涉及使用人工智能技术生成各种形式的内容，比如文字、图像、视频、音乐等。</p>
-</li>
-<li><p>NLP：Natural Language Processing的缩写，指“自然语言处理”，自然语言处理是人工智能的一个子领域，主要研究计算机如何理解、解释和生成人类语言。NLP技术包括文本分析、语言生成、机器翻译、情感分析、对话系统等。</p>
-</li>
-<li><p>LLM：Large Language Model的缩写，指“大语言模型”，这类模型是基于机器学习和深度学习技术，特别是自然语言处理（NLP）中的一种技术。大语言模型通过大量的文本数据进行训练，以生成、理解和处理自然语言。一些著名的 LLM 示例包括 OpenAI 的 GPT（Generative Pre-trained Transformer）系列模型，如 GPT-3 和 GPT-4</p>
-</li>
-<li><p>RAG：Retrieval-Augmented Generation的缩写，指“检索增强生成”，这是一个跨越检索和生成任务的框架，通过先从数据库或文档集合中检索到相关信息，然后利用生成模型（如Transformer模型）来生成最终的输出。目前在技术发展趋势和应用落地上，RAG是工程同学较为值得探索的领域。</p>
-</li>
-<li><p>Agent：中文叫智能体，一个能独立执行任务和做出决策的实体，在人工智能中，Agent可以是一个机器人，一个虚拟助手，或是一个智能软件系统，它能够通过学习和推理来完成复杂任务。在多Agent系统中，多个独立的Agents相互协作或竞争，以共同解决问题或完成任务。</p>
-</li>
-<li><p>GPT：Generative Pre-trained Transformer的缩写，指“生成式预训练变换器”，GPT 模型利用大量文本数据进行预训练，然后可以通过微调来执行特定任务，例如语言生成、回答问题、翻译、文本摘要等。</p>
-</li>
-<li><p>chatGPT：由 OpenAI 开发的一种基于 GPT（生成预训练变换模型）架构的人工智能聊天机器人。它使用自然语言处理技术，能够理解并生成类似人类的文本回复。可以看做是一种Agent。</p>
-</li>
-<li><p>Prompt：指的是提供给模型的一段初始文本，用于引导模型生成后续的内容。</p>
-</li>
-<li><p>Embedding：中文叫嵌入，是一种将高维数据映射到低维空间的技术，但仍尽可能保留原数据的特征和结构。嵌入技术通常用于处理和表示复杂的数据如文本、图像、音乐以及其他高维度的数据类型。</p>
-</li>
-</ul>
-<h2 id="2-LLM"><a href="#2-LLM" class="headerlink" title="2.LLM"></a>2.LLM</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><strong>大型语言模型</strong></a>（英语：large language model，LLM），也称<strong>大语言模型</strong>，简称<strong>大模型</strong>，是一种基于<a href="https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">人工神经网络</a>的<a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">语言模型</a>。其名称中的“大型”指模型具有庞大的参数量（通常在数十亿至数万亿级别，如GPT-3含1750亿参数）以及巨大的训练数据规模。大语言模型通常采用<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0">自监督机器学习</a>方法，从而能够基于海量无标注的文本进行训练。大语言模型专为<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86">自然语言处理</a>任务而设计，尤其适用于<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E7%94%9F%E6%88%90">语言生成</a>。</p>
-<h3 id="2-1-大模型的应用"><a href="#2-1-大模型的应用" class="headerlink" title="2.1 大模型的应用"></a>2.1 大模型的应用</h3><p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
-<p>一个典型的大模型应用架构如上图所示，其实和我们平时开发的应用没什么两样。我们平时开发应用，也是处理用户请求，然后调用其它服务实现具体功能。在这个图中，大模型也就是一个普通的下游服务。</p>
-<h4 id="2-1-1-联网搜索"><a href="#2-1-1-联网搜索" class="headerlink" title="2.1.1  联网搜索"></a>2.1.1  联网搜索</h4><p>大模型的回答是基于训练的数据，如果提问的内容不在训练的知识范围内，那么大模型只能进行推理，自身没有能力获取外界的知识。联网搜索就是把互联网的内容提供给大模型，让大模型能够参考搜索的结果，给出回答。</p>
-<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
-<h4 id="2-1-2-Prompt-Engineering"><a href="#2-1-2-Prompt-Engineering" class="headerlink" title="2.1.2  Prompt Engineering"></a>2.1.2  Prompt Engineering</h4><p>提示词工程（Prompt Engineering）是一种在人工智能和自然语言处理领域中开发和设计提示词（Prompts）以引导大型语言模型（例如GPT-3等）产生特定输出的方法。通过精心构建和优化提示词，用户可以更有效地获得所需的答案、生成文本或执行其他自然语言处理任务。</p>
-<p>提示词可以从大模型中获取大量结果，但是这个结果不一定是期望的结果，所以可以优化提示词，提供更多的信息以及完善度，得到质量更高的结果</p>
-<p><strong>举个例子</strong></p>
-<p>比如我们想完成对句子的续写：天空是？</p>
-<ul>
-<li>不添加提示词直接询问</li>
-</ul>
-<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213141341.png" alt="image-20251228213141341"></p>
-<p>结果并不是我们想要的</p>
-<ul>
-<li>添加提示词</li>
-</ul>
-<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213304892.png" alt="image-20251228213304892"></p>
-<p>这里明确告诉大模型，我们需要对句子进行续写，生成的质量就比刚才高很多。</p>
-<h4 id="2-1-3-提示词要素"><a href="#2-1-3-提示词要素" class="headerlink" title="2.1.3 提示词要素"></a>2.1.3 提示词要素</h4><p><strong>指令</strong>：想要模型执行的特定任务或指令。</p>
-<p><strong>上下文</strong>：包含外部信息或额外的上下文信息，引导语言模型更好地响应。</p>
-<p><strong>输入数据</strong>：用户输入的内容或问题。</p>
-<p><strong>输出指示</strong>：指定输出的类型或格式。</p>
-<h4 id="2-1-4-设计提示词的技巧"><a href="#2-1-4-设计提示词的技巧" class="headerlink" title="2.1.4 设计提示词的技巧"></a>2.1.4 设计提示词的技巧</h4><ul>
-<li>指令<br>使用命令来指示模型执行各种简单任务，例如“写入”、“分类”、“总结”、“翻译”、“排序”等，从而为各种简单任务设计有效的提示。通常，上下文越具体和跟任务越相关则效果越好</li>
-<li>具体性<br>要非常具体地说明你希望模型执行的指令和任务。提示越具描述性和详细，结果越好。特别是当你对生成的结果或风格有要求时，这一点尤为重要。不存在什么特定的词元（tokens）或关键词（tokens）能确定带来更好的结果。更重要的是要有一个具有良好格式和描述性的提示词。事实上，在提示中提供示例对于获得特定格式的期望输出非常有效。<br>在设计提示时，还应注意提示的长度，因为提示的长度是有限制的。想一想你需要多么的具体和详细。包含太多不必要的细节不一定是好的方法。这些细节应该是相关的，并有助于完成手头的任务。这是你需要进行大量实验的事情。我们鼓励大量实验和迭代，以优化适用于你应用的提示。</li>
-<li>避免不明确<br>给定上述关于详细描述和改进格式的建议，很容易陷入陷阱：想要在提示上过于聪明，从而可能创造出不明确的描述。通常来说，具体和直接会更好。这里的类比非常类似于有效沟通——越直接，信息传达得越有效。</li>
-<li>做什么还是不做什么<br>设计提示时的另一个常见技巧是避免说不要做什么，而应该说要做什么。这样（说要做什么）更加的具体，并且聚焦于（有利于模型生成良好回复的）细节上。</li>
-</ul>
-<h4 id="2-1-5-提示技术"><a href="#2-1-5-提示技术" class="headerlink" title="2.1.5 提示技术"></a>2.1.5 提示技术</h4><p>提示技术是更高级的技术，完成更加复杂的任务</p>
-<ul>
-<li>零样本提示</li>
-<li>少样本提示</li>
-<li>链式思考(COT)提示</li>
-<li>生成知识提示</li>
-</ul>
-<h3 id="2-2-LLM的问题"><a href="#2-2-LLM的问题" class="headerlink" title="2.2 LLM的问题"></a>2.2 LLM的问题</h3><h4 id="2-2-1-知识截止"><a href="#2-2-1-知识截止" class="headerlink" title="2.2.1 知识截止"></a>2.2.1 知识截止</h4><p>LLM 训练不是实时的，而是离线训练好的。在训练过程中，使用的数据都是提前准备的，而且大多数是公开、开源的数据，这就导致了 LLM 训练后具备的知识是有范围的。换句话说，**模型知识仅限于训练数据所涵盖的知识范围，**对于新的知识（比如今天的新闻）或未训练的知识（比如未公开的数据），模型本身不具备这些知识，仅具备推理能力。</p>
-<h4 id="2-2-2-幻觉现象"><a href="#2-2-2-幻觉现象" class="headerlink" title="2.2.2 幻觉现象"></a>2.2.2 幻觉现象</h4><p>幻觉现象有多种维度的解释。一方面，LLM 是一个条件概率模型，以前文作为条件的词表概率逐词生成文本，这一机制导致其可能出现**看似逻辑严谨（概率高）但其实缺乏事实依据的生成，<strong>也就是“一本正经地胡说八道”。另一方面，LLM 的训练过程，是</strong>对训练数据的知识进行压缩提炼的过程，但不是无损压缩知识，**边缘知识容易在主流知识冲击下出现扭曲，导致产生了幻觉。</p>
-<h2 id="3-RAG"><a href="#3-RAG" class="headerlink" title="3.RAG"></a>3.RAG</h2><p>针对LLM的问题，RAG可以有效解决模型知识截止和幻觉现象。RAG 是检索增强生成（Retrieval-Augmented Generation）的缩写。检索增强生成，是指对大语言模型（LLM）输入进行优化，使其能够在生成响应之前引用训练数据来源之外的知识，作为回答的根据。这是一种经济高效地改进 LLM 输出的方法，让 LLM 保持相关性、准确性和实用性。</p>
-<h3 id="3-1-RAG的组成部分"><a href="#3-1-RAG的组成部分" class="headerlink" title="3.1 RAG的组成部分"></a>3.1 RAG的组成部分</h3><ul>
-<li>**检索（Retrieval）：**查询外部数据源，例如知识库、向量数据库或者网页搜索API。常见的检索方法有全文检索、向量检索、图检索等。</li>
-<li>**生成（Generation）：**将检索信息提供给 LLM，生成回答。</li>
-</ul>
-<h3 id="3-2-RAG的应用"><a href="#3-2-RAG的应用" class="headerlink" title="3.2 RAG的应用"></a>3.2 RAG的应用</h3><p>具体来说，RAG模型在生成答案之前，会首先从一个大型的文档库或知识库中检索到若干条相关的文档片段。再将这些检索到的片段作为额外的上下文信息，输入到生成模型中，从而生成更为准确和信息丰富的文本。</p>
-<p>RAG的工作原理可以分为以下几个步骤：</p>
-<p>1.接收请求：首先，系统接收到用户的请求（例如提出一个问题）。</p>
-<p>2.信息检索（R)：系统从一个大型文档库中检索出与查询最相关的文档片段。这一步的目标是找到那些可能包含答案或相关信息的文档。</p>
-<p>3.生成增强（A）：将检索到的文档片段与原始查询一起输入到大模型（如chatGPT）中，注意使用合适的提示词，比如原始的问题是XXX，检索到的信息是YYY，给大模型的输入应该类似于：请基于YYY回答XXXX。</p>
-<p>4.输出生成（G)：大模型基于输入的查询和检索到的文档片段生成最终的文本答案，并返回给用户。</p>
-<p>RAG 需要注意两个问题：</p>
-<ul>
-<li>检索结果 和 解答问题需要参考的资料 越相关，生成结果越准确。</li>
-<li>检索出过多的内容，又会引入更多的噪声，影响 LLM 注意力，增加幻觉风险，生成的质量反而降低。</li>
-</ul>
-<p>为了尽可能准确地找到和原始问题相关的内容，我们需要某种程度上尽可能 <strong>理解原问题的语义。</strong></p>
-<h3 id="3-3-向量数据库"><a href="#3-3-向量数据库" class="headerlink" title="3.3 向量数据库"></a>3.3 向量数据库</h3><p>在R阶段，需要理解用户的输入，也就是用户输入的语义。</p>
-<p>向量数据库可以解决语义的问题。举个例子，比如“老婆”和“妻子”，这两个词是不同的，但是从语义上来说，它们是相同的。向量数据库使用高维向量来表示一个词的语义。语义越相似的文本，在向量空间中的位置越相近；语义差异越大，在向量空间中的距离越远。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>AI</category>
-      </categories>
-      <tags>
-        <tag>RAG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu更新镜像源</title>
-    <url>/2025/11/23/Ubuntu%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h3 id="1-Ubuntu软件源配置文件"><a href="#1-Ubuntu软件源配置文件" class="headerlink" title="1. Ubuntu软件源配置文件"></a>1. Ubuntu软件源配置文件</h3><figure class="highlight plaintext"><figcaption><span>cd</span><a href="/etc/apt">link</a></figcaption><table><tr><td class="code"><pre><span class="line">sudo cd /etc/apt</span><br></pre></td></tr></table></figure>
-
-<p>Ubuntu的软件源配置文件在<code>/etc/apt</code>的<code>sources.list</code>中</p>
-<h3 id="2-备份配置文件"><a href="#2-备份配置文件" class="headerlink" title="2.备份配置文件"></a>2.备份配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp sources.list sources.list.bak</span><br></pre></td></tr></table></figure>
-
-<p>备份一份配置文件，以便以后需要时找回</p>
-<h3 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi sources.list</span><br></pre></td></tr></table></figure>
-
-<p>依次按下<code>g</code> <code>d</code> <code>shift</code> <code>g</code>删除所有内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># aliyun</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<p>复制对应版本的镜像源，我这里是Ubuntu22.04 阿里镜像源，其余版本可自行Google</p>
-<p>按下<code>:</code> <code>wq</code> 保存并退出</p>
-<h3 id="4-更新软件源"><a href="#4-更新软件源" class="headerlink" title="4.更新软件源"></a>4.更新软件源</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
-
-<p>更新软件源</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java中的排序</title>
     <url>/2026/01/13/Java%E4%B8%AD%E7%9A%84%E6%8E%92%E5%BA%8F/</url>
     <content><![CDATA[<h2 id="1-排序的对象"><a href="#1-排序的对象" class="headerlink" title="1.排序的对象"></a>1.排序的对象</h2><p>在Java中，排序的对象主要有两类：数组和集合。</p>
@@ -228,6 +106,202 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI学习</title>
+    <url>/2025/12/28/AI%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>2025年，AI的热度越来越火，许多公司的业务都在朝大模型应用发展，校招面试和社招面试也会提问大模型相关的知识，对于后端选手来说，学习AI相关的知识是必然的。</p>
+<h2 id="1-术语解释"><a href="#1-术语解释" class="headerlink" title="1.术语解释"></a>1.术语解释</h2><ul>
+<li><p>AI：Artificial Intelligence的缩写，指“人工智能”，人工智能是指模拟人类智能的计算机系统或软件，使其能够执行诸如学习、推理、问题解决、感知、语言理解等复杂任务。</p>
+</li>
+<li><p>生成式AI：是一种人工智能技术，能够自动生成新的内容，如文本、图像、音频和视频等。与传统的AI不同，生成式AI不仅能分析和理解数据，还能基于其学习到的信息创造出新的内容。</p>
+</li>
+<li><p>AIGC：AI Generated Content的缩写，意指由人工智能生成的内容。在算法和数码内容制作领域，AIGC 涉及使用人工智能技术生成各种形式的内容，比如文字、图像、视频、音乐等。</p>
+</li>
+<li><p>NLP：Natural Language Processing的缩写，指“自然语言处理”，自然语言处理是人工智能的一个子领域，主要研究计算机如何理解、解释和生成人类语言。NLP技术包括文本分析、语言生成、机器翻译、情感分析、对话系统等。</p>
+</li>
+<li><p>LLM：Large Language Model的缩写，指“大语言模型”，这类模型是基于机器学习和深度学习技术，特别是自然语言处理（NLP）中的一种技术。大语言模型通过大量的文本数据进行训练，以生成、理解和处理自然语言。一些著名的 LLM 示例包括 OpenAI 的 GPT（Generative Pre-trained Transformer）系列模型，如 GPT-3 和 GPT-4</p>
+</li>
+<li><p>RAG：Retrieval-Augmented Generation的缩写，指“检索增强生成”，这是一个跨越检索和生成任务的框架，通过先从数据库或文档集合中检索到相关信息，然后利用生成模型（如Transformer模型）来生成最终的输出。目前在技术发展趋势和应用落地上，RAG是工程同学较为值得探索的领域。</p>
+</li>
+<li><p>Agent：中文叫智能体，一个能独立执行任务和做出决策的实体，在人工智能中，Agent可以是一个机器人，一个虚拟助手，或是一个智能软件系统，它能够通过学习和推理来完成复杂任务。在多Agent系统中，多个独立的Agents相互协作或竞争，以共同解决问题或完成任务。</p>
+</li>
+<li><p>GPT：Generative Pre-trained Transformer的缩写，指“生成式预训练变换器”，GPT 模型利用大量文本数据进行预训练，然后可以通过微调来执行特定任务，例如语言生成、回答问题、翻译、文本摘要等。</p>
+</li>
+<li><p>chatGPT：由 OpenAI 开发的一种基于 GPT（生成预训练变换模型）架构的人工智能聊天机器人。它使用自然语言处理技术，能够理解并生成类似人类的文本回复。可以看做是一种Agent。</p>
+</li>
+<li><p>Prompt：指的是提供给模型的一段初始文本，用于引导模型生成后续的内容。</p>
+</li>
+<li><p>Embedding：中文叫嵌入，是一种将高维数据映射到低维空间的技术，但仍尽可能保留原数据的特征和结构。嵌入技术通常用于处理和表示复杂的数据如文本、图像、音乐以及其他高维度的数据类型。</p>
+</li>
+</ul>
+<h2 id="2-LLM"><a href="#2-LLM" class="headerlink" title="2.LLM"></a>2.LLM</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><strong>大型语言模型</strong></a>（英语：large language model，LLM），也称<strong>大语言模型</strong>，简称<strong>大模型</strong>，是一种基于<a href="https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">人工神经网络</a>的<a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B">语言模型</a>。其名称中的“大型”指模型具有庞大的参数量（通常在数十亿至数万亿级别，如GPT-3含1750亿参数）以及巨大的训练数据规模。大语言模型通常采用<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0">自监督机器学习</a>方法，从而能够基于海量无标注的文本进行训练。大语言模型专为<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86">自然语言处理</a>任务而设计，尤其适用于<a href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E7%94%9F%E6%88%90">语言生成</a>。</p>
+<h3 id="2-1-大模型的应用"><a href="#2-1-大模型的应用" class="headerlink" title="2.1 大模型的应用"></a>2.1 大模型的应用</h3><p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
+<p>一个典型的大模型应用架构如上图所示，其实和我们平时开发的应用没什么两样。我们平时开发应用，也是处理用户请求，然后调用其它服务实现具体功能。在这个图中，大模型也就是一个普通的下游服务。</p>
+<h4 id="2-1-1-联网搜索"><a href="#2-1-1-联网搜索" class="headerlink" title="2.1.1  联网搜索"></a>2.1.1  联网搜索</h4><p>大模型的回答是基于训练的数据，如果提问的内容不在训练的知识范围内，那么大模型只能进行推理，自身没有能力获取外界的知识。联网搜索就是把互联网的内容提供给大模型，让大模型能够参考搜索的结果，给出回答。</p>
+<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/640"></p>
+<h4 id="2-1-2-Prompt-Engineering"><a href="#2-1-2-Prompt-Engineering" class="headerlink" title="2.1.2  Prompt Engineering"></a>2.1.2  Prompt Engineering</h4><p>提示词工程（Prompt Engineering）是一种在人工智能和自然语言处理领域中开发和设计提示词（Prompts）以引导大型语言模型（例如GPT-3等）产生特定输出的方法。通过精心构建和优化提示词，用户可以更有效地获得所需的答案、生成文本或执行其他自然语言处理任务。</p>
+<p>提示词可以从大模型中获取大量结果，但是这个结果不一定是期望的结果，所以可以优化提示词，提供更多的信息以及完善度，得到质量更高的结果</p>
+<p><strong>举个例子</strong></p>
+<p>比如我们想完成对句子的续写：天空是？</p>
+<ul>
+<li>不添加提示词直接询问</li>
+</ul>
+<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213141341.png" alt="image-20251228213141341"></p>
+<p>结果并不是我们想要的</p>
+<ul>
+<li>添加提示词</li>
+</ul>
+<p><img src="/2025/12/28/AI%E5%AD%A6%E4%B9%A0/image-20251228213304892.png" alt="image-20251228213304892"></p>
+<p>这里明确告诉大模型，我们需要对句子进行续写，生成的质量就比刚才高很多。</p>
+<h4 id="2-1-3-提示词要素"><a href="#2-1-3-提示词要素" class="headerlink" title="2.1.3 提示词要素"></a>2.1.3 提示词要素</h4><p><strong>指令</strong>：想要模型执行的特定任务或指令。</p>
+<p><strong>上下文</strong>：包含外部信息或额外的上下文信息，引导语言模型更好地响应。</p>
+<p><strong>输入数据</strong>：用户输入的内容或问题。</p>
+<p><strong>输出指示</strong>：指定输出的类型或格式。</p>
+<h4 id="2-1-4-设计提示词的技巧"><a href="#2-1-4-设计提示词的技巧" class="headerlink" title="2.1.4 设计提示词的技巧"></a>2.1.4 设计提示词的技巧</h4><ul>
+<li>指令<br>使用命令来指示模型执行各种简单任务，例如“写入”、“分类”、“总结”、“翻译”、“排序”等，从而为各种简单任务设计有效的提示。通常，上下文越具体和跟任务越相关则效果越好</li>
+<li>具体性<br>要非常具体地说明你希望模型执行的指令和任务。提示越具描述性和详细，结果越好。特别是当你对生成的结果或风格有要求时，这一点尤为重要。不存在什么特定的词元（tokens）或关键词（tokens）能确定带来更好的结果。更重要的是要有一个具有良好格式和描述性的提示词。事实上，在提示中提供示例对于获得特定格式的期望输出非常有效。<br>在设计提示时，还应注意提示的长度，因为提示的长度是有限制的。想一想你需要多么的具体和详细。包含太多不必要的细节不一定是好的方法。这些细节应该是相关的，并有助于完成手头的任务。这是你需要进行大量实验的事情。我们鼓励大量实验和迭代，以优化适用于你应用的提示。</li>
+<li>避免不明确<br>给定上述关于详细描述和改进格式的建议，很容易陷入陷阱：想要在提示上过于聪明，从而可能创造出不明确的描述。通常来说，具体和直接会更好。这里的类比非常类似于有效沟通——越直接，信息传达得越有效。</li>
+<li>做什么还是不做什么<br>设计提示时的另一个常见技巧是避免说不要做什么，而应该说要做什么。这样（说要做什么）更加的具体，并且聚焦于（有利于模型生成良好回复的）细节上。</li>
+</ul>
+<h4 id="2-1-5-提示技术"><a href="#2-1-5-提示技术" class="headerlink" title="2.1.5 提示技术"></a>2.1.5 提示技术</h4><p>提示技术是更高级的技术，完成更加复杂的任务</p>
+<ul>
+<li>零样本提示</li>
+<li>少样本提示</li>
+<li>链式思考(COT)提示</li>
+<li>生成知识提示</li>
+</ul>
+<h3 id="2-2-LLM的问题"><a href="#2-2-LLM的问题" class="headerlink" title="2.2 LLM的问题"></a>2.2 LLM的问题</h3><h4 id="2-2-1-知识截止"><a href="#2-2-1-知识截止" class="headerlink" title="2.2.1 知识截止"></a>2.2.1 知识截止</h4><p>LLM 训练不是实时的，而是离线训练好的。在训练过程中，使用的数据都是提前准备的，而且大多数是公开、开源的数据，这就导致了 LLM 训练后具备的知识是有范围的。换句话说，**模型知识仅限于训练数据所涵盖的知识范围，**对于新的知识（比如今天的新闻）或未训练的知识（比如未公开的数据），模型本身不具备这些知识，仅具备推理能力。</p>
+<h4 id="2-2-2-幻觉现象"><a href="#2-2-2-幻觉现象" class="headerlink" title="2.2.2 幻觉现象"></a>2.2.2 幻觉现象</h4><p>幻觉现象有多种维度的解释。一方面，LLM 是一个条件概率模型，以前文作为条件的词表概率逐词生成文本，这一机制导致其可能出现**看似逻辑严谨（概率高）但其实缺乏事实依据的生成，<strong>也就是“一本正经地胡说八道”。另一方面，LLM 的训练过程，是</strong>对训练数据的知识进行压缩提炼的过程，但不是无损压缩知识，**边缘知识容易在主流知识冲击下出现扭曲，导致产生了幻觉。</p>
+<h2 id="3-RAG"><a href="#3-RAG" class="headerlink" title="3.RAG"></a>3.RAG</h2><p>针对LLM的问题，RAG可以有效解决模型知识截止和幻觉现象。RAG 是检索增强生成（Retrieval-Augmented Generation）的缩写。检索增强生成，是指对大语言模型（LLM）输入进行优化，使其能够在生成响应之前引用训练数据来源之外的知识，作为回答的根据。这是一种经济高效地改进 LLM 输出的方法，让 LLM 保持相关性、准确性和实用性。</p>
+<h3 id="3-1-RAG的组成部分"><a href="#3-1-RAG的组成部分" class="headerlink" title="3.1 RAG的组成部分"></a>3.1 RAG的组成部分</h3><ul>
+<li>**检索（Retrieval）：**查询外部数据源，例如知识库、向量数据库或者网页搜索API。常见的检索方法有全文检索、向量检索、图检索等。</li>
+<li>**生成（Generation）：**将检索信息提供给 LLM，生成回答。</li>
+</ul>
+<h3 id="3-2-RAG的应用"><a href="#3-2-RAG的应用" class="headerlink" title="3.2 RAG的应用"></a>3.2 RAG的应用</h3><p>具体来说，RAG模型在生成答案之前，会首先从一个大型的文档库或知识库中检索到若干条相关的文档片段。再将这些检索到的片段作为额外的上下文信息，输入到生成模型中，从而生成更为准确和信息丰富的文本。</p>
+<p>RAG的工作原理可以分为以下几个步骤：</p>
+<p>1.接收请求：首先，系统接收到用户的请求（例如提出一个问题）。</p>
+<p>2.信息检索（R)：系统从一个大型文档库中检索出与查询最相关的文档片段。这一步的目标是找到那些可能包含答案或相关信息的文档。</p>
+<p>3.生成增强（A）：将检索到的文档片段与原始查询一起输入到大模型（如chatGPT）中，注意使用合适的提示词，比如原始的问题是XXX，检索到的信息是YYY，给大模型的输入应该类似于：请基于YYY回答XXXX。</p>
+<p>4.输出生成（G)：大模型基于输入的查询和检索到的文档片段生成最终的文本答案，并返回给用户。</p>
+<p>RAG 需要注意两个问题：</p>
+<ul>
+<li>检索结果 和 解答问题需要参考的资料 越相关，生成结果越准确。</li>
+<li>检索出过多的内容，又会引入更多的噪声，影响 LLM 注意力，增加幻觉风险，生成的质量反而降低。</li>
+</ul>
+<p>为了尽可能准确地找到和原始问题相关的内容，我们需要某种程度上尽可能 <strong>理解原问题的语义。</strong></p>
+<h3 id="3-3-向量数据库"><a href="#3-3-向量数据库" class="headerlink" title="3.3 向量数据库"></a>3.3 向量数据库</h3><p>在R阶段，需要理解用户的输入，也就是用户输入的语义。</p>
+<p>向量数据库可以解决语义的问题。举个例子，比如“老婆”和“妻子”，这两个词是不同的，但是从语义上来说，它们是相同的。向量数据库使用高维向量来表示一个词的语义。语义越相似的文本，在向量空间中的位置越相近；语义差异越大，在向量空间中的距离越远。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>List的坑</title>
+    <url>/2026/01/15/List%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="Arrays-asList返回的List不支持增删操作"><a href="#Arrays-asList返回的List不支持增删操作" class="headerlink" title="Arrays.asList返回的List不支持增删操作"></a>Arrays.asList返回的List不支持增删操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Arrays.asList(1,2,3);</span><br><span class="line">list.add(4);</span><br></pre></td></tr></table></figure>
+
+<p>通过Arrays.asList得到的list插入数据， 此时会发生错误</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.UnsupportedOperationException</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:148)</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:108)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">private static class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</span><br><span class="line">        implements RandomAccess, java.io.Serializable</span><br></pre></td></tr></table></figure>
+
+<p>ArrayList不是util包下的ArrayList，而是Arrays的内部类，继承了AbstractList的抽象类，但是没有实现add、remove方法，调用AbstractList的方法。而AbstractList的方法是抛出一个异常。。。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void add(int index, E element) &#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">public E remove(int index) &#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>踩坑</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu更新镜像源</title>
+    <url>/2025/11/23/Ubuntu%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h3 id="1-Ubuntu软件源配置文件"><a href="#1-Ubuntu软件源配置文件" class="headerlink" title="1. Ubuntu软件源配置文件"></a>1. Ubuntu软件源配置文件</h3><figure class="highlight plaintext"><figcaption><span>cd</span><a href="/etc/apt">link</a></figcaption><table><tr><td class="code"><pre><span class="line">sudo cd /etc/apt</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu的软件源配置文件在<code>/etc/apt</code>的<code>sources.list</code>中</p>
+<h3 id="2-备份配置文件"><a href="#2-备份配置文件" class="headerlink" title="2.备份配置文件"></a>2.备份配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp sources.list sources.list.bak</span><br></pre></td></tr></table></figure>
+
+<p>备份一份配置文件，以便以后需要时找回</p>
+<h3 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi sources.list</span><br></pre></td></tr></table></figure>
+
+<p>依次按下<code>g</code> <code>d</code> <code>shift</code> <code>g</code>删除所有内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># aliyun</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<p>复制对应版本的镜像源，我这里是Ubuntu22.04 阿里镜像源，其余版本可自行Google</p>
+<p>按下<code>:</code> <code>wq</code> 保存并退出</p>
+<h3 id="4-更新软件源"><a href="#4-更新软件源" class="headerlink" title="4.更新软件源"></a>4.更新软件源</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+
+<p>更新软件源</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL的安装</title>
+    <url>/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>本篇文章参考微软的文档</p>
+<p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
+<h2 id="1-安装WSL命令"><a href="#1-安装WSL命令" class="headerlink" title="1. 安装WSL命令"></a>1. 安装WSL命令</h2><h3 id="1-1-管理员身份打开PowerShell"><a href="#1-1-管理员身份打开PowerShell" class="headerlink" title="1.1 管理员身份打开PowerShell"></a>1.1 管理员身份打开PowerShell</h3><p>输入</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223823461.png"></p>
+<p>该命令会自动启用WSL相关的组件。接着重启电脑。</p>
+<p>或者使用windows功能(启用或关闭Windows功能)，启用<strong>适用于Linux的Windows子系统</strong></p>
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121222954406.png" alt="image-20251121222954406"></p>
+<h2 id="2-设置WSL版本为WSL2"><a href="#2-设置WSL版本为WSL2" class="headerlink" title="2. 设置WSL版本为WSL2"></a>2. 设置WSL版本为WSL2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-安装Linux发行版-注意安装位置"><a href="#3-安装Linux发行版-注意安装位置" class="headerlink" title="3.安装Linux发行版(注意安装位置)"></a>3.安装Linux发行版(注意安装位置)</h2><p>建议从<strong>Microsoft Store</strong>安装稳定的Linux发行版，这里以Ubuntu 18.04为例</p>
+<h3 id="3-1-安装发行版"><a href="#3-1-安装发行版" class="headerlink" title="3.1 安装发行版"></a>3.1 安装发行版</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223552582.png"></p>
+<h3 id="3-2-初始化信息"><a href="#3-2-初始化信息" class="headerlink" title="3.2 初始化信息"></a>3.2 初始化信息</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223934668.png"></p>
+<p>输入自己的用户名以及密码</p>
+<h2 id="4-检查安装"><a href="#4-检查安装" class="headerlink" title="4. 检查安装"></a>4. 检查安装</h2><h3 id="4-1-查看已安装的发行版及其版本"><a href="#4-1-查看已安装的发行版及其版本" class="headerlink" title="4.1 查看已安装的发行版及其版本"></a>4.1 查看已安装的发行版及其版本</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-进入WSL"><a href="#4-2-进入WSL" class="headerlink" title="4.2 进入WSL"></a>4.2 进入WSL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash</span><br></pre></td></tr></table></figure>
+
+<p>命令行输入bash进入WSL，建议更换终端Hyper</p>
+<h2 id="5-WSL的迁移"><a href="#5-WSL的迁移" class="headerlink" title="5. WSL的迁移"></a>5. WSL的迁移</h2><p>如果Linux发行版安装到了C盘，并且C盘空间不足时，可以参考一下操作将其迁移到其他盘</p>
+<h3 id="5-1-停止WSL的运行"><a href="#5-1-停止WSL的运行" class="headerlink" title="5.1 停止WSL的运行"></a>5.1 停止WSL的运行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>首先查看WSL的运行状态</p>
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121225104829.png"></p>
+<p>如果WSL正在运行，首先终止其运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+
+<p>确保处于stopped的状态</p>
+<h3 id="5-2-导出-恢复备份"><a href="#5-2-导出-恢复备份" class="headerlink" title="5.2 导出&#x2F;恢复备份"></a>5.2 导出&#x2F;恢复备份</h3><p>在新的盘中创建一个新的目录来存放迁移后的WSL，这里以F盘为例，新的目录为WSL</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.导出备份，命名为Ubuntu.tar</span><br><span class="line">wsl --export Ubuntu-&#123;版本&#125; F:\WSL\Ubuntu.tar</span><br><span class="line">2.确定新的目录有备份文件后，注销原有文件</span><br><span class="line">wsl --unregister Ubuntu-&#123;版本&#125;</span><br><span class="line">3.恢复备份文件</span><br><span class="line">wsl --import Ubuntu-&#123;版本&#125; F:\WSL F:\WSL\Ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121230524992.png"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -367,57 +441,6 @@
       </tags>
   </entry>
   <entry>
-    <title>WSL的安装</title>
-    <url>/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>本篇文章参考微软的文档</p>
-<p><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
-<h2 id="1-安装WSL命令"><a href="#1-安装WSL命令" class="headerlink" title="1. 安装WSL命令"></a>1. 安装WSL命令</h2><h3 id="1-1-管理员身份打开PowerShell"><a href="#1-1-管理员身份打开PowerShell" class="headerlink" title="1.1 管理员身份打开PowerShell"></a>1.1 管理员身份打开PowerShell</h3><p>输入</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223823461.png"></p>
-<p>该命令会自动启用WSL相关的组件。接着重启电脑。</p>
-<p>或者使用windows功能(启用或关闭Windows功能)，启用<strong>适用于Linux的Windows子系统</strong></p>
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121222954406.png" alt="image-20251121222954406"></p>
-<h2 id="2-设置WSL版本为WSL2"><a href="#2-设置WSL版本为WSL2" class="headerlink" title="2. 设置WSL版本为WSL2"></a>2. 设置WSL版本为WSL2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-安装Linux发行版-注意安装位置"><a href="#3-安装Linux发行版-注意安装位置" class="headerlink" title="3.安装Linux发行版(注意安装位置)"></a>3.安装Linux发行版(注意安装位置)</h2><p>建议从<strong>Microsoft Store</strong>安装稳定的Linux发行版，这里以Ubuntu 18.04为例</p>
-<h3 id="3-1-安装发行版"><a href="#3-1-安装发行版" class="headerlink" title="3.1 安装发行版"></a>3.1 安装发行版</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223552582.png"></p>
-<h3 id="3-2-初始化信息"><a href="#3-2-初始化信息" class="headerlink" title="3.2 初始化信息"></a>3.2 初始化信息</h3><p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121223934668.png"></p>
-<p>输入自己的用户名以及密码</p>
-<h2 id="4-检查安装"><a href="#4-检查安装" class="headerlink" title="4. 检查安装"></a>4. 检查安装</h2><h3 id="4-1-查看已安装的发行版及其版本"><a href="#4-1-查看已安装的发行版及其版本" class="headerlink" title="4.1 查看已安装的发行版及其版本"></a>4.1 查看已安装的发行版及其版本</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-2-进入WSL"><a href="#4-2-进入WSL" class="headerlink" title="4.2 进入WSL"></a>4.2 进入WSL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash</span><br></pre></td></tr></table></figure>
-
-<p>命令行输入bash进入WSL，建议更换终端Hyper</p>
-<h2 id="5-WSL的迁移"><a href="#5-WSL的迁移" class="headerlink" title="5. WSL的迁移"></a>5. WSL的迁移</h2><p>如果Linux发行版安装到了C盘，并且C盘空间不足时，可以参考一下操作将其迁移到其他盘</p>
-<h3 id="5-1-停止WSL的运行"><a href="#5-1-停止WSL的运行" class="headerlink" title="5.1 停止WSL的运行"></a>5.1 停止WSL的运行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
-
-<p>首先查看WSL的运行状态</p>
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121225104829.png"></p>
-<p>如果WSL正在运行，首先终止其运行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
-
-<p>确保处于stopped的状态</p>
-<h3 id="5-2-导出-恢复备份"><a href="#5-2-导出-恢复备份" class="headerlink" title="5.2 导出&#x2F;恢复备份"></a>5.2 导出&#x2F;恢复备份</h3><p>在新的盘中创建一个新的目录来存放迁移后的WSL，这里以F盘为例，新的目录为WSL</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.导出备份，命名为Ubuntu.tar</span><br><span class="line">wsl --export Ubuntu-&#123;版本&#125; F:\WSL\Ubuntu.tar</span><br><span class="line">2.确定新的目录有备份文件后，注销原有文件</span><br><span class="line">wsl --unregister Ubuntu-&#123;版本&#125;</span><br><span class="line">3.恢复备份文件</span><br><span class="line">wsl --import Ubuntu-&#123;版本&#125; F:\WSL F:\WSL\Ubuntu.tar</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/2025/11/21/WSL%E7%9A%84%E5%AE%89%E8%A3%85/image-20251121230524992.png"></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《深入理解Java虚拟机》阅读笔记(2)</title>
     <url>/2025/12/23/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</url>
     <content><![CDATA[<h2 id="1-判断对象的死亡"><a href="#1-判断对象的死亡" class="headerlink" title="1. 判断对象的死亡"></a>1. 判断对象的死亡</h2><p>通常来说，我们有两种方式来判断对象是否存活</p>
@@ -521,6 +544,221 @@
 ]]></content>
       <categories>
         <category>技术</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo和github创建自己的博客</title>
+    <url>/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>本篇文章参考<a href="https://hexo.io/zh-cn/docs/"><strong>Hexo官方文档</strong></a>、<a href="https://zhuanlan.zhihu.com/p/265077468"><strong>Hexo博客如何插入图片</strong></a>、 <a href="https://docs.github.com/en/pages/quickstart"><strong>Github Pages</strong></a>，一步一步搭建自己的博客。</p>
+<h2 id="1-前置准备"><a href="#1-前置准备" class="headerlink" title="1.前置准备"></a>1.前置准备</h2><p>安装Hexo需要先安装Node.js和Git</p>
+<h3 id="1-1-安装Node-js"><a href="#1-1-安装Node-js" class="headerlink" title="1.1 安装Node.js"></a>1.1 安装Node.js</h3><p><a href="https://nodejs.org/zh-cn"><strong>node官网</strong></a>，推荐下载12.0及以上的LTS版本(默认包含npm工具包)，一路安装即可。</p>
+<p>输入<code>node -v</code> <code>npm -v</code>验证是否安装成功</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122143108724.png"></p>
+<h3 id="1-2-安装git-已经配置的可跳过，后续命令都在git中完成"><a href="#1-2-安装git-已经配置的可跳过，后续命令都在git中完成" class="headerlink" title="1.2 安装git(已经配置的可跳过，后续命令都在git中完成)"></a>1.2 安装git(已经配置的可跳过，后续命令都在git中完成)</h3><p><a href="https://git-scm.com/"><strong>git官网</strong></a>，一路安装即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git --version  # 检查是否已经安装git</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>配置用户名、密码以及密钥</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;github绑定的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 生成 ssh 密钥</span><br><span class="line">ssh-keygen -t rsa -C &quot;github 注册邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>使用生成ssh密钥的命令后，会生成<code>id_rsa</code> (私有)<code>id_rsa.pub</code>（公有）两个文件，打开<code>id_rsa.pub</code>中的密钥，复制到<code>GitHub-Settings-SSH and GPG Keys</code>页面，创建一个新的SSH key</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122141133630.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com  # 测试SSH连接</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，会显示Hi，xxx! You’ve successfully authenticated…</p>
+<h2 id="2-安装Hexo并初始化"><a href="#2-安装Hexo并初始化" class="headerlink" title="2.安装Hexo并初始化"></a>2.安装Hexo并初始化</h2><p>使用以下命令安装hexo相关工具</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化项目</strong></p>
+<ol>
+<li>创建一个新文件夹用来存放博客，并执行hexo init命令</li>
+<li>执行npm install安装必备组件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>初始化后，目录结构如图所示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line"> ├── _config.yml # 网站配置信息</span><br><span class="line"> ├── package.json # 应用程序信息</span><br><span class="line"> ├── scaffolds # 模板文件夹</span><br><span class="line"> ├── source # 存放用户资源</span><br><span class="line"> |   ├── _drafts</span><br><span class="line"> |   └── _posts</span><br><span class="line"> └── themes # 主题文件夹</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>本地部署博客</strong></p>
+<ol>
+<li>新建博客</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;博客名&quot;</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令会在&#x2F;source&#x2F;_posts目录下创建一个md文件，用markdown编辑器即可对博客进行编辑</p>
+<ol start="2">
+<li>生成静态网页</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>打开本地服务器</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器打开<code>http://localhost:4000</code>，就可以看到部署的网页</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122151002542.png"></p>
+<h2 id="3-部署到Github-Pages"><a href="#3-部署到Github-Pages" class="headerlink" title="3. 部署到Github Pages"></a>3. 部署到Github Pages</h2><p>如果博客需要其他人也访问，则需要部署到服务器上，在这里选择使用Github Pages，是免费的。访问的地址是<code>https://用户名.github.io</code></p>
+<h3 id="3-1-新建一个仓库"><a href="#3-1-新建一个仓库" class="headerlink" title="3.1 新建一个仓库"></a>3.1 新建一个仓库</h3><p><strong>注意点</strong></p>
+<ul>
+<li><p>仓库一定是<code>public</code>的，否则别人访问不到</p>
+</li>
+<li><p>仓库名一定是<code>用户名.github.io</code></p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145400207.png"></p>
+</li>
+</ul>
+<h3 id="3-2-更改hexo配置"><a href="#3-2-更改hexo配置" class="headerlink" title="3.2 更改hexo配置"></a>3.2 更改hexo配置</h3><p>打开目录下_config.Yaml文件</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145713620.png"></p>
+<p>找到Deployment选项</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="line">deploy:</span><br><span class="line">  type: &#x27;git&#x27;</span><br><span class="line">  repository: git@github.com:myc1543/myc1543.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改type项为git</li>
+<li>repository项为仓库地址</li>
+<li>branch为main</li>
+</ul>
+<p>注意每项配置<code>:</code>后有空格</p>
+<h3 id="3-3-远程部署"><a href="#3-3-远程部署" class="headerlink" title="3.3 远程部署"></a>3.3 远程部署</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g ## 生成静态网页</span><br><span class="line">hexo d ## 部署到Github Pages</span><br></pre></td></tr></table></figure>
+
+
+
+<p>访问<code>https://用户名.github.io</code> 即可</p>
+<h2 id="4-hexo中插入图片"><a href="#4-hexo中插入图片" class="headerlink" title="4.hexo中插入图片"></a>4.hexo中插入图片</h2><p>用md有个蛋疼的问题，就是对图片的展示不是很友好。</p>
+<h3 id="4-1-插入图片"><a href="#4-1-插入图片" class="headerlink" title="4.1 插入图片"></a>4.1 插入图片</h3><p>在md中插入图片的语法为<code>![图片描述](图片路径)</code></p>
+<p>这里图片路径有三种方式</p>
+<ul>
+<li>绝对路径</li>
+<li>相对路径</li>
+<li>网络路径</li>
+</ul>
+<p>对应的，在hexo中使用图片资源，除了网络路径无需更改，相对路径和绝对路径都是需要先在资源文件下存放， 才能正确显示。</p>
+<p><strong>(1)绝对路径引用</strong></p>
+<p>绝对路径使用需要在<code>/source</code> 文件夹下创建一个资源文件夹如<code>/source/pictures/</code>,作为全局资源文件夹</p>
+<p>引用方式为<code>![](/pictures/picture1.jpg)</code></p>
+<p><strong>(2)相对路径引用</strong></p>
+<p>hexo提供了一个资源文件管理功能，通过config.yml文件中的<code>post_assert_folder</code>设置为true来打开。此时当创建一个新的md博客，会同步创建一个相同名字的文件夹，在博客中之需要使用相对路径引用图片即可。</p>
+<p>举个例子：创建了一个新的博客为blog.md，目录结构为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- source</span><br><span class="line">	- _posts</span><br><span class="line">		- blog.md</span><br><span class="line">		- blog(文件夹)</span><br></pre></td></tr></table></figure>
+
+<p>blog文件夹中存放了1.png，引用方式为<code>![](1.png)</code></p>
+<p><strong>预览不正确的问题</strong></p>
+<p>但这时，直接使用相对路径引入的图片，只能在<strong>博文详情页</strong>展示，在首页或者存档页的预览会不正确，此时应该改为<code>![](% assert_img 1.png %)</code></p>
+<p>这时候可以引入<code>hexo-renderer-marked</code>插件来解决这个问题</p>
+<p>使用<code>npm install hexo-renderer-marked</code>命令直接安装，之后在<code>config.yaml</code>中更改配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">marked:</span></span><br><span class="line">  <span class="attr">prependRoot:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-配合Typora来简化操作"><a href="#4-2-配合Typora来简化操作" class="headerlink" title="4.2 配合Typora来简化操作"></a>4.2 配合Typora来简化操作</h3><p>这时候会发现一个问题，就是每次我想使用图片的时候，都需要先在资源文件下存放图片，才能使用，这对复制黏贴的截图来说很不友好。</p>
+<p>Typora的设置可以自动将插入的图片复制一份到文章资源文件夹</p>
+<p><code>文件-偏好设置-图像</code>，设置为复制到指定路径<code>/.${filename}</code>，并且设置优先显示相对路径</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122173743632.png"></p>
+<p>这时候图片的路径就为<code>文章名/picture.jpg</code>。但是hexo的路径应该是没有前面的前缀的，用全局搜索替换<code>文章名/</code>为空即可。</p>
+<p>此时本地typora就显示不出图片，可以设置<code>格式-图像-设置图像根目录</code>来解决</p>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174149386.png" alt="image-20251122174149386"></p>
+<h3 id="4-3-插入图片的总结"><a href="#4-3-插入图片的总结" class="headerlink" title="4.3 插入图片的总结"></a>4.3 插入图片的总结</h3><ol>
+<li>下载<code>hexo-renderer-marked</code>插件并修改<code>config.yaml</code>配置</li>
+<li>设置Typora插入图片设置(<code>插入到指定路径</code> <code>优先使用相对路径</code>)</li>
+</ol>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174615272.png"></p>
+<ol start="3">
+<li>使用<code>&lt;C-f&gt;</code>快捷键，将所有的<code>文章名/</code>替换为空</li>
+</ol>
+<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174748275.png"></p>
+<ol start="4">
+<li>设置图片根目录，在本地编辑器显示</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值计算</title>
+    <url>/2026/01/15/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h2 id="1-浮点数"><a href="#1-浮点数" class="headerlink" title="1. 浮点数"></a>1. 浮点数</h2><h3 id="1-1浮点数计算"><a href="#1-1浮点数计算" class="headerlink" title="1.1浮点数计算"></a>1.1浮点数计算</h3><p>学过计算机组成原理的同学都知道，在程序中，我们使用二进制并不能准确地表示一个数。以0.1为例，0.1的二进制表示为0.0 0011 0011 0011…，再转化为十进制，就变成了0.1000000000000000055511151231257827021181583404541015625。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(0.1 + 0.2);</span><br><span class="line">// 输出结果：0.30000000000000004</span><br></pre></td></tr></table></figure>
+
+<p>所以我们在使用浮点数时，需要注意可能带来的误差。</p>
+<h3 id="1-2-浮点数格式化"><a href="#1-2-浮点数格式化" class="headerlink" title="1.2 浮点数格式化"></a>1.2 浮点数格式化</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">double num1 = 3.35;</span><br><span class="line">float num2 = 3.35f;</span><br><span class="line">System.out.println(String.format(&quot;%.1f&quot;, num1)); // 输出3.4</span><br><span class="line">System.out.println(String.format(&quot;%.1f&quot;, num2)); // 输出3.3</span><br></pre></td></tr></table></figure>
+
+<p>这就是由精度问题和舍入方式共同导致的，double和float的3.35其实相当于3.350xxx和3.349xxx：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3.350000000000000088817841970012523233890533447265625</span><br><span class="line">3.349999904632568359375</span><br></pre></td></tr></table></figure>
+
+<p>String.format采用四舍五入的方式进行舍入，取1位小数，double的3.350四舍五入为3.4，而float的3.349四舍五入为3.3。</p>
+<h2 id="2-BigDecimal"><a href="#2-BigDecimal" class="headerlink" title="2.BigDecimal"></a>2.BigDecimal</h2><p>涉及到精确计算时，我们常常使用decimal来代替浮点数。但是使用浮点数也有一些注意事项</p>
+<h3 id="2-1-使用字符串的构造方法来初始化BigDecimal"><a href="#2-1-使用字符串的构造方法来初始化BigDecimal" class="headerlink" title="2.1 使用字符串的构造方法来初始化BigDecimal"></a>2.1 使用字符串的构造方法来初始化BigDecimal</h3><hr>
+<h4 id="使用浮点数来初始化BigDecimal"><a href="#使用浮点数来初始化BigDecimal" class="headerlink" title="使用浮点数来初始化BigDecimal"></a>使用浮点数来初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(0.1).add(new BigDecimal(0.2)));</span><br><span class="line">// 输出结果 0.3000000000000000166533453693773481063544750213623046875</span><br></pre></td></tr></table></figure>
+
+<p>对比直接使用浮点数做运算，使用BigDecimal，仅仅是提高了精度，并没有解决根本问题。</p>
+<h4 id="使用字符串来初始化BigDecimal"><a href="#使用字符串来初始化BigDecimal" class="headerlink" title="使用字符串来初始化BigDecimal"></a>使用字符串来初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;0.1&quot;).add(new BigDecimal(&quot;0.2&quot;)));</span><br><span class="line">// 输出结果 0.3</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="double转为字符串，初始化BigDecimal"><a href="#double转为字符串，初始化BigDecimal" class="headerlink" title="double转为字符串，初始化BigDecimal"></a>double转为字符串，初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;3.1&quot;).multiply(new BigDecimal(Double.toString(100))));</span><br><span class="line">// 输出结果 310.00</span><br></pre></td></tr></table></figure>
+
+<p>BigDecimal有scale和precision两个概念</p>
+<ul>
+<li>scale:小数点右边的位数</li>
+<li>precision:有效数字的长度</li>
+</ul>
+<p><strong>对于BigDecimal乘法操作，返回值的scale是两个数的scale相加</strong></p>
+<p>new BigDecimal(“3.1”)得到的为3.1，new BigDecimal(Double.toString(100))得到的为100.0，所以相乘得到310.00</p>
+<h3 id="2-2-浮点数的字符串格式化通过BigDecimal来进行"><a href="#2-2-浮点数的字符串格式化通过BigDecimal来进行" class="headerlink" title="2.2 浮点数的字符串格式化通过BigDecimal来进行"></a>2.2 浮点数的字符串格式化通过BigDecimal来进行</h3><p>根据对浮点数的测试，在进行格式化的时候会有精度问题，使用BigDecimal可以避免这个问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BigDecimal num1 = new BigDecimal(&quot;3.35&quot;);</span><br><span class="line">BigDecimal num2 = num1.setScale(1, BigDecimal.ROUND_DOWN);</span><br><span class="line">System.out.println(num2); // 3.3</span><br><span class="line">BigDecimal num3 = num1.setScale(1, BigDecimal.ROUND_HALF_UP);</span><br><span class="line">System.out.println(num3); // 3.4</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-BigDecimal判等"><a href="#2-3-BigDecimal判等" class="headerlink" title="2.3 BigDecimal判等"></a>2.3 BigDecimal判等</h3><p>BigDecimal的判等会同时判断scale和value</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;1&quot;).equals(new BigDecimal(&quot;1.0&quot;))); // false</span><br></pre></td></tr></table></figure>
+
+<p>可以通过compareTo方法只比较数值部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;1&quot;).compareTo(new BigDecimal(&quot;1.0&quot;)) == 0); // true</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="HashSet-和-HashMap问题"><a href="#HashSet-和-HashMap问题" class="headerlink" title="HashSet 和 HashMap问题"></a>HashSet 和 HashMap问题</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set hashSet1 = new HashSet&lt;&gt;();</span><br><span class="line">hashSet1.add(new BigDecimal(&quot;1.0&quot;));</span><br><span class="line">System.out.println(hashSet1.contains(new BigDecimal(&quot;1&quot;)));// false</span><br></pre></td></tr></table></figure>
+
+<p>有两个解决方法</p>
+<ul>
+<li>使用TreeSet替换HashSet，TreeSet不使用hashCode方法，也不使用equals，而是使用compareTo</li>
+<li>把BigDecimal存入HashSet或HashMap前，先使用stripTrailingZeros方法去掉尾部的零，比较的时候也去掉尾部的0，确保value相同的BigDecimal，scale也是一致的</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set hashSet2 = new HashSet&lt;&gt;();</span><br><span class="line">hashSet2.add(new BigDecimal(&quot;1.0&quot;).stripTrailingZeros());</span><br><span class="line">System.out.println(hashSet2.contains(new BigDecimal(&quot;1.000&quot;).stripTrailingZeros()));// true</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-溢出问题"><a href="#3-溢出问题" class="headerlink" title="3. 溢出问题"></a>3. 溢出问题</h2><p>和小数类似，由于数值是二进制表示，当数值超过了可表示的最大值，就会变成最小值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">long l = Long.MAX_VALUE;</span><br><span class="line">System.out.println(l + 1);</span><br><span class="line">System.out.println(l + 1 == Long.MIN_VALUE);</span><br><span class="line">--------------------------------------------</span><br><span class="line">输出结果</span><br><span class="line">-9223372036854775808</span><br><span class="line">true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当发生溢出时，没有任何异常，所以难以感知到，要解决这个问题，有以下两种方法</p>
+<h3 id="3-1-Exact方法"><a href="#3-1-Exact方法" class="headerlink" title="3.1 Exact方法"></a>3.1 Exact方法</h3><p>使用Math类的addExact、subtractExact等xxExact方法进行数值运算，这些方法可以在数值溢出时主动抛出异常</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">            long l = Long.MAX_VALUE;</span><br><span class="line">            System.out.println(Math.addExact(l, 1));</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>结果</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java.lang.ArithmeticException: long overflow</span><br><span class="line">	at java.lang.Math.addExact(Math.java:809)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-使用大数类BigInteger"><a href="#3-2-使用大数类BigInteger" class="headerlink" title="3.2 使用大数类BigInteger"></a>3.2 使用大数类BigInteger</h3><p>如果希望把计算结果转换一个Long变量的话，可以使用BigInteger的longValueExact方法，在转换出现溢出时，同样会抛出ArithmeticException：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BigInteger i = new BigInteger(String.valueOf(Long.MAX_VALUE));</span><br><span class="line">System.out.println(i.add(BigInteger.ONE).toString());</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">    long l = i.add(BigInteger.ONE).longValueExact();</span><br><span class="line">&#125; catch (Exception ex) &#123;</span><br><span class="line">    ex.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>结果</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">9223372036854775808</span><br><span class="line">java.lang.ArithmeticException: BigInteger out of long range</span><br><span class="line">	at java.math.BigInteger.longValueExact(BigInteger.java:4632)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
         <category>Java</category>
       </categories>
       <tags>
@@ -684,103 +922,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《深入理解Java虚拟机》阅读笔记（1）</title>
-    <url>/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="1-第一章“走进“Java”"><a href="#1-第一章“走进“Java”" class="headerlink" title="1.第一章“走进“Java”"></a>1.第一章“走进“Java”</h2><p><strong>Java的优势之JVM</strong></p>
-<ul>
-<li>虚拟机层面屏蔽技术的复杂性和操作系统的差异性</li>
-</ul>
-<h2 id="2-第二章“Java内存区域与内存溢出异常”"><a href="#2-第二章“Java内存区域与内存溢出异常”" class="headerlink" title="2.第二章“Java内存区域与内存溢出异常”"></a>2.第二章“Java内存区域与内存溢出异常”</h2><h3 id="2-1-运行时数据区域"><a href="#2-1-运行时数据区域" class="headerlink" title="2.1 运行时数据区域"></a>2.1 运行时数据区域</h3><p><img src="/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/image-20251124231738862.png" alt="JVM内存区域"></p>
-<h4 id="2-1-1程序计数器"><a href="#2-1-1程序计数器" class="headerlink" title="2.1.1程序计数器"></a>2.1.1程序计数器</h4><p>程序计数器是当前线程所执行的字节码的行号指示器(唯一不会出现OOM的区域)</p>
-<p>因为Java是多线程执行的，每个处理器在一个时间内只会执行一条线程内的指令，所以每条线程都要有单独的程序计数器，为了线程切换后能恢复到正确的执行位置。</p>
-<h4 id="2-1-2-Java虚拟机栈"><a href="#2-1-2-Java虚拟机栈" class="headerlink" title="2.1.2 Java虚拟机栈"></a>2.1.2 Java虚拟机栈</h4><p>虚拟机栈是线程私有的，生命周期和线程相同。描述的是Java方法执行的线程内存模型。每个方法被执行的时候，会同步创建栈帧。</p>
-<ul>
-<li><p>栈帧</p>
-<ul>
-<li><p>局部变量表：编译器可知的基本数据类型、对象引用、返回地址</p>
-</li>
-<li><p>操作数栈：用于暂存计算的操作数和结果</p>
-</li>
-<li><p>动态链接：符号引用(字符串)转化内直接引用(指针)</p>
-</li>
-<li><p>方法出口</p>
-<p>​</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-3-本地方法栈"><a href="#2-1-3-本地方法栈" class="headerlink" title="2.1.3 本地方法栈"></a>2.1.3 本地方法栈</h4><p>本地方法栈执为虚拟机使用到的本地方法服务</p>
-<h4 id="2-1-4-Java堆"><a href="#2-1-4-Java堆" class="headerlink" title="2.1.4 Java堆"></a>2.1.4 Java堆</h4><p>堆是虚拟机锁管理的内存中最大的一块，被所有线程共享。在虚拟机启动时创建，存放对象实例(所有还是大部分？)</p>
-<p>从内存分配的角度来看，堆中还可以划分出线程私有的分配缓冲区。</p>
-<p><strong>改变Java堆的大小</strong></p>
-<ul>
-<li>-Xmx</li>
-<li>-Xms</li>
-</ul>
-<p><strong>字符串常量池</strong></p>
-<p>编译器可确定的字符串常量自动入池，运行时生成的字符串需要通过intern()手动入池</p>
-<h4 id="2-1-5-方法区"><a href="#2-1-5-方法区" class="headerlink" title="2.1.5 方法区"></a>2.1.5 方法区</h4><p>方法区是各个线程共享的内存区域，存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。</p>
-<h4 id="2-1-6-运行时常量池"><a href="#2-1-6-运行时常量池" class="headerlink" title="2.1.6 运行时常量池"></a>2.1.6 运行时常量池</h4><p>运行时常量池是方法区的一部分，存放编译器生成的各种字面量与符号引用</p>
-<p>String.intern</p>
-<h4 id="2-2-7-直接内存"><a href="#2-2-7-直接内存" class="headerlink" title="2.2.7  直接内存"></a>2.2.7  直接内存</h4><p>直接内存是一种特殊的内存缓冲区，并不在 Java 堆或方法区中分配的，而是通过 JNI 的方式在本地内存上分配的。</p>
-<h3 id="2-3HotSpot虚拟机对象探秘"><a href="#2-3HotSpot虚拟机对象探秘" class="headerlink" title="2.3HotSpot虚拟机对象探秘"></a>2.3HotSpot虚拟机对象探秘</h3><h4 id="2-3-1-对象的创建"><a href="#2-3-1-对象的创建" class="headerlink" title="2.3.1 对象的创建"></a>2.3.1 对象的创建</h4><p>当虚拟机遇到new字节码指令时，首先回去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并检查这个符号引用代表的类是否已经被加载、解析、初始化过，如果没有，先执行类的加载。</p>
-<ul>
-<li>为新生对象分配内存，根据Java堆的内存是否规整，选择指针碰撞或空闲列表的方式分配内存<ul>
-<li>针对并发问题，有CAS和本地线程分配缓冲</li>
-</ul>
-</li>
-<li>内存分配完成后，必须将分配到的内存空间初始化为零值</li>
-<li>对对象进行必要的设置</li>
-<li>执行构造函数，对对象进行初始化</li>
-</ul>
-<h4 id="2-3-2-对象的内存布局"><a href="#2-3-2-对象的内存布局" class="headerlink" title="2.3.2 对象的内存布局"></a>2.3.2 对象的内存布局</h4><p>对象在HotSpot虚拟机中的存储布局可以分为三个部分：对象头、实例数据、对齐填充。</p>
-<p>*** 对象头***</p>
-<ul>
-<li>对象自身的运行时数据(Mark Word)<ul>
-<li>哈希码</li>
-<li>GC分代年龄</li>
-<li>锁状态标志</li>
-<li>线程持有的锁</li>
-<li>偏向线程ID</li>
-</ul>
-</li>
-<li>类型指针<ul>
-<li>对象指向它的类型元数据的指针</li>
-</ul>
-</li>
-</ul>
-<p><em><strong>实例数据</strong></em></p>
-<ul>
-<li>程序代码中所定义的各种类型的字段内容</li>
-</ul>
-<p>*** 对齐填充***</p>
-<ul>
-<li>占位符，符合对象的起始地址是8字节的整数倍</li>
-</ul>
-<h4 id="2-3-3-对象的访问定位"><a href="#2-3-3-对象的访问定位" class="headerlink" title="2.3.3 对象的访问定位"></a>2.3.3 对象的访问定位</h4><p>Java程序通过栈上的reference数据来操作堆上的具体对象。reference是一个指向对象的引用，通过引用去访问对象的方式主要有句柄和直接指针两种</p>
-<p>*** 句柄***‘</p>
-<ul>
-<li>堆中内存划分出一块作为句柄池，reference中存储的是对象的句柄地址，句柄在包含对象实例数据和对象类型数据各自具体的地址信息。</li>
-</ul>
-<p><em><strong>直接指针</strong></em></p>
-<p>存储的是对象地址</p>
-<h3 id="2-4-OOM"><a href="#2-4-OOM" class="headerlink" title="2.4 OOM"></a>2.4 OOM</h3><h4 id="2-4-1-堆溢出"><a href="#2-4-1-堆溢出" class="headerlink" title="2.4.1 堆溢出"></a>2.4.1 堆溢出</h4><p>对象太多，总容量触及最大堆的容量限制后就会产生内存溢出异常。</p>
-<h4 id="2-4-2-栈溢出"><a href="#2-4-2-栈溢出" class="headerlink" title="2.4.2  栈溢出"></a>2.4.2  栈溢出</h4><p>栈溢出的本质是新的栈帧内存无法分配的时候，导致OOM。</p>
-<p>有两种情况</p>
-<ul>
-<li>栈帧太大</li>
-<li>虚拟机栈容量太小</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>判等</title>
     <url>/2026/01/15/%E5%88%A4%E7%AD%89/</url>
     <content><![CDATA[<h2 id="1-判等的工具"><a href="#1-判等的工具" class="headerlink" title="1.判等的工具"></a>1.判等的工具</h2><p>在Java中，有两种方式来判断是否相等：&#x3D;&#x3D;和equals。</p>
@@ -902,137 +1043,100 @@
       </tags>
   </entry>
   <entry>
-    <title>使用hexo和github创建自己的博客</title>
-    <url>/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>本篇文章参考<a href="https://hexo.io/zh-cn/docs/"><strong>Hexo官方文档</strong></a>、<a href="https://zhuanlan.zhihu.com/p/265077468"><strong>Hexo博客如何插入图片</strong></a>、 <a href="https://docs.github.com/en/pages/quickstart"><strong>Github Pages</strong></a>，一步一步搭建自己的博客。</p>
-<h2 id="1-前置准备"><a href="#1-前置准备" class="headerlink" title="1.前置准备"></a>1.前置准备</h2><p>安装Hexo需要先安装Node.js和Git</p>
-<h3 id="1-1-安装Node-js"><a href="#1-1-安装Node-js" class="headerlink" title="1.1 安装Node.js"></a>1.1 安装Node.js</h3><p><a href="https://nodejs.org/zh-cn"><strong>node官网</strong></a>，推荐下载12.0及以上的LTS版本(默认包含npm工具包)，一路安装即可。</p>
-<p>输入<code>node -v</code> <code>npm -v</code>验证是否安装成功</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122143108724.png"></p>
-<h3 id="1-2-安装git-已经配置的可跳过，后续命令都在git中完成"><a href="#1-2-安装git-已经配置的可跳过，后续命令都在git中完成" class="headerlink" title="1.2 安装git(已经配置的可跳过，后续命令都在git中完成)"></a>1.2 安装git(已经配置的可跳过，后续命令都在git中完成)</h3><p><a href="https://git-scm.com/"><strong>git官网</strong></a>，一路安装即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git --version  # 检查是否已经安装git</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>配置用户名、密码以及密钥</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;github绑定的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 生成 ssh 密钥</span><br><span class="line">ssh-keygen -t rsa -C &quot;github 注册邮箱&quot;</span><br></pre></td></tr></table></figure>
-
-<p>使用生成ssh密钥的命令后，会生成<code>id_rsa</code> (私有)<code>id_rsa.pub</code>（公有）两个文件，打开<code>id_rsa.pub</code>中的密钥，复制到<code>GitHub-Settings-SSH and GPG Keys</code>页面，创建一个新的SSH key</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122141133630.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com  # 测试SSH连接</span><br></pre></td></tr></table></figure>
-
-<p>如果成功，会显示Hi，xxx! You’ve successfully authenticated…</p>
-<h2 id="2-安装Hexo并初始化"><a href="#2-安装Hexo并初始化" class="headerlink" title="2.安装Hexo并初始化"></a>2.安装Hexo并初始化</h2><p>使用以下命令安装hexo相关工具</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<p><strong>初始化项目</strong></p>
-<ol>
-<li>创建一个新文件夹用来存放博客，并执行hexo init命令</li>
-<li>执行npm install安装必备组件</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<p>初始化后，目录结构如图所示</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line"> ├── _config.yml # 网站配置信息</span><br><span class="line"> ├── package.json # 应用程序信息</span><br><span class="line"> ├── scaffolds # 模板文件夹</span><br><span class="line"> ├── source # 存放用户资源</span><br><span class="line"> |   ├── _drafts</span><br><span class="line"> |   └── _posts</span><br><span class="line"> └── themes # 主题文件夹</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>本地部署博客</strong></p>
-<ol>
-<li>新建博客</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;博客名&quot;</span><br></pre></td></tr></table></figure>
-
-<p>执行此命令会在&#x2F;source&#x2F;_posts目录下创建一个md文件，用markdown编辑器即可对博客进行编辑</p>
-<ol start="2">
-<li>生成静态网页</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>打开本地服务器</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>在浏览器打开<code>http://localhost:4000</code>，就可以看到部署的网页</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122151002542.png"></p>
-<h2 id="3-部署到Github-Pages"><a href="#3-部署到Github-Pages" class="headerlink" title="3. 部署到Github Pages"></a>3. 部署到Github Pages</h2><p>如果博客需要其他人也访问，则需要部署到服务器上，在这里选择使用Github Pages，是免费的。访问的地址是<code>https://用户名.github.io</code></p>
-<h3 id="3-1-新建一个仓库"><a href="#3-1-新建一个仓库" class="headerlink" title="3.1 新建一个仓库"></a>3.1 新建一个仓库</h3><p><strong>注意点</strong></p>
+    <title>《深入理解Java虚拟机》阅读笔记（1）</title>
+    <url>/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="1-第一章“走进“Java”"><a href="#1-第一章“走进“Java”" class="headerlink" title="1.第一章“走进“Java”"></a>1.第一章“走进“Java”</h2><p><strong>Java的优势之JVM</strong></p>
 <ul>
-<li><p>仓库一定是<code>public</code>的，否则别人访问不到</p>
+<li>虚拟机层面屏蔽技术的复杂性和操作系统的差异性</li>
+</ul>
+<h2 id="2-第二章“Java内存区域与内存溢出异常”"><a href="#2-第二章“Java内存区域与内存溢出异常”" class="headerlink" title="2.第二章“Java内存区域与内存溢出异常”"></a>2.第二章“Java内存区域与内存溢出异常”</h2><h3 id="2-1-运行时数据区域"><a href="#2-1-运行时数据区域" class="headerlink" title="2.1 运行时数据区域"></a>2.1 运行时数据区域</h3><p><img src="/2025/11/24/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/image-20251124231738862.png" alt="JVM内存区域"></p>
+<h4 id="2-1-1程序计数器"><a href="#2-1-1程序计数器" class="headerlink" title="2.1.1程序计数器"></a>2.1.1程序计数器</h4><p>程序计数器是当前线程所执行的字节码的行号指示器(唯一不会出现OOM的区域)</p>
+<p>因为Java是多线程执行的，每个处理器在一个时间内只会执行一条线程内的指令，所以每条线程都要有单独的程序计数器，为了线程切换后能恢复到正确的执行位置。</p>
+<h4 id="2-1-2-Java虚拟机栈"><a href="#2-1-2-Java虚拟机栈" class="headerlink" title="2.1.2 Java虚拟机栈"></a>2.1.2 Java虚拟机栈</h4><p>虚拟机栈是线程私有的，生命周期和线程相同。描述的是Java方法执行的线程内存模型。每个方法被执行的时候，会同步创建栈帧。</p>
+<ul>
+<li><p>栈帧</p>
+<ul>
+<li><p>局部变量表：编译器可知的基本数据类型、对象引用、返回地址</p>
 </li>
-<li><p>仓库名一定是<code>用户名.github.io</code></p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145400207.png"></p>
+<li><p>操作数栈：用于暂存计算的操作数和结果</p>
+</li>
+<li><p>动态链接：符号引用(字符串)转化内直接引用(指针)</p>
+</li>
+<li><p>方法出口</p>
+<p>​</p>
 </li>
 </ul>
-<h3 id="3-2-更改hexo配置"><a href="#3-2-更改hexo配置" class="headerlink" title="3.2 更改hexo配置"></a>3.2 更改hexo配置</h3><p>打开目录下_config.Yaml文件</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122145713620.png"></p>
-<p>找到Deployment选项</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="line">deploy:</span><br><span class="line">  type: &#x27;git&#x27;</span><br><span class="line">  repository: git@github.com:myc1543/myc1543.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>修改type项为git</li>
-<li>repository项为仓库地址</li>
-<li>branch为main</li>
+</li>
 </ul>
-<p>注意每项配置<code>:</code>后有空格</p>
-<h3 id="3-3-远程部署"><a href="#3-3-远程部署" class="headerlink" title="3.3 远程部署"></a>3.3 远程部署</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g ## 生成静态网页</span><br><span class="line">hexo d ## 部署到Github Pages</span><br></pre></td></tr></table></figure>
-
-
-
-<p>访问<code>https://用户名.github.io</code> 即可</p>
-<h2 id="4-hexo中插入图片"><a href="#4-hexo中插入图片" class="headerlink" title="4.hexo中插入图片"></a>4.hexo中插入图片</h2><p>用md有个蛋疼的问题，就是对图片的展示不是很友好。</p>
-<h3 id="4-1-插入图片"><a href="#4-1-插入图片" class="headerlink" title="4.1 插入图片"></a>4.1 插入图片</h3><p>在md中插入图片的语法为<code>![图片描述](图片路径)</code></p>
-<p>这里图片路径有三种方式</p>
+<h4 id="2-1-3-本地方法栈"><a href="#2-1-3-本地方法栈" class="headerlink" title="2.1.3 本地方法栈"></a>2.1.3 本地方法栈</h4><p>本地方法栈执为虚拟机使用到的本地方法服务</p>
+<h4 id="2-1-4-Java堆"><a href="#2-1-4-Java堆" class="headerlink" title="2.1.4 Java堆"></a>2.1.4 Java堆</h4><p>堆是虚拟机锁管理的内存中最大的一块，被所有线程共享。在虚拟机启动时创建，存放对象实例(所有还是大部分？)</p>
+<p>从内存分配的角度来看，堆中还可以划分出线程私有的分配缓冲区。</p>
+<p><strong>改变Java堆的大小</strong></p>
 <ul>
-<li>绝对路径</li>
-<li>相对路径</li>
-<li>网络路径</li>
+<li>-Xmx</li>
+<li>-Xms</li>
 </ul>
-<p>对应的，在hexo中使用图片资源，除了网络路径无需更改，相对路径和绝对路径都是需要先在资源文件下存放， 才能正确显示。</p>
-<p><strong>(1)绝对路径引用</strong></p>
-<p>绝对路径使用需要在<code>/source</code> 文件夹下创建一个资源文件夹如<code>/source/pictures/</code>,作为全局资源文件夹</p>
-<p>引用方式为<code>![](/pictures/picture1.jpg)</code></p>
-<p><strong>(2)相对路径引用</strong></p>
-<p>hexo提供了一个资源文件管理功能，通过config.yml文件中的<code>post_assert_folder</code>设置为true来打开。此时当创建一个新的md博客，会同步创建一个相同名字的文件夹，在博客中之需要使用相对路径引用图片即可。</p>
-<p>举个例子：创建了一个新的博客为blog.md，目录结构为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- source</span><br><span class="line">	- _posts</span><br><span class="line">		- blog.md</span><br><span class="line">		- blog(文件夹)</span><br></pre></td></tr></table></figure>
-
-<p>blog文件夹中存放了1.png，引用方式为<code>![](1.png)</code></p>
-<p><strong>预览不正确的问题</strong></p>
-<p>但这时，直接使用相对路径引入的图片，只能在<strong>博文详情页</strong>展示，在首页或者存档页的预览会不正确，此时应该改为<code>![](% assert_img 1.png %)</code></p>
-<p>这时候可以引入<code>hexo-renderer-marked</code>插件来解决这个问题</p>
-<p>使用<code>npm install hexo-renderer-marked</code>命令直接安装，之后在<code>config.yaml</code>中更改配置如下：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">marked:</span></span><br><span class="line">  <span class="attr">prependRoot:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-配合Typora来简化操作"><a href="#4-2-配合Typora来简化操作" class="headerlink" title="4.2 配合Typora来简化操作"></a>4.2 配合Typora来简化操作</h3><p>这时候会发现一个问题，就是每次我想使用图片的时候，都需要先在资源文件下存放图片，才能使用，这对复制黏贴的截图来说很不友好。</p>
-<p>Typora的设置可以自动将插入的图片复制一份到文章资源文件夹</p>
-<p><code>文件-偏好设置-图像</code>，设置为复制到指定路径<code>/.${filename}</code>，并且设置优先显示相对路径</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122173743632.png"></p>
-<p>这时候图片的路径就为<code>文章名/picture.jpg</code>。但是hexo的路径应该是没有前面的前缀的，用全局搜索替换<code>文章名/</code>为空即可。</p>
-<p>此时本地typora就显示不出图片，可以设置<code>格式-图像-设置图像根目录</code>来解决</p>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174149386.png" alt="image-20251122174149386"></p>
-<h3 id="4-3-插入图片的总结"><a href="#4-3-插入图片的总结" class="headerlink" title="4.3 插入图片的总结"></a>4.3 插入图片的总结</h3><ol>
-<li>下载<code>hexo-renderer-marked</code>插件并修改<code>config.yaml</code>配置</li>
-<li>设置Typora插入图片设置(<code>插入到指定路径</code> <code>优先使用相对路径</code>)</li>
-</ol>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174615272.png"></p>
-<ol start="3">
-<li>使用<code>&lt;C-f&gt;</code>快捷键，将所有的<code>文章名/</code>替换为空</li>
-</ol>
-<p><img src="/2025/11/22/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgithub%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/image-20251122174748275.png"></p>
-<ol start="4">
-<li>设置图片根目录，在本地编辑器显示</li>
-</ol>
+<p><strong>字符串常量池</strong></p>
+<p>编译器可确定的字符串常量自动入池，运行时生成的字符串需要通过intern()手动入池</p>
+<h4 id="2-1-5-方法区"><a href="#2-1-5-方法区" class="headerlink" title="2.1.5 方法区"></a>2.1.5 方法区</h4><p>方法区是各个线程共享的内存区域，存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。</p>
+<h4 id="2-1-6-运行时常量池"><a href="#2-1-6-运行时常量池" class="headerlink" title="2.1.6 运行时常量池"></a>2.1.6 运行时常量池</h4><p>运行时常量池是方法区的一部分，存放编译器生成的各种字面量与符号引用</p>
+<p>String.intern</p>
+<h4 id="2-2-7-直接内存"><a href="#2-2-7-直接内存" class="headerlink" title="2.2.7  直接内存"></a>2.2.7  直接内存</h4><p>直接内存是一种特殊的内存缓冲区，并不在 Java 堆或方法区中分配的，而是通过 JNI 的方式在本地内存上分配的。</p>
+<h3 id="2-3HotSpot虚拟机对象探秘"><a href="#2-3HotSpot虚拟机对象探秘" class="headerlink" title="2.3HotSpot虚拟机对象探秘"></a>2.3HotSpot虚拟机对象探秘</h3><h4 id="2-3-1-对象的创建"><a href="#2-3-1-对象的创建" class="headerlink" title="2.3.1 对象的创建"></a>2.3.1 对象的创建</h4><p>当虚拟机遇到new字节码指令时，首先回去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并检查这个符号引用代表的类是否已经被加载、解析、初始化过，如果没有，先执行类的加载。</p>
+<ul>
+<li>为新生对象分配内存，根据Java堆的内存是否规整，选择指针碰撞或空闲列表的方式分配内存<ul>
+<li>针对并发问题，有CAS和本地线程分配缓冲</li>
+</ul>
+</li>
+<li>内存分配完成后，必须将分配到的内存空间初始化为零值</li>
+<li>对对象进行必要的设置</li>
+<li>执行构造函数，对对象进行初始化</li>
+</ul>
+<h4 id="2-3-2-对象的内存布局"><a href="#2-3-2-对象的内存布局" class="headerlink" title="2.3.2 对象的内存布局"></a>2.3.2 对象的内存布局</h4><p>对象在HotSpot虚拟机中的存储布局可以分为三个部分：对象头、实例数据、对齐填充。</p>
+<p>*** 对象头***</p>
+<ul>
+<li>对象自身的运行时数据(Mark Word)<ul>
+<li>哈希码</li>
+<li>GC分代年龄</li>
+<li>锁状态标志</li>
+<li>线程持有的锁</li>
+<li>偏向线程ID</li>
+</ul>
+</li>
+<li>类型指针<ul>
+<li>对象指向它的类型元数据的指针</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>实例数据</strong></em></p>
+<ul>
+<li>程序代码中所定义的各种类型的字段内容</li>
+</ul>
+<p>*** 对齐填充***</p>
+<ul>
+<li>占位符，符合对象的起始地址是8字节的整数倍</li>
+</ul>
+<h4 id="2-3-3-对象的访问定位"><a href="#2-3-3-对象的访问定位" class="headerlink" title="2.3.3 对象的访问定位"></a>2.3.3 对象的访问定位</h4><p>Java程序通过栈上的reference数据来操作堆上的具体对象。reference是一个指向对象的引用，通过引用去访问对象的方式主要有句柄和直接指针两种</p>
+<p>*** 句柄***‘</p>
+<ul>
+<li>堆中内存划分出一块作为句柄池，reference中存储的是对象的句柄地址，句柄在包含对象实例数据和对象类型数据各自具体的地址信息。</li>
+</ul>
+<p><em><strong>直接指针</strong></em></p>
+<p>存储的是对象地址</p>
+<h3 id="2-4-OOM"><a href="#2-4-OOM" class="headerlink" title="2.4 OOM"></a>2.4 OOM</h3><h4 id="2-4-1-堆溢出"><a href="#2-4-1-堆溢出" class="headerlink" title="2.4.1 堆溢出"></a>2.4.1 堆溢出</h4><p>对象太多，总容量触及最大堆的容量限制后就会产生内存溢出异常。</p>
+<h4 id="2-4-2-栈溢出"><a href="#2-4-2-栈溢出" class="headerlink" title="2.4.2  栈溢出"></a>2.4.2  栈溢出</h4><p>栈溢出的本质是新的栈帧内存无法分配的时候，导致OOM。</p>
+<p>有两种情况</p>
+<ul>
+<li>栈帧太大</li>
+<li>虚拟机栈容量太小</li>
+</ul>
 ]]></content>
       <categories>
         <category>技术</category>
-        <category>工具</category>
+        <category>Java</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1137,110 +1241,6 @@
 ]]></content>
       <categories>
         <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数值计算</title>
-    <url>/2026/01/15/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h2 id="1-浮点数"><a href="#1-浮点数" class="headerlink" title="1. 浮点数"></a>1. 浮点数</h2><h3 id="1-1浮点数计算"><a href="#1-1浮点数计算" class="headerlink" title="1.1浮点数计算"></a>1.1浮点数计算</h3><p>学过计算机组成原理的同学都知道，在程序中，我们使用二进制并不能准确地表示一个数。以0.1为例，0.1的二进制表示为0.0 0011 0011 0011…，再转化为十进制，就变成了0.1000000000000000055511151231257827021181583404541015625。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(0.1 + 0.2);</span><br><span class="line">// 输出结果：0.30000000000000004</span><br></pre></td></tr></table></figure>
-
-<p>所以我们在使用浮点数时，需要注意可能带来的误差。</p>
-<h3 id="1-2-浮点数格式化"><a href="#1-2-浮点数格式化" class="headerlink" title="1.2 浮点数格式化"></a>1.2 浮点数格式化</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">double num1 = 3.35;</span><br><span class="line">float num2 = 3.35f;</span><br><span class="line">System.out.println(String.format(&quot;%.1f&quot;, num1)); // 输出3.4</span><br><span class="line">System.out.println(String.format(&quot;%.1f&quot;, num2)); // 输出3.3</span><br></pre></td></tr></table></figure>
-
-<p>这就是由精度问题和舍入方式共同导致的，double和float的3.35其实相当于3.350xxx和3.349xxx：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3.350000000000000088817841970012523233890533447265625</span><br><span class="line">3.349999904632568359375</span><br></pre></td></tr></table></figure>
-
-<p>String.format采用四舍五入的方式进行舍入，取1位小数，double的3.350四舍五入为3.4，而float的3.349四舍五入为3.3。</p>
-<h2 id="2-BigDecimal"><a href="#2-BigDecimal" class="headerlink" title="2.BigDecimal"></a>2.BigDecimal</h2><p>涉及到精确计算时，我们常常使用decimal来代替浮点数。但是使用浮点数也有一些注意事项</p>
-<h3 id="2-1-使用字符串的构造方法来初始化BigDecimal"><a href="#2-1-使用字符串的构造方法来初始化BigDecimal" class="headerlink" title="2.1 使用字符串的构造方法来初始化BigDecimal"></a>2.1 使用字符串的构造方法来初始化BigDecimal</h3><hr>
-<h4 id="使用浮点数来初始化BigDecimal"><a href="#使用浮点数来初始化BigDecimal" class="headerlink" title="使用浮点数来初始化BigDecimal"></a>使用浮点数来初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(0.1).add(new BigDecimal(0.2)));</span><br><span class="line">// 输出结果 0.3000000000000000166533453693773481063544750213623046875</span><br></pre></td></tr></table></figure>
-
-<p>对比直接使用浮点数做运算，使用BigDecimal，仅仅是提高了精度，并没有解决根本问题。</p>
-<h4 id="使用字符串来初始化BigDecimal"><a href="#使用字符串来初始化BigDecimal" class="headerlink" title="使用字符串来初始化BigDecimal"></a>使用字符串来初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;0.1&quot;).add(new BigDecimal(&quot;0.2&quot;)));</span><br><span class="line">// 输出结果 0.3</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="double转为字符串，初始化BigDecimal"><a href="#double转为字符串，初始化BigDecimal" class="headerlink" title="double转为字符串，初始化BigDecimal"></a>double转为字符串，初始化BigDecimal</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;3.1&quot;).multiply(new BigDecimal(Double.toString(100))));</span><br><span class="line">// 输出结果 310.00</span><br></pre></td></tr></table></figure>
-
-<p>BigDecimal有scale和precision两个概念</p>
-<ul>
-<li>scale:小数点右边的位数</li>
-<li>precision:有效数字的长度</li>
-</ul>
-<p><strong>对于BigDecimal乘法操作，返回值的scale是两个数的scale相加</strong></p>
-<p>new BigDecimal(“3.1”)得到的为3.1，new BigDecimal(Double.toString(100))得到的为100.0，所以相乘得到310.00</p>
-<h3 id="2-2-浮点数的字符串格式化通过BigDecimal来进行"><a href="#2-2-浮点数的字符串格式化通过BigDecimal来进行" class="headerlink" title="2.2 浮点数的字符串格式化通过BigDecimal来进行"></a>2.2 浮点数的字符串格式化通过BigDecimal来进行</h3><p>根据对浮点数的测试，在进行格式化的时候会有精度问题，使用BigDecimal可以避免这个问题</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BigDecimal num1 = new BigDecimal(&quot;3.35&quot;);</span><br><span class="line">BigDecimal num2 = num1.setScale(1, BigDecimal.ROUND_DOWN);</span><br><span class="line">System.out.println(num2); // 3.3</span><br><span class="line">BigDecimal num3 = num1.setScale(1, BigDecimal.ROUND_HALF_UP);</span><br><span class="line">System.out.println(num3); // 3.4</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-3-BigDecimal判等"><a href="#2-3-BigDecimal判等" class="headerlink" title="2.3 BigDecimal判等"></a>2.3 BigDecimal判等</h3><p>BigDecimal的判等会同时判断scale和value</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;1&quot;).equals(new BigDecimal(&quot;1.0&quot;))); // false</span><br></pre></td></tr></table></figure>
-
-<p>可以通过compareTo方法只比较数值部分</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">System.out.println(new BigDecimal(&quot;1&quot;).compareTo(new BigDecimal(&quot;1.0&quot;)) == 0); // true</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="HashSet-和-HashMap问题"><a href="#HashSet-和-HashMap问题" class="headerlink" title="HashSet 和 HashMap问题"></a>HashSet 和 HashMap问题</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set hashSet1 = new HashSet&lt;&gt;();</span><br><span class="line">hashSet1.add(new BigDecimal(&quot;1.0&quot;));</span><br><span class="line">System.out.println(hashSet1.contains(new BigDecimal(&quot;1&quot;)));// false</span><br></pre></td></tr></table></figure>
-
-<p>有两个解决方法</p>
-<ul>
-<li>使用TreeSet替换HashSet，TreeSet不使用hashCode方法，也不使用equals，而是使用compareTo</li>
-<li>把BigDecimal存入HashSet或HashMap前，先使用stripTrailingZeros方法去掉尾部的零，比较的时候也去掉尾部的0，确保value相同的BigDecimal，scale也是一致的</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Set hashSet2 = new HashSet&lt;&gt;();</span><br><span class="line">hashSet2.add(new BigDecimal(&quot;1.0&quot;).stripTrailingZeros());</span><br><span class="line">System.out.println(hashSet2.contains(new BigDecimal(&quot;1.000&quot;).stripTrailingZeros()));// true</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3-溢出问题"><a href="#3-溢出问题" class="headerlink" title="3. 溢出问题"></a>3. 溢出问题</h2><p>和小数类似，由于数值是二进制表示，当数值超过了可表示的最大值，就会变成最小值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">long l = Long.MAX_VALUE;</span><br><span class="line">System.out.println(l + 1);</span><br><span class="line">System.out.println(l + 1 == Long.MIN_VALUE);</span><br><span class="line">--------------------------------------------</span><br><span class="line">输出结果</span><br><span class="line">-9223372036854775808</span><br><span class="line">true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>当发生溢出时，没有任何异常，所以难以感知到，要解决这个问题，有以下两种方法</p>
-<h3 id="3-1-Exact方法"><a href="#3-1-Exact方法" class="headerlink" title="3.1 Exact方法"></a>3.1 Exact方法</h3><p>使用Math类的addExact、subtractExact等xxExact方法进行数值运算，这些方法可以在数值溢出时主动抛出异常</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">            long l = Long.MAX_VALUE;</span><br><span class="line">            System.out.println(Math.addExact(l, 1));</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>结果</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java.lang.ArithmeticException: long overflow</span><br><span class="line">	at java.lang.Math.addExact(Math.java:809)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-2-使用大数类BigInteger"><a href="#3-2-使用大数类BigInteger" class="headerlink" title="3.2 使用大数类BigInteger"></a>3.2 使用大数类BigInteger</h3><p>如果希望把计算结果转换一个Long变量的话，可以使用BigInteger的longValueExact方法，在转换出现溢出时，同样会抛出ArithmeticException：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BigInteger i = new BigInteger(String.valueOf(Long.MAX_VALUE));</span><br><span class="line">System.out.println(i.add(BigInteger.ONE).toString());</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">    long l = i.add(BigInteger.ONE).longValueExact();</span><br><span class="line">&#125; catch (Exception ex) &#123;</span><br><span class="line">    ex.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>结果</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">9223372036854775808</span><br><span class="line">java.lang.ArithmeticException: BigInteger out of long range</span><br><span class="line">	at java.math.BigInteger.longValueExact(BigInteger.java:4632)</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2026/01/15/List%E7%9A%84%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="Arrays-asList返回的List不支持增删操作"><a href="#Arrays-asList返回的List不支持增删操作" class="headerlink" title="Arrays.asList返回的List不支持增删操作"></a>Arrays.asList返回的List不支持增删操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Arrays.asList(1,2,3);</span><br><span class="line">list.add(4);</span><br></pre></td></tr></table></figure>
-
-<p>通过Arrays.asList得到的list插入数据， 此时会发生错误</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.UnsupportedOperationException</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:148)</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:108)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">private static class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</span><br><span class="line">        implements RandomAccess, java.io.Serializable</span><br></pre></td></tr></table></figure>
-
-<p>ArrayList不是util包下的ArrayList，而是Arrays的内部类，继承了AbstractList的抽象类，但是没有实现add、remove方法，调用AbstractList的方法。而AbstractList的方法是抛出一个异常。。。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void add(int index, E element) &#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">public E remove(int index) &#123;</span><br><span class="line">        throw new UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>踩坑</category>
       </categories>
       <tags>
         <tag>Java</tag>
