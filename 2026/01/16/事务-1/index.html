@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="MySQL中的事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事务(1)">
+<meta property="og:url" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/index.html">
+<meta property="og:site_name" content="The Dawn">
+<meta property="og:description" content="MySQL中的事务">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/AID-%3EC.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117213843383.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117213855509.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117214247313.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117214729349.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117214823134.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117215635667.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117215755132.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117221109954.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117222630040.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117223050140.png">
+<meta property="og:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117223107072.png">
+<meta property="article:published_time" content="2026-01-16T08:39:55.000Z">
+<meta property="article:modified_time" content="2026-01-17T14:35:55.896Z">
+<meta property="article:author" content="The Dawn">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/AID-%3EC.png">
+
+
+<link rel="canonical" href="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/","path":"2026/01/16/事务-1/","title":"事务(1)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>事务(1) | The Dawn</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Dawn</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E5%8A%A1%EF%BC%9F"><span class="nav-text">1.什么是事务？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%89%B9%E6%80%A7-ACID"><span class="nav-text">2.事务的特性-ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%AA%8C%E8%AF%81ACID"><span class="nav-text">3.验证ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-text">3.1 原子性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%88%90%E5%8A%9F"><span class="nav-text">执行成功</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%A4%B1%E8%B4%A5"><span class="nav-text">执行失败</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8C%81%E4%B9%85%E6%80%A7"><span class="nav-text">3.2 持久性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%9A%94%E7%A6%BB%E6%80%A7"><span class="nav-text">3.3 隔离性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AF%BB%E6%9C%AA%E6%8F%90%E4%BA%A4-Read-Uncommitted"><span class="nav-text">(1)读未提交 Read Uncommitted</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AF%BB%E5%B7%B2%E6%8F%90%E4%BA%A4-READ-COMMITTED"><span class="nav-text">(2)读已提交 READ-COMMITTED</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB-REPEATABLE-READ"><span class="nav-text">(3)可重复读 REPEATABLE-READ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB-%E5%B9%BB%E8%AF%BB"><span class="nav-text">可重复读 - 幻读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%8F%AF%E4%B8%B2%E8%A1%8C%E5%8C%96-SERIALIZABLE"><span class="nav-text">(4)可串行化 SERIALIZABLE</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">3.4 一致性</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="The Dawn"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">The Dawn</p>
+  <div class="site-description" itemprop="description">一位即将步入职场的应届生的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/16/%E4%BA%8B%E5%8A%A1-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="The Dawn">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Dawn">
+      <meta itemprop="description" content="一位即将步入职场的应届生的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="事务(1) | The Dawn">
+      <meta itemprop="description" content="MySQL中的事务">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          事务(1)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-16 16:39:55" itemprop="dateCreated datePublished" datetime="2026-01-16T16:39:55+08:00">2026-01-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-01-17 22:35:55" itemprop="dateModified" datetime="2026-01-17T22:35:55+08:00">2026-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">MySQL中的事务</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近在看事务相关的问题，所以打算把事务写成一个专题，从存储层的事务到应用层的事务。</p>
+<h2 id="1-什么是事务？"><a href="#1-什么是事务？" class="headerlink" title="1.什么是事务？"></a>1.什么是事务？</h2><p>事务是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。简单来说就是，多条sql是一个整体，要么全都执行成功，要么全部执行失败。</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>某人要在商店使购买100元的东西，当中至少包括两个操作：</p>
+<ol>
+<li>该人账户减少100元</li>
+<li>商店账户增加100元</li>
+</ol>
+<p>事务就是要确保以上两个操作（整个“事务”）都能完成，或一起取消；否则就会出现100元平白消失或出现的情况</p>
+<h2 id="2-事务的特性-ACID"><a href="#2-事务的特性-ACID" class="headerlink" title="2.事务的特性-ACID"></a>2.事务的特性-ACID</h2><p>事务应该拥有以下四个特性</p>
+<ul>
+<li><strong>原子性（Atomicity）</strong>：事务作为一个整体被执行，包含在其中的对数据库的操作要么全部被执行，要么都不执行。</li>
+<li><strong>一致性（Consistency）</strong>：事务应确保数据库的状态从一个一致状态转变为另一个一致状态。<em>一致状态</em>的含义是数据库中的数据应满足完整性约束。</li>
+<li><strong>隔离性（Isolation）</strong>：多个事务并发执行时，一个事务的执行不应影响其他事务的执行。</li>
+<li><strong>持久性（Durability）</strong>：已被提交的事务对数据库的修改应该永久保存在数据库中。</li>
+</ul>
+<p>只有保证了AID，才能保证一致性。</p>
+<p><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/AID-%3EC.png" alt="AID-&gt;C"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="3-验证ACID"><a href="#3-验证ACID" class="headerlink" title="3.验证ACID"></a>3.验证ACID</h2><p>现在我们有一张账户表，里面记录着余额。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE account (</span><br><span class="line">    id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    name VARCHAR(50),</span><br><span class="line">    balance INT</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
+
+<p>有A和B两个人，账户都为100</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO account(name, balance) VALUES (&#x27;A&#x27;, 100), (&#x27;B&#x27;, 100);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-1-原子性"><a href="#3-1-原子性" class="headerlink" title="3.1 原子性"></a>3.1 原子性</h3><h4 id="执行成功"><a href="#执行成功" class="headerlink" title="执行成功"></a>执行成功</h4><p><strong>转账前</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |     100 |</span><br><span class="line">|  2 | B    |     100 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+
+
+<p>A向B转账10元</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 开启事务</span><br><span class="line">start transaction;</span><br><span class="line">UPDATE account SET balance = balance - 10 WHERE name = &#x27;A&#x27;;</span><br><span class="line">UPDATE account SET balance = balance + 10 WHERE name = &#x27;B&#x27;;</span><br><span class="line">-- 提交事务</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
+
+<p>转账成功后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |      90 |</span><br><span class="line">|  2 | B    |     110 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="执行失败"><a href="#执行失败" class="headerlink" title="执行失败"></a>执行失败</h4><p><strong>转账前</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |      90 |</span><br><span class="line">|  2 | B    |     110 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+
+
+<p>A向B转账10元，失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 开启事务</span><br><span class="line">start transaction;</span><br><span class="line">UPDATE account SET balance = balance - 10 WHERE name = &#x27;A&#x27;;</span><br><span class="line">UPDATE account SET balance = balance + 10 WHERE name = &#x27;B&#x27;;</span><br><span class="line">-- 更新不存在的数据，发生错误</span><br><span class="line">UPDATE account SET unknown = 1; </span><br><span class="line">-- 回滚事务</span><br><span class="line">rollback;</span><br></pre></td></tr></table></figure>
+
+<p><strong>转账后</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from account;</span><br><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |      90 |</span><br><span class="line">|  2 | B    |     110 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-持久性"><a href="#3-2-持久性" class="headerlink" title="3.2 持久性"></a>3.2 持久性</h3><p>事务提交后，修改永久保存到数据库，即使系统崩溃也不丢失。</p>
+<p>A的账户到账100元</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 开启事务</span><br><span class="line">start transaction;</span><br><span class="line">UPDATE account SET balance = balance + 100 WHERE name = &#x27;A&#x27;;</span><br><span class="line">-- 提交事务</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
+
+<p><strong>到账前</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |      90 |</span><br><span class="line">|  2 | B    |     110 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>到账后</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |     190 |</span><br><span class="line">|  2 | B    |     110 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>模拟故障</strong></p>
+<p>在事务提交后立即关闭数据库，重启后验证数据是否保留</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+---------+</span><br><span class="line">| id | name | balance |</span><br><span class="line">+----+------+---------+</span><br><span class="line">|  1 | A    |     190 |</span><br><span class="line">|  2 | B    |     110 |</span><br><span class="line">+----+------+---------+</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3-隔离性"><a href="#3-3-隔离性" class="headerlink" title="3.3 隔离性"></a>3.3 隔离性</h3><p>MySQL 提供四种事务隔离级别：读未提交、读已提交、可重复读（默认）、串行化。不同的食事务隔离级别，是在数据一致性和速度之间的权衡。</p>
+<h4 id="1-读未提交-Read-Uncommitted"><a href="#1-读未提交-Read-Uncommitted" class="headerlink" title="(1)读未提交 Read Uncommitted"></a>(1)读未提交 Read Uncommitted</h4><p>允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。</p>
+<p><strong>脏读</strong></p>
+<p>能够读取到未提交的事务的执行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">START TRANSACTION; -- 开启事务</span><br><span class="line">UPDATE account SET balance = balance + 100 WHERE name = &#x27;A&#x27;;</span><br><span class="line">-- 不执行COMMIT，事务未提交</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 会话2</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">SELECT balance FROM account WHERE name = &#x27;A&#x27;; </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>会话1(初始数据)</th>
+<th>会话1(会话2开启事务后)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117213843383.png"></td>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117213855509.png" alt="image-20260117213855509"></td>
+</tr>
+</tbody></table>
+<p>可以看到，会话2中查询的结果是会话1中sql执行的结果。会话1的事务还没有提交，其他事务就可以读取到结果，造成了脏读。</p>
+<h4 id="2-读已提交-READ-COMMITTED"><a href="#2-读已提交-READ-COMMITTED" class="headerlink" title="(2)读已提交 READ-COMMITTED"></a>(2)读已提交 READ-COMMITTED</h4><p>读已提交隔离级别，解决了脏读的问题，但没有解决可重复读(同一个事务内前后读取的结果不同)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">SELECT balance FROM account WHERE name = &#x27;A&#x27;; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 会话2</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">UPDATE account SET balance = 2000 WHERE name = &#x27;A&#x27;;</span><br><span class="line">COMMIT; -- 提交事务</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SELECT balance FROM account WHERE name = &#x27;A&#x27;;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>初始数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117214247313.png" alt="image-20260117214247313"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>会话2提交事务前</th>
+<th>会话2提交事务后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117214729349.png" alt="image-20260117214729349"></td>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117214823134.png" alt="image-20260117214823134"></td>
+</tr>
+</tbody></table>
+<p>可以看到，读未提交解决了脏读的问题，没有被会话2未提交的事务影响。<br>但是可以发现，在会话1的同一个事务中，读取同一条数据的结果不同，这就是不可重复读。</p>
+<h4 id="3-可重复读-REPEATABLE-READ"><a href="#3-可重复读-REPEATABLE-READ" class="headerlink" title="(3)可重复读 REPEATABLE-READ"></a>(3)可重复读 REPEATABLE-READ</h4><p>可重复读，针对的是读已提交的不可重复读。在同一个事务内读取的结果一致。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">SELECT balance FROM account WHERE name = &#x27;A&#x27;; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 会话2</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">UPDATE account SET balance = 2000 WHERE name = &#x27;A&#x27;;</span><br><span class="line">COMMIT; -- 提交事务</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SELECT balance FROM account WHERE name = &#x27;A&#x27;;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+
+
+<table>
+<thead>
+<tr>
+<th>初始数据</th>
+<th>会话2提交事务后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117215635667.png" alt="image-20260117215635667"></td>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117215755132.png" alt="image-20260117215755132"></td>
+</tr>
+</tbody></table>
+<p>可重复读，同一个事务内读取到的结果一致。</p>
+<p>可重复读没有解决幻读的问题(读取到并不存在的数据)。在MySQL中，通过MVCC和锁，能够解决大部分幻读的问题。</p>
+<h4 id="可重复读-幻读"><a href="#可重复读-幻读" class="headerlink" title="可重复读 - 幻读"></a>可重复读 - 幻读</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">SELECT * FROM account; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 会话2</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">INSERT INTO account values(null,&#x27;D&#x27;,200);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SELECT * FROM account; </span><br><span class="line">UPDATE account SET balance = 2000 WHERE name = &#x27;D&#x27;;</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>会话2事务提交前</th>
+<th>会话2事务提交后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117221109954.png" alt="image-20260117221109954"></td>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117222630040.png" alt="image-20260117222630040"></td>
+</tr>
+</tbody></table>
+<p>可以发现，在会话1中，竟然更新了不存在的数据。提交事务后，确实name &#x3D; ‘D’的数据确实被修改了</p>
+<h4 id="4-可串行化-SERIALIZABLE"><a href="#4-可串行化-SERIALIZABLE" class="headerlink" title="(4)可串行化 SERIALIZABLE"></a>(4)可串行化 SERIALIZABLE</h4><p>所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 会话1</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">SELECT * FROM account;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 会话2</span><br><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">INSERT INTO account values(null,&#x27;F&#x27;,400);</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>会话1事务提交前</th>
+<th>会话1事务提交后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117223050140.png" alt="image-20260117223050140"></td>
+<td><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/image-20260117223107072.png" alt="image-20260117223107072"></td>
+</tr>
+</tbody></table>
+<p>在会话1提交事务前，会话2无法插入数据。直到事务提交后，才能插入。</p>
+<h3 id="3-4-一致性"><a href="#3-4-一致性" class="headerlink" title="3.4 一致性"></a>3.4 一致性</h3><p>一致性是由上面三种特性共同实现，所以在这里就不进行演示。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/15/List%E7%9A%84%E5%9D%91/" rel="prev" title="List的坑">
+                  <i class="fa fa-angle-left"></i> List的坑
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Dawn</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">46k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">42 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
