@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="再引入Spring AI之后，有许多参数可以配置，本篇文章来讲讲这些参数应该怎么使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agent应用">
+<meta property="og:url" content="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="The Dawn">
+<meta property="og:description" content="再引入Spring AI之后，有许多参数可以配置，本篇文章来讲讲这些参数应该怎么使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129163724725.png">
+<meta property="og:image" content="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129173930530.png">
+<meta property="og:image" content="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129174023905.png">
+<meta property="og:image" content="http://example.com/image-20260129190728283.png">
+<meta property="og:image" content="http://example.com/image-20260129192008642.png">
+<meta property="article:published_time" content="2026-01-29T08:31:34.000Z">
+<meta property="article:modified_time" content="2026-01-29T12:02:33.967Z">
+<meta property="article:author" content="The Dawn">
+<meta property="article:tag" content="Agent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129163724725.png">
+
+
+<link rel="canonical" href="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/","path":"2026/01/29/Agent应用/","title":"Agent应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Agent应用 | The Dawn</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Dawn</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BE%93%E5%87%BA%E6%A8%A1%E5%BC%8F"><span class="nav-text">1. 输出模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%90%8C%E6%AD%A5%E8%BE%93%E5%87%BA"><span class="nav-text">1.1 同步输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA"><span class="nav-text">1.2 流式输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%BE%93%E5%87%BA%E6%A8%A1%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="nav-text">1.3 输出模式对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-text">2. 提示词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%B0%83%E7%94%A8%E6%A8%A1%E5%9E%8B%E6%97%B6"><span class="nav-text">2.1 调用模型时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%88%9B%E5%BB%BAclient%E6%97%B6"><span class="nav-text">2.2 创建client时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%AF%B9%E6%AF%94"><span class="nav-text">2.3 对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-text">3. 上下文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-MessageChatMemoryAdvisor"><span class="nav-text">3.1 MessageChatMemoryAdvisor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Redis%E5%AD%98%E5%82%A8%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-text">3.2 Redis存储上下文</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="The Dawn"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">The Dawn</p>
+  <div class="site-description" itemprop="description">一位即将步入职场的应届生的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/29/Agent%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="The Dawn">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Dawn">
+      <meta itemprop="description" content="一位即将步入职场的应届生的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Agent应用 | The Dawn">
+      <meta itemprop="description" content="再引入Spring AI之后，有许多参数可以配置，本篇文章来讲讲这些参数应该怎么使用。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Agent应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-01-29 16:31:34 / 修改时间：20:02:33" itemprop="dateCreated datePublished" datetime="2026-01-29T16:31:34+08:00">2026-01-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">再引入Spring AI之后，有许多参数可以配置，本篇文章来讲讲这些参数应该怎么使用。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>用Spring AI调用模型大概是这样的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chatClient.prompt()           // 1. 创建prompt构建器</span><br><span class="line">    .user(message)            // 2. 设置用户消息</span><br><span class="line">    .system(systemPrompt)     // 3. 设置系统提示词（可选）</span><br><span class="line">    .options(options)         // 4. 设置模型参数（可选）</span><br><span class="line">    .call()                   // 5. 执行调用</span><br><span class="line">    .content();               // 6. 获取结果</span><br></pre></td></tr></table></figure>
+
+<p>每个参数都会对结果产生影响</p>
+<h2 id="1-输出模式"><a href="#1-输出模式" class="headerlink" title="1. 输出模式"></a>1. 输出模式</h2><p>在成熟的产品中，我们和AI对话时，AI会把生成的结果一点点呈现出来，就像打字机一样，这是流式输出。<br><img src="/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129163724725.png" alt="image-20260129163724725"></p>
+<p>Spring AI为我们提供了两种输出模式</p>
+<ul>
+<li>同步输出模式：客户端发送请求后会等待，直到AI模型生成完整的响应内容后一次性返回</li>
+<li>流式输出模式：流式输出采用SSE技术，AI模型生成内容时会逐步推送给客户端</li>
+</ul>
+<h3 id="1-1-同步输出"><a href="#1-1-同步输出" class="headerlink" title="1.1 同步输出"></a>1.1 同步输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public String chat(@RequestBody String message) &#123;</span><br><span class="line">        return chatClient.prompt()</span><br><span class="line">                .user(message)</span><br><span class="line">                .call()</span><br><span class="line">                .content();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ChatClient提供call方法，一次性返回所有结果</p>
+<h3 id="1-2-流式输出"><a href="#1-2-流式输出" class="headerlink" title="1.2 流式输出"></a>1.2 流式输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public Flux&lt;String&gt; streamChat(@RequestParam String message) &#123;</span><br><span class="line">       return chatClient.prompt()</span><br><span class="line">               .user(message)</span><br><span class="line">               .stream()</span><br><span class="line">               .content();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ChatClient提供stream方法，流式输出，使用Flux返回结果</p>
+<h3 id="1-3-输出模式对比"><a href="#1-3-输出模式对比" class="headerlink" title="1.3 输出模式对比"></a>1.3 输出模式对比</h3><p>流式输出通常是更好的选择，因为和模型交互是一段比较长的时间，如果一直阻塞不给用户反馈，会带来不好的产品体验。使用流式输出，用户可以实时看到内容生成，感觉更加流畅，并且采用非阻塞IO，资源利用率高，适合长文本输出。</p>
+<p>另一方面，流式输出需要前端做对应的处理，接受流式处理。</p>
+<h2 id="2-提示词"><a href="#2-提示词" class="headerlink" title="2. 提示词"></a>2. 提示词</h2><p>大语言模型通过注意力机制来处理输入，提示词通过强有力的上下文信号，引导模型关注特定知识领域。</p>
+<p>Spring AI提供两种方式来预设提示词</p>
+<ul>
+<li>调用模型时</li>
+<li>创建client时</li>
+</ul>
+<h3 id="2-1-调用模型时"><a href="#2-1-调用模型时" class="headerlink" title="2.1 调用模型时"></a>2.1 调用模型时</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public String chat(String message) &#123;</span><br><span class="line">        return chatClient.prompt()</span><br><span class="line">            .system(&quot;你是一位Java专家&quot;)  // ← 每次调用时设置</span><br><span class="line">            .user(message)</span><br><span class="line">            .call()</span><br><span class="line">            .content();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过system方法预设提示词</p>
+<h3 id="2-2-创建client时"><a href="#2-2-创建client时" class="headerlink" title="2.2 创建client时"></a>2.2 创建client时</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">   public ChatClient getChatClient(ChatModel chatModel) &#123;</span><br><span class="line">       return ChatClient.builder(chatModel)</span><br><span class="line">               .defaultSystem(&quot;你是一位Java专家&quot;)</span><br><span class="line">               .build();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-对比"><a href="#2-3-对比" class="headerlink" title="2.3 对比"></a>2.3 对比</h3><p>提示词参考</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"># 身份定位</span><br><span class="line">你是&quot;智游AI&quot;，一位专业的智能旅行规划助手。你能够整合天气、交通、景点、口碑等多源信息，为用户提供个性化、可动态调整的旅行行程规划。</span><br><span class="line"></span><br><span class="line">## 核心能力</span><br><span class="line"></span><br><span class="line">### 1. 信息整合</span><br><span class="line">实时获取并分析：天气预报、交通票价、景点客流、用户评价、餐饮住宿、特殊事件等信息。</span><br><span class="line"></span><br><span class="line">### 2. 用户理解</span><br><span class="line">深入了解用户的：预算约束、兴趣偏好、体力状况、时间安排、特殊需求、同行人员。</span><br><span class="line"></span><br><span class="line">### 3. 智能规划</span><br><span class="line">- 时空优化：合理安排景点顺序，最小化交通时间</span><br><span class="line">- 节奏控制：根据体力动态调整游览强度</span><br><span class="line">- 成本优化：在预算内最大化体验价值</span><br><span class="line">- 避峰策略：推荐人少时段，避开高峰</span><br><span class="line">- 应急预案：为关键节点提供备选方案</span><br><span class="line"></span><br><span class="line">### 4. 动态调整</span><br><span class="line">当出现天气变化、景点闭馆、体力不支、交通延误、预算超支等情况时，主动优化行程。</span><br><span class="line"></span><br><span class="line">## 工作流程</span><br><span class="line"></span><br><span class="line">### 第一步：需求收集</span><br><span class="line">友好地询问用户：</span><br><span class="line">- 📍 目的地、出行日期、天数</span><br><span class="line">- 💰 总预算及分配偏好</span><br><span class="line">- ❤️ 兴趣偏好（文化/自然/美食/休闲/冒险等）</span><br><span class="line">- 🏃 体力评估（年龄段、步行距离、游览强度）</span><br><span class="line">- 👥 同行信息及特殊需求</span><br><span class="line">- ⏰ 时间偏好（起床时间、午休、晚间活动）</span><br><span class="line"></span><br><span class="line">如信息不完整，主动询问缺失项。</span><br><span class="line"></span><br><span class="line">### 第二步：信息分析</span><br><span class="line">向用户说明正在收集信息：</span><br><span class="line">🔍 正在为您收集信息...</span><br><span class="line">✓ 已获取天气预报</span><br><span class="line">✓ 已分析景点客流</span><br><span class="line">✓ 已查询交通票价</span><br><span class="line">✓ 已整合口碑数据</span><br><span class="line">📊 数据分析完成，开始生成行程...</span><br><span class="line"></span><br><span class="line">### 第三步：行程生成</span><br><span class="line"></span><br><span class="line">按以下格式输出：</span><br><span class="line"></span><br><span class="line">```markdown</span><br><span class="line"># 🎒 您的专属旅行计划</span><br><span class="line"></span><br><span class="line">## 📋 行程概览</span><br><span class="line">- 目的地：[城市]</span><br><span class="line">- 日期：[日期]（共X天）</span><br><span class="line">- 预算：¥[总额]（预估：¥[金额]，剩余：¥[金额]）</span><br><span class="line">- 主题：[如&quot;文化探索+美食之旅&quot;]</span><br><span class="line"></span><br><span class="line">## 🌤️ 天气预报</span><br><span class="line">| 日期 | 天气 | 温度 | 建议 |</span><br><span class="line">|------|------|------|------|</span><br><span class="line">| Day1 | ☀️晴 | 18-28℃ | 适合户外 |</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 📅 Day 1：[主题]</span><br><span class="line"></span><br><span class="line">### 🌅 上午（09:00-12:00）</span><br><span class="line">#### 📍 [景点名]</span><br><span class="line">- 地址：[地址]</span><br><span class="line">- 门票：¥[价格] | 游览时长：[时间]</span><br><span class="line">- 亮点：[核心看点]</span><br><span class="line">- 客流：🟢较少 | 避坑：[提示]</span><br><span class="line">- 交通：[方式及时间]</span><br><span class="line"></span><br><span class="line">#### 🍜 午餐：[餐厅]</span><br><span class="line">- 位置：[位置] | 人均：¥[价格]</span><br><span class="line">- 特色：[菜品] | 评分：⭐⭐⭐⭐⭐ [分数]</span><br><span class="line"></span><br><span class="line">### 🌆 下午（14:00-18:00）</span><br><span class="line">[同上格式]</span><br><span class="line"></span><br><span class="line">### 🌃 晚上（19:00-21:00）</span><br><span class="line">#### 🎭 [活动]</span><br><span class="line">[活动信息]</span><br><span class="line"></span><br><span class="line">#### 🏨 住宿：[酒店]</span><br><span class="line">- 价格：¥[价格]/晚 | 评分：⭐⭐⭐⭐</span><br><span class="line">- 设施：[设施] | 理由：[选择理由]</span><br><span class="line"></span><br><span class="line">### 💡 今日小贴士</span><br><span class="line">- ⚠️ [注意事项]</span><br><span class="line">- 🎒 [携带物品]</span><br><span class="line">- 📸 [拍照建议]</span><br><span class="line"></span><br><span class="line">### 💰 今日预算：¥[金额]</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 🎯 行程亮点</span><br><span class="line">1. ✨ 必打卡：[TOP3景点]</span><br><span class="line">2. 🍽️ 美食：[特色美食]</span><br><span class="line">3. 📷 拍照点：[推荐位置]</span><br><span class="line"></span><br><span class="line">## 🔄 备选方案</span><br><span class="line">- 如遇下雨：[替代方案]</span><br><span class="line">- 如时间不足：[可压缩/跳过景点]</span><br><span class="line">- 如预算超支：[节省方案]</span><br><span class="line"></span><br><span class="line">## 💬 互动提示</span><br><span class="line">您可以随时告诉我：</span><br><span class="line">- &quot;调整Day2安排&quot; → 重新规划</span><br><span class="line">- &quot;预算太紧&quot; → 更经济方案</span><br><span class="line">- &quot;增加美食&quot; → 增加美食安排</span><br><span class="line">- &quot;太累了&quot; → 降低强度</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>无提示词</th>
+<th>有提示词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129173930530.png" alt="image-20260129173930530"></td>
+<td><img src="/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129174023905.png"></td>
+</tr>
+</tbody></table>
+<p>通过对比可以发现，在添加提示词的情况下，输出结果更加具体，质量更高。</p>
+<h2 id="3-上下文"><a href="#3-上下文" class="headerlink" title="3. 上下文"></a>3. 上下文</h2><p>AI对话中的上下文就是对话的记录内容。如果AI不能记住上下文，就只能进行一次对话，无法记住前面的对话内容，不能进行多轮对话</p>
+<table>
+<thead>
+<tr>
+<th>未开启上下文</th>
+<th>已开启上下文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/image-20260129190728283.png" alt="image-20260129190728283"></td>
+<td><img src="/image-20260129192008642.png" alt="image-20260129192008642"></td>
+</tr>
+</tbody></table>
+<p>不难看出，Agent应用，应该是需要有记忆上下文的能力。</p>
+<h3 id="3-1-MessageChatMemoryAdvisor"><a href="#3-1-MessageChatMemoryAdvisor" class="headerlink" title="3.1 MessageChatMemoryAdvisor"></a>3.1 MessageChatMemoryAdvisor</h3><p>Spring AI提供了MessageChatMemoryAdvisor 用来存储上下文</p>
+<p><strong>加载ChatMemory</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">   public ChatMemory chatMemory() &#123;</span><br><span class="line">       return new InMemoryChatMemory();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建 ChatClient时，设置memory</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">return ChatClient.builder(chatModel)</span><br><span class="line">						 	// 配置Advisor</span><br><span class="line">               .defaultAdvisors(new MessageChatMemoryAdvisor(chatMemory))</span><br><span class="line">               .build();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>调用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public Flux&lt;String&gt; chatWithMemory(String sessionId, String message)&#123;</span><br><span class="line">       return chatClient.prompt()</span><br><span class="line">               .user(message)</span><br><span class="line">               .advisors(advisorSpec -&gt; advisorSpec</span><br><span class="line">                       // 指定会话ID</span><br><span class="line">                       .param(CHAT_MEMORY_CONVERSATION_ID_KEY, sessionId)</span><br><span class="line">                       // 保留最近10轮对话</span><br><span class="line">                       .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10)</span><br><span class="line">               )</span><br><span class="line">               .stream()</span><br><span class="line">               .content();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>本质上这种方法是把对话的内容存放到内存中，然后把内容带到与模型的交互中</p>
+<h3 id="3-2-Redis存储上下文"><a href="#3-2-Redis存储上下文" class="headerlink" title="3.2 Redis存储上下文"></a>3.2 Redis存储上下文</h3><p>把对话的内容以每条记录为{“角色” : “内容”}的形式记录下来，组合成MessageList。每次请求对话，加载以往的记录，调用模型，将返回值添加到已有的记录中持久保存。通过这种方式保留上下文</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">public Flux&lt;String&gt; chatStream(String sessionId, String userMessage) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 获取历史消息</span><br><span class="line">            List&lt;MessageDto&gt; history = getConversationHistory(sessionId);</span><br><span class="line"></span><br><span class="line">            // 添加用户消息</span><br><span class="line">            history.add(new MessageDto(&quot;user&quot;, userMessage));</span><br><span class="line"></span><br><span class="line">            // 转换为Message对象</span><br><span class="line">            List&lt;Message&gt; messages = convertToMessages(history);</span><br><span class="line"></span><br><span class="line">            // 使用 final 变量以在 lambda 中使用</span><br><span class="line">            final List&lt;MessageDto&gt; finalHistory = history;</span><br><span class="line"></span><br><span class="line">            // 调用AI流式接口</span><br><span class="line">            return chatClient.prompt()</span><br><span class="line">                    .messages(messages)</span><br><span class="line">                    .stream()</span><br><span class="line">                    .content()</span><br><span class="line">                    .doOnNext(content -&gt; &#123;</span><br><span class="line">                        // 流式传输中不保存，在完成后保存</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .doOnComplete(() -&gt; &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            // 完成后获取完整回复并保存</span><br><span class="line">                            String assistantReply = chatClient.prompt()</span><br><span class="line">                                    .messages(messages)</span><br><span class="line">                                    .call()</span><br><span class="line">                                    .content();</span><br><span class="line"></span><br><span class="line">                            // 保存AI回复</span><br><span class="line">                            finalHistory.add(new MessageDto(&quot;assistant&quot;, assistantReply));</span><br><span class="line"></span><br><span class="line">                            // 限制消息数量</span><br><span class="line">                            List&lt;MessageDto&gt; updatedHistory = finalHistory;</span><br><span class="line">                            if (updatedHistory.size() &gt; maxMessages) &#123;</span><br><span class="line">                                updatedHistory = new ArrayList&lt;&gt;(updatedHistory.subList(updatedHistory.size() - maxMessages, updatedHistory.size()));</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            // 保存到Redis</span><br><span class="line">                            saveConversationHistory(sessionId, updatedHistory);</span><br><span class="line"></span><br><span class="line">                            log.info(&quot;Stream chat completed for session: &#123;&#125;, history size: &#123;&#125;&quot;, sessionId, updatedHistory.size());</span><br><span class="line">                        &#125; catch (Exception e) &#123;</span><br><span class="line">                            log.error(&quot;Error in stream chat onComplete for session: &#123;&#125;&quot;, sessionId, e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .doOnError(e -&gt; log.error(&quot;Error in stream chat for session: &#123;&#125;&quot;, sessionId, e));</span><br><span class="line"></span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            log.error(&quot;Error in chatStream for session: &#123;&#125;&quot;, sessionId, e);</span><br><span class="line">            return Flux.error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Agent/" rel="tag"># Agent</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/29/Spring%E6%8E%A5%E5%85%A5AI%E6%A8%A1%E5%9E%8B/" rel="prev" title="Spring接入AI模型">
+                  <i class="fa fa-angle-left"></i> Spring接入AI模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Dawn</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">51 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

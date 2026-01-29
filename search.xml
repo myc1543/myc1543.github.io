@@ -1437,4 +1437,302 @@
         <tag>MySQL</tag>
       </tags>
   </entry>
+  <entry>
+    <title>事务(2)</title>
+    <url>/2026/01/23/%E4%BA%8B%E5%8A%A1-2/</url>
+    <content><![CDATA[<p>在上篇文章，我们讲到了MySQL事务的四个特性ACID。这次，从ACID的特性的实现原理来解析MySQL事务的实现原理。</p>
+<h2 id="1-原子性"><a href="#1-原子性" class="headerlink" title="1.原子性"></a>1.原子性</h2><p>原子性是指一个事务是一个不可分割的工作单位，其中的操作要么都做，要么都不做。<br>当事务执行失败的时候，需要对已经执行的操作做回滚，在MySQL的InnoDB引擎中，使用undo log日志进行回滚</p>
+<h3 id="1-1-undo-log"><a href="#1-1-undo-log" class="headerlink" title="1.1 undo log"></a>1.1 undo log</h3><p>undo log是记录了相反的操作，比如insert一条记录，undo log就记录了一条delete，update一条记录，就记录一条相反的update记录。</p>
+<p>undo log分为两种</p>
+<ul>
+<li>Insert类型：insert语句</li>
+<li>Update类型：update语句，delete语句</li>
+</ul>
+<p>删除记录时，实际上并不是真的删除，而是修改一下Delete Mark标记，所以delete操作也是updat操作。</p>
+<h3 id="1-2-TODO"><a href="#1-2-TODO" class="headerlink" title="1.2 TODO"></a>1.2 TODO</h3><ul>
+<li>undo log 持久化</li>
+<li>undo log 物理存储组织</li>
+<li>undo log清理</li>
+</ul>
+<h2 id="2-持久性"><a href="#2-持久性" class="headerlink" title="2. 持久性"></a>2. 持久性</h2><p>事务一旦提交，对数据库的改变是永久的。数据持久化到磁盘中。</p>
+<h3 id="2-1-数据丢失？"><a href="#2-1-数据丢失？" class="headerlink" title="2.1 数据丢失？"></a>2.1 数据丢失？</h3><p>因为数据最终要存储在硬盘当中，如果每次提交事务都直接保存到硬盘中，MySQL的速度会十分慢。所以在提交事务时，先保存到内存中， 再从内存中保存到硬盘中。从内存保存到硬盘中，可能会出现系统故障，比如断电，这时候就需要持久性。</p>
+<h3 id="2-2-Buffer-Pool"><a href="#2-2-Buffer-Pool" class="headerlink" title="2.2 Buffer Pool"></a>2.2 Buffer Pool</h3><p>InnoDB借助内存来提升操作效率。Buffer Pool是InnoDB实现的一个缓存模式。</p>
+<ul>
+<li>读取数据时，MySQL会先访问Buffer Pool，有则返回，没有读取硬盘</li>
+<li>修改数据，如果Buffer Pool中存在数据，直接修改Buffer Pool所在的数据页，标记为脏页，通过后台线程写回脏页。</li>
+</ul>
+<p>InnoDB按16KB一页进行划分</p>
+<h3 id="2-3-redo-log"><a href="#2-3-redo-log" class="headerlink" title="2.3 redo log"></a>2.3 redo log</h3><p>上一条讲到，MySQL读取和修改数据都有通过内存，但是内存是做不到持久化的，需要同步到硬盘中。InnoDB 通过redo log来解决这个问题。</p>
+<p>redo log是物理日志，记录了在哪一页的哪一个偏移量的修改。每当数据更新时，会把redo log记录到redo log buffer中，然后刷盘到redo log文件中。</p>
+<p><strong>redo log也是将数据写入磁盘，为什么不直接将脏页写到磁盘中？</strong></p>
+<ul>
+<li>将脏页写回磁盘是随机IO，redo log是追加操作，是顺序IO</li>
+<li>脏页是以一个数据页为单位，需要将整页写入，redo log只包含真正要写入的</li>
+</ul>
+<p><img src="/../%E4%BA%8B%E5%8A%A1-2/03.png" alt="img"></p>
+<h4 id="2-3-1-刷盘时机"><a href="#2-3-1-刷盘时机" class="headerlink" title="2.3.1 刷盘时机"></a>2.3.1 刷盘时机</h4><ul>
+<li>0:事务提交时不刷盘，每秒刷盘一次</li>
+<li>1:事务提交时立即刷盘</li>
+<li>2:事务提交时写入操作系统缓存</li>
+</ul>
+<h4 id="2-3-2-日志文件组"><a href="#2-3-2-日志文件组" class="headerlink" title="2.3.2 日志文件组"></a>2.3.2 日志文件组</h4><p>硬盘上存储的 redo log 日志文件不只一个，而是以一个<strong>日志文件组</strong>的形式出现的，每个的<code>redo</code>日志文件大小都是一样的。</p>
+<p>比如可以配置为一组<code>4</code>个文件，每个文件的大小是 <code>1GB</code>，整个 redo log 日志文件组可以记录<code>4G</code>的内容。</p>
+<p>它采用的是环形数组形式，从头开始写，写到末尾又回到头循环写</p>
+<p><img src="/../%E4%BA%8B%E5%8A%A1-2/10.png" alt="img"></p>
+<p>日志文件组中有write pos，checkpoint</p>
+<ul>
+<li>write pos记录当前位置，一边写一边往后移</li>
+<li>checkoutpoint是当前擦除的位置</li>
+</ul>
+<p>每次刷盘redolog记录到日志文件组中，write pos位置后移。</p>
+<p>次 MySQL 加载<strong>日志文件组</strong>恢复数据时，会清空加载过的 redo log 记录，并把 <code>checkpoint</code> 后移更新。<code>write pos</code> 和 <code>checkpoint</code> 之间的还空着的部分可以用来写入新的 redo log 记录。</p>
+<h2 id="3-隔离性"><a href="#3-隔离性" class="headerlink" title="3.隔离性"></a>3.隔离性</h2><p>隔离性是事务和事务之间是隔离的。在InnoDB中，事务依靠锁和MVCC机制来实现。</p>
+<ul>
+<li>一个事务写操作对另一个事务写操作的影响：锁机制</li>
+<li>一个事务写操作对另一个事务读操作：MVCC</li>
+</ul>
+<h3 id="3-1-锁"><a href="#3-1-锁" class="headerlink" title="3.1 锁"></a>3.1 锁</h3><p>同一时刻只能有一个事务对数据进行写操作。<br>锁机制可以概括为：<br><strong>事务在修改数据之前，需要先获得相应的锁；获得锁之后，事务便可以修改数据；该事务操作期间，这部分数据是锁定的，其他事务如果需要修改数据，需要等待当前事务提交或回滚后释放锁。</strong></p>
+<p>按照粒度，锁可以分为行锁和表锁以及其他锁。表锁在操作时会锁定整张表，行锁只锁定一条记录。所以行锁比表锁的性能更好。</p>
+<h3 id="3-2-MVCC"><a href="#3-2-MVCC" class="headerlink" title="3.2 MVCC"></a>3.2 MVCC</h3><p>MVCC是针对读数据的方案，读不加锁。MVCC基于以下结构</p>
+<ul>
+<li>隐藏列，每条记录都有隐藏列，隐藏列中包含了本行数据的事务id、指向undo log的指针等</li>
+<li>基于undo log的版本链，每条记录包含了执行undo log的指针，每条undo log也会指向更早版本的undo log，从而形成一条版本链</li>
+<li>ReadView：通过隐藏列和版本链，MySQL可以将数据恢复到指定版本；但是具体要恢复到哪个版本，则需要根据ReadView来确定。所谓ReadView，是指事务（记做事务A）在某一时刻给整个事务系统（trx_sys）打快照，之后再进行读操作时，会将读取到的数据中的事务id与trx_sys快照比较，从而判断数据对该ReadView是否可见，即对事务A是否可见。</li>
+</ul>
+<p><strong>判断可见性</strong></p>
+<ul>
+<li>low_limit_id：表示生成ReadView时系统中应该分配给下一个事务的id。如果数据的事务id大于等于low_limit_id，则对该ReadView不可见。</li>
+<li>up_limit_id：表示生成ReadView时当前系统中活跃的读写事务中最小的事务id。如果数据的事务id小于up_limit_id，则对该ReadView可见。</li>
+<li>rw_trx_ids：表示生成ReadView时当前系统中活跃的读写事务的事务id列表。如果数据的事务id在low_limit_id和up_limit_id之间，则需要判断事务id是否在rw_trx_ids中：如果在，说明生成ReadView时事务仍在活跃中，因此数据对ReadView不可见；如果不在，说明生成ReadView时事务已经提交了，因此数据对ReadView可见。</li>
+</ul>
+<p>在RC隔离级别下</p>
+<ul>
+<li><strong>每条 SELECT 语句都创建新的 Read View</strong></li>
+<li>保证读到<strong>最新已提交</strong>的数据</li>
+</ul>
+<p>在RR隔离级别下</p>
+<ul>
+<li><strong>Read View 在事务开始时创建，直到事务结束</strong></li>
+<li>保证事务内多次读取看到<strong>相同的数据快照</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring接入AI模型</title>
+    <url>/2026/01/29/Spring%E6%8E%A5%E5%85%A5AI%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h2 id="1-SpringAI介绍"><a href="#1-SpringAI介绍" class="headerlink" title="1.SpringAI介绍"></a>1.SpringAI介绍</h2><p><code>SpringAI</code>解决了AI集成的根本难题：将企业数据和AI模型连接起来。<br>Spring AI提供的抽象是开发AI应用的基础。<br>Spring AI提供了以下功能</p>
+<ul>
+<li>跨多家 AI 提供商的 Chat、文本转图像和嵌入模型的可移植 API 支持。支持同步和流式A PI 选项。</li>
+<li>支持所有主要的 AI 模型提供商，如 Anthropic、OpenAI、微软、亚马逊、谷歌和 Ollama。支持的模型类型包括：<ul>
+<li>对话补全</li>
+<li>潜入</li>
+<li>文生图</li>
+<li>音频转录</li>
+<li>文本转语音</li>
+<li>内容审核</li>
+</ul>
+</li>
+<li>结构化输出 - 将 AI 模型输出映射到 POJO。</li>
+<li>跨向量数据库提供商的可移植API</li>
+</ul>
+<h2 id="2-引入Maven坐标"><a href="#2-引入Maven坐标" class="headerlink" title="2. 引入Maven坐标"></a>2. 引入Maven坐标</h2><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本要求</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JDK</td>
+<td>17+</td>
+<td>推荐LTS版本</td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td>3.0+</td>
+<td>需支持Java 17</td>
+</tr>
+<tr>
+<td>Maven</td>
+<td>3.8+</td>
+<td>或Gradle 7.5+</td>
+</tr>
+<tr>
+<td>OpenAI API</td>
+<td>自行选择模型</td>
+<td>需申请API Key</td>
+</tr>
+</tbody></table>
+<p>在pom.xml中添加Spring AI Starter依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.4.3&lt;/version&gt;</span><br><span class="line">    &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">&lt;/parent&gt;</span><br><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;java.version&gt;17&lt;/java.version&gt;</span><br><span class="line">    &lt;spring-ai.version&gt;1.0.0-M6&lt;/spring-ai.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-ai-openai-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependencyManagement&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-ai-bom&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;spring-ai.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">            &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/dependencyManagement&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-配置文件"><a href="#3-配置文件" class="headerlink" title="3.配置文件"></a>3.配置文件</h2><p>application.yml中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ai:</span><br><span class="line">  openai:</span><br><span class="line">    api-key: $&#123;OPENAI_API_KEY&#125;</span><br><span class="line">    base-url: https://dashscope.aliyuncs.com/compatible-mode</span><br><span class="line">    chat:</span><br><span class="line">      options:</span><br><span class="line">        model: qwen-turbo</span><br><span class="line">        max-tokens: 2000</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>api-key</code></td>
+<td>OpenAI的API密钥，用于身份验证和API调用授权</td>
+</tr>
+<tr>
+<td><code>base-url</code></td>
+<td>指定AI服务的API端点地址</td>
+</tr>
+<tr>
+<td><code>model</code> (chat)</td>
+<td>指定使用的聊天模型，决定AI的能力和成本</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td>控制输出的随机性和创造性，取值0.0-2.0，越低越确定，越高越有创意</td>
+</tr>
+<tr>
+<td><code>max-tokens</code></td>
+<td>限制单次响应的最大token数量，控制回复长度和API成本</td>
+</tr>
+<tr>
+<td><code>model</code> (embedding)</td>
+<td>用于文本向量化的嵌入模型，用于语义搜索、相似度计算等场景</td>
+</tr>
+</tbody></table>
+<h2 id="4-使用阿里云的模型服务平台"><a href="#4-使用阿里云的模型服务平台" class="headerlink" title="4.使用阿里云的模型服务平台"></a>4.使用阿里云的模型服务平台</h2><p>阿里云可以提供100万token的免费额度，所以可以接入阿里的模型。<br>阿里的官方文档:<a href="https://help.aliyun.com/zh/model-studio/compatibility-of-openai-with-dashscope">https://help.aliyun.com/zh/model-studio/compatibility-of-openai-with-dashscope</a></p>
+<table>
+<thead>
+<tr>
+<th>页面</th>
+<th align="left">网址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配置API Key</td>
+<td align="left"><a href="https://bailian.console.aliyun.com/?spm=a2c4g.11186623.0.0.6029533aOs1B0X&tab=model#/api-key">https://bailian.console.aliyun.com/?spm=a2c4g.11186623.0.0.6029533aOs1B0X&amp;tab=model#/api-key</a></td>
+</tr>
+<tr>
+<td>查看模型用量</td>
+<td align="left"><a href="https://bailian.console.aliyun.com/?spm=a2c4g.11186623.0.0.5211175fiLZA7q&tab=model#/model-usage/free-quota">https://bailian.console.aliyun.com/?spm=a2c4g.11186623.0.0.5211175fiLZA7q&amp;tab=model#/model-usage/free-quota</a></td>
+</tr>
+</tbody></table>
+<h2 id="5-demo"><a href="#5-demo" class="headerlink" title="5.demo"></a>5.demo</h2><h3 id="5-1-配置bean"><a href="#5-1-配置bean" class="headerlink" title="5.1 配置bean"></a>5.1 配置bean</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Spring AI ChatClient 配置类</span><br><span class="line"> * 用于创建和配置 ChatClient bean，以支持 Spring AI 的聊天功能</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">public class ChatClientConfig &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建 ChatClient bean，用于与 AI 模型交互</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public ChatClient gameChatClient(ChatModel chatModel) &#123;</span><br><span class="line">        return ChatClient.builder(chatModel)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-2-编写接口"><a href="#5-2-编写接口" class="headerlink" title="5.2 编写接口"></a>5.2 编写接口</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/api/chat&quot;)</span><br><span class="line">@Slf4j</span><br><span class="line">public class ChatController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    ChatClient chatClient;</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;/send&quot;)</span><br><span class="line">    public String chat(@RequestBody String message) &#123;</span><br><span class="line">        return chatClient.prompt()</span><br><span class="line">                .user(message)</span><br><span class="line">                .call()</span><br><span class="line">                .content();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @return 流式响应结果</span><br><span class="line">     */</span><br><span class="line">    @GetMapping(&quot;/stream&quot;)</span><br><span class="line">    public Flux&lt;String&gt; streamChat(@RequestParam String message) &#123;</span><br><span class="line">        return chatClient.prompt()</span><br><span class="line">                .user(message)</span><br><span class="line">                .stream()</span><br><span class="line">                .content();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看一下效果</p>
+<p><img src="/2026/01/29/Spring%E6%8E%A5%E5%85%A5AI%E6%A8%A1%E5%9E%8B/image-20260129161612068.png" alt="image-20260129161612068"></p>
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Agent应用</title>
+    <url>/2026/01/29/Agent%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[<p>用Spring AI调用模型大概是这样的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chatClient.prompt()           // 1. 创建prompt构建器</span><br><span class="line">    .user(message)            // 2. 设置用户消息</span><br><span class="line">    .system(systemPrompt)     // 3. 设置系统提示词（可选）</span><br><span class="line">    .options(options)         // 4. 设置模型参数（可选）</span><br><span class="line">    .call()                   // 5. 执行调用</span><br><span class="line">    .content();               // 6. 获取结果</span><br></pre></td></tr></table></figure>
+
+<p>每个参数都会对结果产生影响</p>
+<h2 id="1-输出模式"><a href="#1-输出模式" class="headerlink" title="1. 输出模式"></a>1. 输出模式</h2><p>在成熟的产品中，我们和AI对话时，AI会把生成的结果一点点呈现出来，就像打字机一样，这是流式输出。<br><img src="/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129163724725.png" alt="image-20260129163724725"></p>
+<p>Spring AI为我们提供了两种输出模式</p>
+<ul>
+<li>同步输出模式：客户端发送请求后会等待，直到AI模型生成完整的响应内容后一次性返回</li>
+<li>流式输出模式：流式输出采用SSE技术，AI模型生成内容时会逐步推送给客户端</li>
+</ul>
+<h3 id="1-1-同步输出"><a href="#1-1-同步输出" class="headerlink" title="1.1 同步输出"></a>1.1 同步输出</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public String chat(@RequestBody String message) &#123;</span><br><span class="line">        return chatClient.prompt()</span><br><span class="line">                .user(message)</span><br><span class="line">                .call()</span><br><span class="line">                .content();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ChatClient提供call方法，一次性返回所有结果</p>
+<h3 id="1-2-流式输出"><a href="#1-2-流式输出" class="headerlink" title="1.2 流式输出"></a>1.2 流式输出</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public Flux&lt;String&gt; streamChat(@RequestParam String message) &#123;</span><br><span class="line">       return chatClient.prompt()</span><br><span class="line">               .user(message)</span><br><span class="line">               .stream()</span><br><span class="line">               .content();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ChatClient提供stream方法，流式输出，使用Flux返回结果</p>
+<h3 id="1-3-输出模式对比"><a href="#1-3-输出模式对比" class="headerlink" title="1.3 输出模式对比"></a>1.3 输出模式对比</h3><p>流式输出通常是更好的选择，因为和模型交互是一段比较长的时间，如果一直阻塞不给用户反馈，会带来不好的产品体验。使用流式输出，用户可以实时看到内容生成，感觉更加流畅，并且采用非阻塞IO，资源利用率高，适合长文本输出。</p>
+<p>另一方面，流式输出需要前端做对应的处理，接受流式处理。</p>
+<h2 id="2-提示词"><a href="#2-提示词" class="headerlink" title="2. 提示词"></a>2. 提示词</h2><p>大语言模型通过注意力机制来处理输入，提示词通过强有力的上下文信号，引导模型关注特定知识领域。</p>
+<p>Spring AI提供两种方式来预设提示词</p>
+<ul>
+<li>调用模型时</li>
+<li>创建client时</li>
+</ul>
+<h3 id="2-1-调用模型时"><a href="#2-1-调用模型时" class="headerlink" title="2.1 调用模型时"></a>2.1 调用模型时</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public String chat(String message) &#123;</span><br><span class="line">        return chatClient.prompt()</span><br><span class="line">            .system(&quot;你是一位Java专家&quot;)  // ← 每次调用时设置</span><br><span class="line">            .user(message)</span><br><span class="line">            .call()</span><br><span class="line">            .content();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过system方法预设提示词</p>
+<h3 id="2-2-创建client时"><a href="#2-2-创建client时" class="headerlink" title="2.2 创建client时"></a>2.2 创建client时</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">   public ChatClient getChatClient(ChatModel chatModel) &#123;</span><br><span class="line">       return ChatClient.builder(chatModel)</span><br><span class="line">               .defaultSystem(&quot;你是一位Java专家&quot;)</span><br><span class="line">               .build();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-对比"><a href="#2-3-对比" class="headerlink" title="2.3 对比"></a>2.3 对比</h3><p>提示词参考</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 身份定位</span><br><span class="line">你是&quot;智游AI&quot;，一位专业的智能旅行规划助手。你能够整合天气、交通、景点、口碑等多源信息，为用户提供个性化、可动态调整的旅行行程规划。</span><br><span class="line"></span><br><span class="line">## 核心能力</span><br><span class="line"></span><br><span class="line">### 1. 信息整合</span><br><span class="line">实时获取并分析：天气预报、交通票价、景点客流、用户评价、餐饮住宿、特殊事件等信息。</span><br><span class="line"></span><br><span class="line">### 2. 用户理解</span><br><span class="line">深入了解用户的：预算约束、兴趣偏好、体力状况、时间安排、特殊需求、同行人员。</span><br><span class="line"></span><br><span class="line">### 3. 智能规划</span><br><span class="line">- 时空优化：合理安排景点顺序，最小化交通时间</span><br><span class="line">- 节奏控制：根据体力动态调整游览强度</span><br><span class="line">- 成本优化：在预算内最大化体验价值</span><br><span class="line">- 避峰策略：推荐人少时段，避开高峰</span><br><span class="line">- 应急预案：为关键节点提供备选方案</span><br><span class="line"></span><br><span class="line">### 4. 动态调整</span><br><span class="line">当出现天气变化、景点闭馆、体力不支、交通延误、预算超支等情况时，主动优化行程。</span><br><span class="line"></span><br><span class="line">## 工作流程</span><br><span class="line"></span><br><span class="line">### 第一步：需求收集</span><br><span class="line">友好地询问用户：</span><br><span class="line">- 📍 目的地、出行日期、天数</span><br><span class="line">- 💰 总预算及分配偏好</span><br><span class="line">- ❤️ 兴趣偏好（文化/自然/美食/休闲/冒险等）</span><br><span class="line">- 🏃 体力评估（年龄段、步行距离、游览强度）</span><br><span class="line">- 👥 同行信息及特殊需求</span><br><span class="line">- ⏰ 时间偏好（起床时间、午休、晚间活动）</span><br><span class="line"></span><br><span class="line">如信息不完整，主动询问缺失项。</span><br><span class="line"></span><br><span class="line">### 第二步：信息分析</span><br><span class="line">向用户说明正在收集信息：</span><br><span class="line">🔍 正在为您收集信息...</span><br><span class="line">✓ 已获取天气预报</span><br><span class="line">✓ 已分析景点客流</span><br><span class="line">✓ 已查询交通票价</span><br><span class="line">✓ 已整合口碑数据</span><br><span class="line">📊 数据分析完成，开始生成行程...</span><br><span class="line"></span><br><span class="line">### 第三步：行程生成</span><br><span class="line"></span><br><span class="line">按以下格式输出：</span><br><span class="line"></span><br><span class="line">```markdown</span><br><span class="line"># 🎒 您的专属旅行计划</span><br><span class="line"></span><br><span class="line">## 📋 行程概览</span><br><span class="line">- 目的地：[城市]</span><br><span class="line">- 日期：[日期]（共X天）</span><br><span class="line">- 预算：¥[总额]（预估：¥[金额]，剩余：¥[金额]）</span><br><span class="line">- 主题：[如&quot;文化探索+美食之旅&quot;]</span><br><span class="line"></span><br><span class="line">## 🌤️ 天气预报</span><br><span class="line">| 日期 | 天气 | 温度 | 建议 |</span><br><span class="line">|------|------|------|------|</span><br><span class="line">| Day1 | ☀️晴 | 18-28℃ | 适合户外 |</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 📅 Day 1：[主题]</span><br><span class="line"></span><br><span class="line">### 🌅 上午（09:00-12:00）</span><br><span class="line">#### 📍 [景点名]</span><br><span class="line">- 地址：[地址]</span><br><span class="line">- 门票：¥[价格] | 游览时长：[时间]</span><br><span class="line">- 亮点：[核心看点]</span><br><span class="line">- 客流：🟢较少 | 避坑：[提示]</span><br><span class="line">- 交通：[方式及时间]</span><br><span class="line"></span><br><span class="line">#### 🍜 午餐：[餐厅]</span><br><span class="line">- 位置：[位置] | 人均：¥[价格]</span><br><span class="line">- 特色：[菜品] | 评分：⭐⭐⭐⭐⭐ [分数]</span><br><span class="line"></span><br><span class="line">### 🌆 下午（14:00-18:00）</span><br><span class="line">[同上格式]</span><br><span class="line"></span><br><span class="line">### 🌃 晚上（19:00-21:00）</span><br><span class="line">#### 🎭 [活动]</span><br><span class="line">[活动信息]</span><br><span class="line"></span><br><span class="line">#### 🏨 住宿：[酒店]</span><br><span class="line">- 价格：¥[价格]/晚 | 评分：⭐⭐⭐⭐</span><br><span class="line">- 设施：[设施] | 理由：[选择理由]</span><br><span class="line"></span><br><span class="line">### 💡 今日小贴士</span><br><span class="line">- ⚠️ [注意事项]</span><br><span class="line">- 🎒 [携带物品]</span><br><span class="line">- 📸 [拍照建议]</span><br><span class="line"></span><br><span class="line">### 💰 今日预算：¥[金额]</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 🎯 行程亮点</span><br><span class="line">1. ✨ 必打卡：[TOP3景点]</span><br><span class="line">2. 🍽️ 美食：[特色美食]</span><br><span class="line">3. 📷 拍照点：[推荐位置]</span><br><span class="line"></span><br><span class="line">## 🔄 备选方案</span><br><span class="line">- 如遇下雨：[替代方案]</span><br><span class="line">- 如时间不足：[可压缩/跳过景点]</span><br><span class="line">- 如预算超支：[节省方案]</span><br><span class="line"></span><br><span class="line">## 💬 互动提示</span><br><span class="line">您可以随时告诉我：</span><br><span class="line">- &quot;调整Day2安排&quot; → 重新规划</span><br><span class="line">- &quot;预算太紧&quot; → 更经济方案</span><br><span class="line">- &quot;增加美食&quot; → 增加美食安排</span><br><span class="line">- &quot;太累了&quot; → 降低强度</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>无提示词</th>
+<th>有提示词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129173930530.png" alt="image-20260129173930530"></td>
+<td><img src="/2026/01/29/Agent%E5%BA%94%E7%94%A8/image-20260129174023905.png"></td>
+</tr>
+</tbody></table>
+<p>通过对比可以发现，在添加提示词的情况下，输出结果更加具体，质量更高。</p>
+<h2 id="3-上下文"><a href="#3-上下文" class="headerlink" title="3. 上下文"></a>3. 上下文</h2><p>AI对话中的上下文就是对话的记录内容。如果AI不能记住上下文，就只能进行一次对话，无法记住前面的对话内容，不能进行多轮对话</p>
+<table>
+<thead>
+<tr>
+<th>未开启上下文</th>
+<th>已开启上下文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/image-20260129190728283.png" alt="image-20260129190728283"></td>
+<td><img src="/image-20260129192008642.png" alt="image-20260129192008642"></td>
+</tr>
+</tbody></table>
+<p>不难看出，Agent应用，应该是需要有记忆上下文的能力。</p>
+<h3 id="3-1-MessageChatMemoryAdvisor"><a href="#3-1-MessageChatMemoryAdvisor" class="headerlink" title="3.1 MessageChatMemoryAdvisor"></a>3.1 MessageChatMemoryAdvisor</h3><p>Spring AI提供了MessageChatMemoryAdvisor 用来存储上下文</p>
+<p><strong>加载ChatMemory</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">   public ChatMemory chatMemory() &#123;</span><br><span class="line">       return new InMemoryChatMemory();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建 ChatClient时，设置memory</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">return ChatClient.builder(chatModel)</span><br><span class="line">						 	// 配置Advisor</span><br><span class="line">               .defaultAdvisors(new MessageChatMemoryAdvisor(chatMemory))</span><br><span class="line">               .build();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>调用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public Flux&lt;String&gt; chatWithMemory(String sessionId, String message)&#123;</span><br><span class="line">       return chatClient.prompt()</span><br><span class="line">               .user(message)</span><br><span class="line">               .advisors(advisorSpec -&gt; advisorSpec</span><br><span class="line">                       // 指定会话ID</span><br><span class="line">                       .param(CHAT_MEMORY_CONVERSATION_ID_KEY, sessionId)</span><br><span class="line">                       // 保留最近10轮对话</span><br><span class="line">                       .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10)</span><br><span class="line">               )</span><br><span class="line">               .stream()</span><br><span class="line">               .content();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>本质上这种方法是把对话的内容存放到内存中，然后把内容带到与模型的交互中</p>
+<h3 id="3-2-Redis存储上下文"><a href="#3-2-Redis存储上下文" class="headerlink" title="3.2 Redis存储上下文"></a>3.2 Redis存储上下文</h3><p>把对话的内容以每条记录为{“角色” : “内容”}的形式记录下来，组合成MessageList。每次请求对话，加载以往的记录，调用模型，将返回值添加到已有的记录中持久保存。通过这种方式保留上下文</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public Flux&lt;String&gt; chatStream(String sessionId, String userMessage) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 获取历史消息</span><br><span class="line">            List&lt;MessageDto&gt; history = getConversationHistory(sessionId);</span><br><span class="line"></span><br><span class="line">            // 添加用户消息</span><br><span class="line">            history.add(new MessageDto(&quot;user&quot;, userMessage));</span><br><span class="line"></span><br><span class="line">            // 转换为Message对象</span><br><span class="line">            List&lt;Message&gt; messages = convertToMessages(history);</span><br><span class="line"></span><br><span class="line">            // 使用 final 变量以在 lambda 中使用</span><br><span class="line">            final List&lt;MessageDto&gt; finalHistory = history;</span><br><span class="line"></span><br><span class="line">            // 调用AI流式接口</span><br><span class="line">            return chatClient.prompt()</span><br><span class="line">                    .messages(messages)</span><br><span class="line">                    .stream()</span><br><span class="line">                    .content()</span><br><span class="line">                    .doOnNext(content -&gt; &#123;</span><br><span class="line">                        // 流式传输中不保存，在完成后保存</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .doOnComplete(() -&gt; &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            // 完成后获取完整回复并保存</span><br><span class="line">                            String assistantReply = chatClient.prompt()</span><br><span class="line">                                    .messages(messages)</span><br><span class="line">                                    .call()</span><br><span class="line">                                    .content();</span><br><span class="line"></span><br><span class="line">                            // 保存AI回复</span><br><span class="line">                            finalHistory.add(new MessageDto(&quot;assistant&quot;, assistantReply));</span><br><span class="line"></span><br><span class="line">                            // 限制消息数量</span><br><span class="line">                            List&lt;MessageDto&gt; updatedHistory = finalHistory;</span><br><span class="line">                            if (updatedHistory.size() &gt; maxMessages) &#123;</span><br><span class="line">                                updatedHistory = new ArrayList&lt;&gt;(updatedHistory.subList(updatedHistory.size() - maxMessages, updatedHistory.size()));</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            // 保存到Redis</span><br><span class="line">                            saveConversationHistory(sessionId, updatedHistory);</span><br><span class="line"></span><br><span class="line">                            log.info(&quot;Stream chat completed for session: &#123;&#125;, history size: &#123;&#125;&quot;, sessionId, updatedHistory.size());</span><br><span class="line">                        &#125; catch (Exception e) &#123;</span><br><span class="line">                            log.error(&quot;Error in stream chat onComplete for session: &#123;&#125;&quot;, sessionId, e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .doOnError(e -&gt; log.error(&quot;Error in stream chat for session: &#123;&#125;&quot;, sessionId, e));</span><br><span class="line"></span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            log.error(&quot;Error in chatStream for session: &#123;&#125;&quot;, sessionId, e);</span><br><span class="line">            return Flux.error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>Agent</tag>
+      </tags>
+  </entry>
 </search>
