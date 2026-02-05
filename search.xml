@@ -1265,7 +1265,7 @@
 <li><strong>持久性（Durability）</strong>：已被提交的事务对数据库的修改应该永久保存在数据库中。</li>
 </ul>
 <p>只有保证了AID，才能保证一致性。</p>
-<p><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/AID-%3EC.png" alt="AID-&gt;C"></p>
+<p><img src="/2026/01/16/%E4%BA%8B%E5%8A%A1-1/ACID.png"></p>
 <h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="3-验证ACID"><a href="#3-验证ACID" class="headerlink" title="3.验证ACID"></a>3.验证ACID</h2><p>现在我们有一张账户表，里面记录着余额。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE account (</span><br><span class="line">    id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    name VARCHAR(50),</span><br><span class="line">    balance INT</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
 
@@ -1733,6 +1733,53 @@
       </categories>
       <tags>
         <tag>Agent</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tool Calling</title>
+    <url>/2026/02/05/Tool-Calling/</url>
+    <content><![CDATA[<h2 id="1-背景引入"><a href="#1-背景引入" class="headerlink" title="1.背景引入"></a>1.背景引入</h2><p>大语言模型本质上是基于海量文本信息训练的统计模型，核心机制是学习词与词之间的关系。这就导致了模型对时间的理解仅局限于文本中出现的日期表达式，而不是真实的时间</p>
+<p><img src="/2026/02/05/Tool-Calling/image-20260205104355317.png" alt="image-20260205104355317"></p>
+<p>可以看到，模型的输出和现实时间不一致。</p>
+<p>模型的训练数据有明确的截止时间（例如GPT-4为2023年底），在此之后发生的事件都不在模型知识训练范围内。</p>
+<p><img src="/2026/02/05/Tool-Calling/image-20260205105209219.png" alt="image-20260205105209219"></p>
+<p>针对以上不足的信息，我们需要为模型提供查找外部信息的能力，也就是让大模型可以调用我们自己创建的API。</p>
+<h2 id="2-函数调用原理"><a href="#2-函数调用原理" class="headerlink" title="2. 函数调用原理"></a>2. 函数调用原理</h2><p>大模型仅负责 <strong>决定是否调用工具</strong> 和 <strong>提供参数</strong>，实际执行逻辑由客户端（Spring 应用）实现，确保工具调用的可控性与安全性。</p>
+<p><img src="/2026/02/05/Tool-Calling/1769816-20250414102420526-2145105587.png" alt="img"></p>
+<h3 id="2-1-工具元数据注入"><a href="#2-1-工具元数据注入" class="headerlink" title="2.1. 工具元数据注入"></a>2.1. 工具元数据注入</h3><p>在发起Chat Request时，将工具描述（name&#x2F;description）、参数结构（input schema）等元数据封装至请求体，建立大模型的工具调用能力基线。</p>
+<h3 id="2-2-模型决策响应"><a href="#2-2-模型决策响应" class="headerlink" title="2.2. 模型决策响应"></a>2.2. 模型决策响应</h3><p>大模型根据上下文推理生成工具调用指令（tool_calls字段），返回包含选定工具名称及结构化参数的中间响应。</p>
+<h3 id="2-3-服务端路由执行"><a href="#2-3-服务端路由执行" class="headerlink" title="2.3. 服务端路由执行"></a>2.3. 服务端路由执行</h3><p>Spring AI模块解析工具调用指令，通过服务发现机制定位目标工具实例，注入参数并触发同步&#x2F;异步执行。</p>
+<h3 id="2-4-执行结果标准化"><a href="#2-4-执行结果标准化" class="headerlink" title="2.4. 执行结果标准化"></a>2.4. 执行结果标准化</h3><p>工具返回原始执行结果后，系统进行数据类型校验、异常捕获和JSON序列化处理，生成模型可解析的标准化数据结构。</p>
+<h3 id="2-5-上下文增强推理"><a href="#2-5-上下文增强推理" class="headerlink" title="2.5. 上下文增强推理"></a>2.5. 上下文增强推理</h3><p>将标准化结果作为新增上下文（tool_outputs）回传大模型，触发基于增强上下文的二次推理流程。</p>
+<h3 id="2-6-终端响应生成"><a href="#2-6-终端响应生成" class="headerlink" title="2.6. 终端响应生成"></a>2.6. 终端响应生成</h3><p>模型综合初始请求与工具执行结果，生成最终自然语言响应，完成工具增强的对话闭环。</p>
+<h2 id="3-函数调用"><a href="#3-函数调用" class="headerlink" title="3.函数调用"></a>3.函数调用</h2><h3 id="3-1-创建一个时间工具类"><a href="#3-1-创建一个时间工具类" class="headerlink" title="3.1 创建一个时间工具类"></a>3.1 创建一个时间工具类</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ublic class DateTimeTools &#123;</span><br><span class="line">    @Tool(description = &quot;获取当前日期和时间。&quot;)</span><br><span class="line">    String getCurrentDateTime() &#123;</span><br><span class="line">        log.info(&quot;调用时间工具&quot;);</span><br><span class="line">        return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@Tool注解定义当前方法可以被大模型调用</li>
+<li>description告诉大模型该方法的用途</li>
+</ul>
+<h3 id="3-2-配置ChatClient"><a href="#3-2-配置ChatClient" class="headerlink" title="3.2 配置ChatClient"></a>3.2 配置ChatClient</h3><p>默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">  public ChatClient getChatClient(ChatModel chatModel, ChatMemory chatMemory) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">      return ChatClient.builder(chatModel)</span><br><span class="line">              .defaultTools(new DateTimeTools()) // 时间工具</span><br><span class="line">              .defaultAdvisors(new MessageChatMemoryAdvisor(chatMemory))</span><br><span class="line">              .build();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>调用配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">String response = chatClient.prompt(message)</span><br><span class="line">               .tools(new DateTimeTools())</span><br><span class="line">               .call()</span><br><span class="line">               .content();</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3-测试"><a href="#3-3-测试" class="headerlink" title="3.3 测试"></a>3.3 测试</h3><p><img src="/2026/02/05/Tool-Calling/image-20260205110442269.png" alt="image-20260205110442269"></p>
+<p>现在模型可以获取正确的时间了。</p>
+<h2 id="4-Spring-AI某些版本使用流式输出调用工具出现的bug"><a href="#4-Spring-AI某些版本使用流式输出调用工具出现的bug" class="headerlink" title="4. Spring AI某些版本使用流式输出调用工具出现的bug"></a>4. Spring AI某些版本使用流式输出调用工具出现的bug</h2><p><img src="/2026/02/05/Tool-Calling/image-20260205110717899.png" alt="image-20260205110717899"></p>
+<p><a href="https://github.com/alibaba/spring-ai-alibaba/issues/4066">https://github.com/alibaba/spring-ai-alibaba/issues/4066</a></p>
+<p>当流式输出时，会出现调用方法参数为空的bug。(Spring AI版本 1.1.0-M1)</p>
+<p>建议使用同步输出或者更换到新版本</p>
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
       </tags>
   </entry>
 </search>
