@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="由于锁的内容比较繁杂，所以决定写一篇文章来梳理一下锁相关的内容。参考的内容为《MySQL45讲》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL中的锁">
+<meta property="og:url" content="http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/index.html">
+<meta property="og:site_name" content="The Dawn">
+<meta property="og:description" content="由于锁的内容比较繁杂，所以决定写一篇文章来梳理一下锁相关的内容。参考的内容为《MySQL45讲》">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/4d0eeec7b136371b79248a0aed005a52.jpg">
+<meta property="og:image" content="http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/e7f7ca0d3dab2f48c588d714ee3ac861.png">
+<meta property="article:published_time" content="2026-03-14T04:06:39.000Z">
+<meta property="article:modified_time" content="2026-07-05T11:52:28.063Z">
+<meta property="article:author" content="The Dawn">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/4d0eeec7b136371b79248a0aed005a52.jpg">
+
+
+<link rel="canonical" href="http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/","path":"2026/03/14/MySQL中的锁/","title":"MySQL中的锁"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL中的锁 | The Dawn</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Dawn</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%A8%E5%B1%80%E9%94%81"><span class="nav-text">1. 全局锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">1.1 使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%85%A8%E5%B1%80%E9%94%81%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-text">1.2 全局锁的影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%A1%A8%E7%BA%A7%E9%94%81"><span class="nav-text">2.表级锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%A1%A8%E9%94%81"><span class="nav-text">2.1 表锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81MDL-metadata-lock"><span class="nav-text">2.2 元数据锁MDL(metadata lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-MDL%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-text">2.3 MDL的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%AE%89%E5%85%A8%E6%94%B9%E8%A1%A8"><span class="nav-text">2.4 安全改表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-text">2.5 意向锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%A1%8C%E9%94%81"><span class="nav-text">3. 行锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%B8%A4%E9%98%B6%E6%AE%B5%E9%94%81"><span class="nav-text">3.1 两阶段锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%AD%BB%E9%94%81%E5%92%8C%E6%AD%BB%E9%94%81%E6%A3%80%E6%B5%8B"><span class="nav-text">3.3 死锁和死锁检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%A1%8C%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">3.3 行锁的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%8A%A0%E9%94%81%E8%A7%84%E5%88%99"><span class="nav-text">3.4 加锁规则</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="The Dawn"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">The Dawn</p>
+  <div class="site-description" itemprop="description">一位即将步入职场的应届生的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="The Dawn">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Dawn">
+      <meta itemprop="description" content="一位即将步入职场的应届生的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MySQL中的锁 | The Dawn">
+      <meta itemprop="description" content="由于锁的内容比较繁杂，所以决定写一篇文章来梳理一下锁相关的内容。参考的内容为《MySQL45讲》">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL中的锁
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-14 12:06:39" itemprop="dateCreated datePublished" datetime="2026-03-14T12:06:39+08:00">2026-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-07-05 19:52:28" itemprop="dateModified" datetime="2026-07-05T19:52:28+08:00">2026-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">由于锁的内容比较繁杂，所以决定写一篇文章来梳理一下锁相关的内容。参考的内容为《MySQL45讲》</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>数据库锁设计的初衷是处理并发问题。</p>
+<p>根据加锁的范围，MySQL里的锁大致分为<code>全局锁</code> <code>表级锁</code> <code>行锁</code>三类。</p>
+<h2 id="1-全局锁"><a href="#1-全局锁" class="headerlink" title="1. 全局锁"></a>1. 全局锁</h2><p>全局锁是对整个数据库实例加读锁，使得数据库处于只读状态，数据库的其他操作(数据更新语句、数据定义语句和更新类事务的提交)都会被阻塞。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush tables with read lock;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-1-使用场景"><a href="#1-1-使用场景" class="headerlink" title="1.1 使用场景"></a>1.1 使用场景</h3><p>全局锁的典型使用场景是：做全库逻辑备份。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 加全局锁</span><br><span class="line">flush tables with read lock;</span><br><span class="line"></span><br><span class="line">// 数据备份</span><br><span class="line">mysqldump -uroot –p1234 itcast &gt; itcast.sql</span><br><span class="line"></span><br><span class="line">// 释放锁</span><br><span class="line">unlock tables;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>为什么在数据备份时需要加全局锁？</strong></p>
+<p>假设现在有一张订单表和库存表。业务执行下单操作，先扣减库存，然后生成订单。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1.备份库存表</span><br><span class="line">2.下单</span><br><span class="line">3.备份订单表</span><br></pre></td></tr></table></figure>
+
+<p>如果对每个表分别做备份，以上面这个备份时机为例，此时备份的数据是库存没有减少，但是有对应的订单，出现了数据不一致的情况。</p>
+<p>如果加上全局锁，所有更新操作都会被阻塞，直到备份完毕，此时备份的数据就是完整的。</p>
+<h3 id="1-2-全局锁的影响"><a href="#1-2-全局锁的影响" class="headerlink" title="1.2 全局锁的影响"></a>1.2 全局锁的影响</h3><p>锁主库，主库在锁期间都不能执行更新， 业务基本停摆</p>
+<p>锁从库，从库在锁期间不能执行主库同步过来的binlog，会导致主从延迟。</p>
+<h2 id="2-表级锁"><a href="#2-表级锁" class="headerlink" title="2.表级锁"></a>2.表级锁</h2><p>表级<code>锁的粒度是表，在MySQL中，主要有两种表级锁：</code>表锁<code>和</code>元数据锁</p>
+<h3 id="2-1-表锁"><a href="#2-1-表锁" class="headerlink" title="2.1 表锁"></a>2.1 表锁</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 加锁</span><br><span class="line">lock tables ... read/write</span><br><span class="line">// 解锁</span><br><span class="line">unlock tables </span><br></pre></td></tr></table></figure>
+
+<p>客户端断开时也会自动释放表锁。</p>
+<p>表锁除了会限制其他别的线程读写外，也会限定本线程接下来操作的对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 线程A 加锁</span><br><span class="line">lock tables t1 read, t2 write;</span><br></pre></td></tr></table></figure>
+
+<p>其他线程写t1，读写t2的语句都会被阻塞。同时线程A在解锁之前，只能执行读t1，读写t2的操作。</p>
+<h3 id="2-2-元数据锁MDL-metadata-lock"><a href="#2-2-元数据锁MDL-metadata-lock" class="headerlink" title="2.2 元数据锁MDL(metadata lock)"></a>2.2 元数据锁MDL(metadata lock)</h3><p>MDL不需要显式使用，在访问一个表的时候会自动加上。MDL的作用是保证读写的正确性，避免因为表数据变更二导致数据错误。</p>
+<p>当对一个表做增删改查时，加MDL读锁。当对表结构做变更时，加MDL写锁。</p>
+<ul>
+<li>读锁之间不互斥，所以可多线程对一张表做增删改查</li>
+<li>读写锁、写锁之间互斥，保证变更表结构操作的安全性。</li>
+</ul>
+<h3 id="2-3-MDL的影响"><a href="#2-3-MDL的影响" class="headerlink" title="2.3 MDL的影响"></a>2.3 MDL的影响</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sessionA：查表</span><br><span class="line">sessionB：查表</span><br><span class="line">sessionC：更改表结构 （阻塞）</span><br><span class="line">sessionD：查表 （阻塞）</span><br></pre></td></tr></table></figure>
+
+<p>sessionA和sessionB加MDL读锁，不会相互阻塞，可以正常执行，sessionC加MDL写锁，被阻塞。如果后续有增删改查操作，都会被阻塞住。</p>
+<p>如果客户端有重试机制，这个库的线程很快会爆满。</p>
+<h3 id="2-4-安全改表"><a href="#2-4-安全改表" class="headerlink" title="2.4 安全改表"></a>2.4 安全改表</h3><p>首先，需要解决的是长事务，在做DDL变更时，考虑暂停或者kill长事务。</p>
+<p>如果是读写操作较多的热点表，比较理想的机制是在改表语句里面设定等待时间，如果在等待时间里拿到MDL写锁最好，如果拿不到也不会阻塞后续的业务语句。之后再重试给改表语句。</p>
+<h3 id="2-5-意向锁"><a href="#2-5-意向锁" class="headerlink" title="2.5 意向锁"></a>2.5 意向锁</h3><p>在InnoDB中，由于行锁的存在，表锁与行锁之间也会存在冲突，为了减小行锁与表锁的冲突，设计意向锁来解决这个问题。</p>
+<p>在加行锁之前，会先在操作表上加意向锁，如果有其他线程需要加表锁，就会先去判断是否有意向锁，而不用查找每行的行锁。</p>
+<ul>
+<li>意向共享锁（IS）：由语句select … lock in share mode添加，与表锁共享锁（read）兼容，与表锁排他锁（write）互斥。在准备给表数据添加一个S锁时，需要先获得该表的IS锁</li>
+<li>意向排他锁（IX）：由insert、update、delete、select…for update添加 。与表锁共享锁(read)及排他锁(write)都互斥，意向锁之间不会互斥。在准备给表数据添加一个X锁时，需要先获得该表的IX锁</li>
+</ul>
+<h2 id="3-行锁"><a href="#3-行锁" class="headerlink" title="3. 行锁"></a>3. 行锁</h2><p>MySQL的行锁是在引擎层实现的，MyISAM不支持行锁，所以MyISAM只能通过表锁的方式来控制并发，进而影响到业务并发度。</p>
+<p>行锁是针对数据表中行记录的锁。两个事务同时更新一条记录，需要等待对方事务完成之后才能进行更新。</p>
+<h3 id="3-1-两阶段锁"><a href="#3-1-两阶段锁" class="headerlink" title="3.1 两阶段锁"></a>3.1 两阶段锁</h3><p>在InnoDB事务中，行锁是在需要的时候才加上，等到事务结束时才释放。这个时两阶段锁协议。</p>
+<p>如果事务中需要锁多个行，要把最有可能造成锁冲突，最可能影响并发度的锁尽量向后放。</p>
+<h3 id="3-3-死锁和死锁检测"><a href="#3-3-死锁和死锁检测" class="headerlink" title="3.3 死锁和死锁检测"></a>3.3 死锁和死锁检测</h3><p><img src="/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/4d0eeec7b136371b79248a0aed005a52.jpg" alt="img"></p>
+<p>这时候，事务 A 在等待事务 B 释放 id&#x3D;2 的行锁，而事务 B 在等待事务 A 释放 id&#x3D;1 的行锁。 事务 A 和事务 B 在互相等待对方的资源释放，就是进入了死锁状态。当出现死锁以后，有两种策略：</p>
+<ul>
+<li>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数 innodb_lock_wait_timeout 来设置。</li>
+<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 innodb_deadlock_detect 设置为 on，表示开启这个逻辑。</li>
+</ul>
+<p>Innodb默认的innodb_lock_wait_timeout 的时间为50s，如果发生死锁后，需要50s后才能退出，这个等待时间太长。如果等待时间设置的很短，就会影响正常的事务。所以一般采用第二种策略</p>
+<h3 id="3-3-行锁的分类"><a href="#3-3-行锁的分类" class="headerlink" title="3.3 行锁的分类"></a>3.3 行锁的分类</h3><p>行锁在InnoDB中有三种：记录锁(RR\RC)、间隙锁(RR)、临键锁(RR)。</p>
+<p><img src="/2026/03/14/MySQL%E4%B8%AD%E7%9A%84%E9%94%81/e7f7ca0d3dab2f48c588d714ee3ac861.png" alt="img"></p>
+<p>在RR隔离级别下，为解决幻读的问题，引入了间隙锁。间隙锁锁住的是记录之间的空隙。临键锁是行锁+间隙锁，范围是左开右闭。</p>
+<p>与间隙锁存在冲突关系的是，“往这个间隙中插入一个记录”。间隙锁之间不存在冲突关系。</p>
+<h3 id="3-4-加锁规则"><a href="#3-4-加锁规则" class="headerlink" title="3.4 加锁规则"></a>3.4 加锁规则</h3><ul>
+<li><p>原则 1：加锁的基本单位是 next-key lock。next-key lock 是前开后闭区间。</p>
+</li>
+<li><p>原则 2：查找过程中访问到的对象才会加锁。</p>
+</li>
+<li><p>优化 1：索引上的等值查询，给唯一索引加锁的时候，next-key lock 退化为行锁。</p>
+</li>
+<li><p>优化 2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock 退化为间隙锁。</p>
+</li>
+<li><p>一个 bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</p>
+</li>
+</ul>
+<p>加锁规则如上，具体的场景可以参考以下</p>
+<table>
+<thead>
+<tr>
+<th align="left">场景</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">等值查询间隙锁</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">非唯一索引等值锁</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">主键索引范围锁</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">非唯一索引范围锁</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">唯一索引范围锁bug</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">非唯一索引存在等值的情况</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">limit语句加锁</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">不等号条件里的等值查询</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>注意：lock in share mode只锁覆盖索引，for update会顺便给主键索引加上行锁。如果要用 lock in share mode 来给行加读锁避免数据被更新的话，就必须得绕过覆盖索引的优化，在查询字段中加入索引中不存在的字段。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/13/synchronized/" rel="prev" title="synchronized">
+                  <i class="fa fa-angle-left"></i> synchronized
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/05/20/windows%E7%AB%AF%E5%8F%A3%E9%97%AE%E9%A2%98/" rel="next" title="windows端口问题">
+                  windows端口问题 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Dawn</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
