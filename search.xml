@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>用 Tabwork 整理 Chrome 标签页：下次排查，从同一个文件夹开始</title>
+    <title>用 Tabwork 整理 Chrome 标签页：把同一件事的网页放在一起</title>
     <url>/2026/11/18/tabwork-chrome/</url>
-    <content><![CDATA[<p>排查一笔订单时，接口文档、监控面板和具体请求的日志往往同时开着。查完以后，关掉日志很容易，关掉监控页却会犹豫一下：下次还得从哪里把它找回来？</p>
-<p>我做了一个 Chrome 扩展 <strong>Tabwork</strong>。它在浏览器侧栏里给每项任务留一个文件夹。常用入口可以存进去，这一轮排查临时打开的页面也可以放在旁边。两种页面关掉以后，有各自的去处。</p>
-<h2 id="用一个文件夹走完一次排查"><a href="#用一个文件夹走完一次排查" class="headerlink" title="用一个文件夹走完一次排查"></a>用一个文件夹走完一次排查</h2><ol>
-<li>打开 Tabwork 侧栏，点右上角「⋯ → 新建文件夹」，取名「订单排查」。</li>
-<li>点「＋ 添加链接」，把接口文档和监控面板存进这个文件夹。网页已经开着时，也可以在工作台里右键点它，选「保存为链接」。</li>
-<li>把本次请求的日志页归入同一任务。侧栏里展开「订单排查」就能一起看到它们。点击已经打开的条目会切回原标签，尤其适合监控页开在另一个窗口的时候。</li>
+    <content><![CDATA[<p>为了安排一个周末，我可能在 Chrome 里打开十来个网页：一张步行路线图、几家民宿、博物馆的预约入口，还有临时搜来的天气预报。晚上合上电脑时，最想留到明天的是那张花了半小时才找到的路线图。可要是把所有网页都留着，明天又得猜，哪一家民宿是我已经看过、决定放弃的？</p>
+<p><strong>Tabwork</strong> 是我做的一个 Chrome 标签页扩展。它让你在侧栏里给一件事建一个文件夹：想留到以后再看的网址可以保存为链接，还在挑、还在读的页面可以临时放在旁边。</p>
+<h2 id="第一次用，建一个「周末出游」文件夹"><a href="#第一次用，建一个「周末出游」文件夹" class="headerlink" title="第一次用，建一个「周末出游」文件夹"></a>第一次用，建一个「周末出游」文件夹</h2><ol>
+<li>点 Tabwork 图标打开侧栏，选「⋯ → 新建文件夹」，输入「周末出游」。</li>
+<li>点「＋ 添加链接」，把步行路线和博物馆预约入口存进去，起两个一眼认得出的名字。如果网页已经在工作台里，右键点它也可以选「保存为链接」。</li>
+<li>把正在比较的民宿页面临时归入这个文件夹。看中一家就保存链接，排除一家就关掉标签。想看路线时，点侧栏里的「步行路线」。它要是已经开在另一个窗口，Tabwork 会直接带你过去。</li>
 </ol>
-<p><img src="/2026/11/18/tabwork-chrome/sidebar.png" alt="订单排查文件夹展开后，接口说明和本次排查的临时页面出现在同一列"></p>
-<p><strong>什么时候该点「保存为链接」？</strong> 问自己一句：下次换一笔订单，我还会打开这个地址吗？如果是监控首页，值得保存；如果是带着这次请求参数的详情页，临时归组就够了。</p>
+<p><img src="/2026/11/18/tabwork-chrome/sidebar.png" alt="Tabwork 侧栏示例：展开「周末出游」可以看到步行路线、预约入口和民宿链接；「学摄影」和「换耳机」各有自己的文件夹"></p>
+<p><strong>关掉网页以后，还能找回来吗？</strong> 这取决于你之前怎样放置它。</p>
 <table>
 <thead>
 <tr>
-<th>我做的操作</th>
-<th>下次还能找到什么</th>
+<th>你做的操作</th>
+<th>下次打开工作台</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>关闭已经保存为链接的监控页</td>
-<td>文件夹里保留入口，点击即可重开</td>
+<td>把路线图保存为链接，然后关闭标签</td>
+<td>文件夹里仍有「步行路线」，点一下就能重开</td>
 </tr>
 <tr>
-<td>单独关闭临时归组的日志页</td>
-<td>这条临时记录随标签移除，文件夹和常用入口仍在</td>
+<td>把民宿页面临时归组，看完后单独关闭标签</td>
+<td>这条临时记录随标签移除，其他候选仍在</td>
 </tr>
 <tr>
-<td>正常退出 Chrome，日志页当时仍在组内</td>
-<td>下次启动时，可以预览待恢复的网页，决定是否继续这项任务</td>
+<td>民宿还没挑完，保留组内标签并正常退出 Chrome</td>
+<td>下次启动时，可以预览待恢复清单，再决定打开哪些任务的页面</td>
 </tr>
 </tbody></table>
-<h2 id="第二天，只打开今天要做的事"><a href="#第二天，只打开今天要做的事" class="headerlink" title="第二天，只打开今天要做的事"></a>第二天，只打开今天要做的事</h2><p>昨天可能同时开着「订单排查」和「技术调研」，今天只想接着查订单。Tabwork 1.4.0 的启动询问可以按文件夹选范围。展开清单看看标题，再点「打开」。Chrome 已经恢复的相同网址会跳过，选「暂不打开」也会保留清单。这里恢复的是网址，表单草稿和页面滚动位置取决于网页和浏览器。</p>
-<p><img src="/2026/11/18/tabwork-chrome/startup-folder.png" alt="启动时选择订单排查，先预览待恢复的四个网页"></p>
-<p>Chrome 自带的标签组已经可以保存和重开一组网页。Tabwork 适合另一种更细的习惯：<strong>同一项工作反复做，常用入口固定，每次的临时页面却不同。</strong> 下次点开「订单排查」，监控和文档还在那里，上一次已经查完并关掉的日志也干干净净。<a href="https://support.google.com/chrome/answer/2391819">Chrome 标签组说明</a></p>
+<h2 id="明天只想接着学摄影"><a href="#明天只想接着学摄影" class="headerlink" title="明天只想接着学摄影"></a>明天只想接着学摄影</h2><p>同一套用法也适合日常学习和购物。学摄影时，把课程目录保存为链接，当天读的几篇构图教程临时归组；挑耳机时，把入围的两个型号存下来，查完一篇评测就关掉。文件夹的名字由你定，一件事做完也可以换下一件。</p>
+<p>有多个文件夹待恢复时，Tabwork 1.4.0 会在 Chrome 启动时让你选范围。今天打算学摄影，就选「学摄影」；等到周末要出门，再选「周末出游」。点开清单能先看标题和数量，确认后只打开所选范围里尚未打开的网址。「暂不打开」也会保留清单。重新打开的是网页地址，表单草稿和滚动位置取决于网页及浏览器。</p>
+<p><img src="/2026/11/18/tabwork-chrome/startup-folder.png" alt="启动 Chrome 时，选择「周末出游」并展开清单，确认要打开的三个网址"></p>
+<p>如果平时只想把一组网页一起关掉、一起打开，Chrome 自带的标签组也支持保存和重开。我用 Tabwork 的理由是，每次展开同一个文件夹，都能在常用入口旁边看到眼下还没处理完的页面。<a href="https://support.google.com/chrome/answer/2391819">Chrome 标签组说明</a></p>
 <h2 id="安装，也可以交给-Agent"><a href="#安装，也可以交给-Agent" class="headerlink" title="安装，也可以交给 Agent"></a>安装，也可以交给 Agent</h2><p><a href="https://myc1543.github.io/2026/11/18/tabwork-chrome/tabwork-1.4.0.zip">下载 Tabwork 1.4.0 安装包</a>。这个包只包含扩展运行文件，适用于桌面 Chrome 116 及以上版本，无需安装 Node.js。解压到一个长期保留的位置，进入 <code>chrome://extensions/</code>，开启「开发者模式」，点「加载已解压的扩展程序」，选择直接包含 <code>manifest.json</code> 的 <strong>extension</strong> 文件夹。安装完成后，点击扩展图标即可打开工作台。</p>
 <p>如果你的 Agent 能操作本机文件和浏览器，可以直接复制下面这段：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">请帮我在当前桌面 Chrome 中安装 Tabwork · 工作台 1.4.0，并验证侧栏可以打开。</span><br><span class="line"></span><br><span class="line">从本文的固定地址下载安装包：</span><br><span class="line">https://myc1543.github.io/2026/11/18/tabwork-chrome/tabwork-1.4.0.zip</span><br><span class="line">预期 SHA-256：f86ed28f618d9de8ce6e2b3910c2fa62ccf261a743b85f1e08cf6314fc45ba25</span><br><span class="line"></span><br><span class="line">1. 检查 Chrome 版本至少为 116。若已有 Tabwork，先核对版本；若已是 1.4.0，直接验证。升级时保留原加载目录和扩展数据。</span><br><span class="line">2. 下载并核对 SHA-256。匹配后，将 extension 文件夹解压到我用户目录下长期保留的位置。检查 manifest.json 中的名称、版本和 Manifest V3。</span><br><span class="line">3. 打开 chrome://extensions/，开启开发者模式，通过「加载已解压的扩展程序」选择包含 manifest.json 的目录。若是原目录升级，点击该扩展的「重新加载」。如果系统要求我亲自选择文件夹，告诉我具体路径并等我完成。</span><br><span class="line">4. 确认扩展卡片显示 1.4.0 且已启用，点击图标打开工作台，检查能看到「＋ 添加链接」。最后告诉我安装目录及验证结果。保留现有标签、书签和分组。</span><br></pre></td></tr></table></figure>
